@@ -1,9 +1,11 @@
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:milk_zilla/Utils/utils.dart';
 import 'package:milk_zilla/View/Auth%20UI/registration_screen.dart';
+import 'package:milk_zilla/View/User_UI/buyer_screen.dart';
+import 'package:milk_zilla/View/User_UI/insector_screen.dart';
+import 'package:milk_zilla/View/User_UI/seller_screen.dart';
 import 'package:milk_zilla/main.dart';
 
 import '../../res/Components/round_button.dart';
@@ -287,20 +289,33 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   Future FirebaseLogin() async {
-    showDialog(context: context,
-    barrierDismissible: false,
-     builder: (context)=>Center(child: Lottie.asset('assets/animations/loading.json'),));
-    try{
+    showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (context) => Center(
+              child: Lottie.asset('assets/animations/loading.json'),
+            ));
+    try {
       await FirebaseAuth.instance.createUserWithEmailAndPassword(
-        email: emailTextController.text.trim(),
-        password: PasswordTextController.text.trim());
-        print(':::');
-    }on FirebaseAuthException catch(e){
+          email: emailTextController.text.trim(),
+          password: PasswordTextController.text.trim());
+      print(':::');
+      if (widget.whichUser == 'Buyer') {
+        Navigator.of(context)
+            .push(MaterialPageRoute(builder: (context) => BuyerScreen()));
+      }else if(widget.whichUser == 'Seller'){
+  Navigator.of(context)
+            .push(MaterialPageRoute(builder: (context) => SellerScreen()));
+      }else{
+          Navigator.of(context)
+            .push(MaterialPageRoute(builder: (context) => InspectorScreen()));
+      }
+    } on FirebaseAuthException catch (e) {
       print('Khan${e.toString()}');
       Utils.toastMessage(e.toString());
     }
 
-    //navigator of context not working  
-   navigatorKey.currentState!.popUntil((route) => route.isFirst);
+    // //navigator of context not working
+    // navigatorKey.currentState!.popUntil((route) => route.isFirst);
   }
 }
