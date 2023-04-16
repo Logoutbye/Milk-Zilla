@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1041923569442",
+    "project_id": "milk-zilla",
+    "storage_bucket": "milk-zilla.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1041923569442:android:b5b79d755a783af425977b",
+        "android_client_info": {
+          "package_name": "com.example.milk_zilla"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1041923569442-mnpfstpa0nkna7du0tuujat9f05h82pi.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBlzQZsLfylRS2Ub0wzYeyQEQVMmcTyM4w"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1041923569442-mnpfstpa0nkna7du0tuujat9f05h82pi.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
