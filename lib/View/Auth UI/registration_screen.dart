@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
@@ -53,7 +54,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
         ),
       ),
       body: SingleChildScrollView(
-        // physics: NeverScrollableScrollPhysics(),
+        physics: NeverScrollableScrollPhysics(),
         child: Column(
           //mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -365,7 +366,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                                       ),
                                     ),
                                   ),
-
+                            
                                   // Password TextField
                                   Container(
                                     // color: Colors.red,
@@ -408,7 +409,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                                       ),
                                     ),
                                   ),
-
+                            
                                   SizedBox(
                                     height: 30,
                                   ),
@@ -421,7 +422,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                                     width: 140,
                                   ),
                                   SizedBox(
-                                    height: 50,
+                                    height: MediaQuery.of(context).size.height/2.5,
                                   ),
                                 ],
                               ),
@@ -441,6 +442,51 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
     );
   }
 
+  Future createUserInFirebase() async {
+    //Refrence to document
+    final buyer = FirebaseFirestore.instance
+        .collection('Buyers')
+        .doc('${nameTextControl.text}');
+    final seller = FirebaseFirestore.instance
+        .collection('Sellers')
+        .doc('${nameTextControl.text}');
+    final inpector = FirebaseFirestore.instance
+        .collection('Inpectors')
+        .doc('${nameTextControl.text}');
+
+    final jsonForBuyer = {
+      'name': nameTextControl.text,
+      'mobile-no': mobileNumberTextController.text,
+      'city': cityTextControl.text,
+      'email': emailTextController.text,
+      'password': PasswordTextController.text,
+    };
+    final jsonForSeller = {
+      'name': nameTextControl.text,
+      'mobile-no': mobileNumberTextController.text,
+      'city': cityTextControl.text,
+      'shop-name': shopNameTextControl.text,
+      'shop-adress': shopAdressTextControl.text,
+      'email': emailTextController.text,
+      'password': PasswordTextController.text
+    };
+    final jsonForInspector = {
+      'name': nameTextControl.text,
+      'mobile-no': mobileNumberTextController.text,
+      'city': cityTextControl.text,
+      'email': emailTextController.text,
+      'password': PasswordTextController.text,
+    };
+    //create document and write data to firebase
+    if (widget.whichUser == 'Buyer') {
+      await buyer.set(jsonForBuyer);
+    } else if (widget.whichUser == 'Seller') {
+      await seller.set(jsonForSeller);
+    } else {
+      await inpector.set(jsonForInspector);
+    }
+  }
+
   Future FirebaseRegistration(BuildContext parentContext) async {
     showDialog(
         context: parentContext,
@@ -455,7 +501,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
               password: PasswordTextController.text.trim())
           .then((UserCredential user_credentials) {
         Navigator.of(parentContext).pop();
-
+        createUserInFirebase();
         if (widget.whichUser == 'Buyer') {
           Navigator.of(context)
               .push(MaterialPageRoute(builder: (context) => BuyerScreen()));
