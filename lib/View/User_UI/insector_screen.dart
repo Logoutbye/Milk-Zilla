@@ -14,7 +14,7 @@ class _InspectorScreenState extends State<InspectorScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Buyer screeen')),
+      appBar: AppBar(title: Text('Inspector screeen')),
       drawer: MyAppDrawer(),
     );
   }

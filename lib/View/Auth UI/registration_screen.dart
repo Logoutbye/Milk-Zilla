@@ -1,7 +1,14 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 
+import '../../Utils/utils.dart';
+import '../../main.dart';
 import '../../res/Components/round_button.dart';
 import '../../res/my_colors.dart';
+import '../User_UI/buyer_screen.dart';
+import '../User_UI/insector_screen.dart';
+import '../User_UI/seller_screen.dart';
 
 class RegistrationScreen extends StatefulWidget {
   String whichUser;
@@ -22,7 +29,6 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   bool _showSpinner = false;
 
   var whichUser;
-  
 
   @override
   void initState() {
@@ -47,7 +53,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
         ),
       ),
       body: SingleChildScrollView(
-        physics: NeverScrollableScrollPhysics(),
+        // physics: NeverScrollableScrollPhysics(),
         child: Column(
           //mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -409,7 +415,9 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                                   // sig up
                                   RoundButton(
                                     title: 'Sign Up',
-                                    onpress: () {},
+                                    onpress: () {
+                                      FirebaseRegistration();
+                                    },
                                     width: 140,
                                   ),
                                   SizedBox(
@@ -431,5 +439,47 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
         ),
       ),
     );
+  }
+
+  Future FirebaseRegistration() async {
+    showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (context) => Center(
+              child: Lottie.asset('assets/animations/loading.json'),
+            ));
+    try {
+      await FirebaseAuth.instance
+          .createUserWithEmailAndPassword(
+              email: emailTextController.text.trim(),
+              password: PasswordTextController.text.trim())
+          .then((UserCredential user_credentials) {
+        //  navigator of context not working
+        navigatorKey.currentState!.popUntil((route) => route.isFirst);
+        if (widget.whichUser == 'Buyer') {
+          Navigator.of(context)
+              .push(MaterialPageRoute(builder: (context) => BuyerScreen()));
+        } else if (widget.whichUser == 'Seller') {
+          Navigator.of(context)
+              .push(MaterialPageRoute(builder: (context) => SellerScreen()));
+        } else {
+          Navigator.of(context)
+              .push(MaterialPageRoute(builder: (context) => InspectorScreen()));
+        }
+      }).onError((FirebaseAuthException error, stackTrace) {
+        if (error.code == "email-already-in-use") {
+          print("The email address is already in use by another account");
+          Utils.toastMessage(
+              "The email address is already in use by another account");
+              //  navigator of context not working
+        navigatorKey.currentState!.popUntil((route) => route.isFirst);
+        }
+      });
+    } on FirebaseAuthException catch (e) {
+      print('Khan${e.toString()}');
+      Utils.toastMessage(e.toString());
+      //  navigator of context not working
+      navigatorKey.currentState!.popUntil((route) => route.isFirst);
+    }
   }
 }

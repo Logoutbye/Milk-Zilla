@@ -41,6 +41,7 @@ dependencies:
   cloud_firestore: ^4.5.1
   # authnetication
   firebase_auth: ^4.4.1
+  firebase_core: ^2.9.0
 
   fluttertoast: ^8.2.1
   another_flushbar: ^1.12.29

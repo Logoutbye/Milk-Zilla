@@ -14,7 +14,7 @@ class _BuyerScreenState extends State<SellerScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Buyer screeen')),
+      appBar: AppBar(title: Text('Seller screeen')),
       drawer: MyAppDrawer(),
     );
   }

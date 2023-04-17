@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:milk_zilla/main.dart';
 
 import '../my_colors.dart';
 
@@ -13,7 +14,7 @@ class MyAppDrawer extends StatefulWidget {
 class _MyAppDrawerState extends State<MyAppDrawer> {
   @override
   Widget build(BuildContext context) {
-    final user= FirebaseAuth.instance.currentUser!;
+    final user = FirebaseAuth.instance.currentUser!;
     return Drawer(
       child: ListView(
         padding: const EdgeInsets.all(0),
@@ -29,6 +30,8 @@ class _MyAppDrawerState extends State<MyAppDrawer> {
             title: const Text('Logout'),
             onTap: () {
               FirebaseAuth.instance.signOut();
+              //  navigator of context not working
+              navigatorKey.currentState!.popUntil((route) => route.isFirst);
             },
           ),
         ],

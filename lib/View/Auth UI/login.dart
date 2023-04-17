@@ -291,31 +291,49 @@ class _LoginScreenState extends State<LoginScreen> {
   Future FirebaseLogin() async {
     showDialog(
         context: context,
-        barrierDismissible: false,
+        barrierDismissible: true,
         builder: (context) => Center(
               child: Lottie.asset('assets/animations/loading.json'),
             ));
     try {
-      await FirebaseAuth.instance.createUserWithEmailAndPassword(
-          email: emailTextController.text.trim(),
-          password: PasswordTextController.text.trim());
-      print(':::');
-      if (widget.whichUser == 'Buyer') {
-        Navigator.of(context)
-            .push(MaterialPageRoute(builder: (context) => BuyerScreen()));
-      }else if(widget.whichUser == 'Seller'){
-  Navigator.of(context)
-            .push(MaterialPageRoute(builder: (context) => SellerScreen()));
-      }else{
+      await FirebaseAuth.instance.signInWithEmailAndPassword(
+              email: emailTextController.text.trim(),
+              password: PasswordTextController.text.trim())
+          .then((UserCredential user_credentials) {
+        // print("object ${user_credentials.user.toString()}");
+        // print("object ${user_credentials.credential!.signInMethod}");
+        // print("object ${user_credentials.credential!.token}");
+
+        //  navigator of context not working
+    navigatorKey.currentState!.popUntil((route) => route.isFirst);
+        if (widget.whichUser == 'Buyer') {
           Navigator.of(context)
-            .push(MaterialPageRoute(builder: (context) => InspectorScreen()));
-      }
+              .push(MaterialPageRoute(builder: (context) => BuyerScreen()));
+        } else if (widget.whichUser == 'Seller') {
+          Navigator.of(context)
+              .push(MaterialPageRoute(builder: (context) => SellerScreen()));
+        } else {
+          Navigator.of(context)
+              .push(MaterialPageRoute(builder: (context) => InspectorScreen()));
+        }
+      }).onError((FirebaseAuthException error, stackTrace) {
+        if (error.code == "wrong-password") {
+          print("The password is invalid");
+          Utils.toastMessage(
+              "The password is invalid");
+              //  navigator of context not working
+        navigatorKey.currentState!.popUntil((route) => route.isFirst);
+        }
+      });
     } on FirebaseAuthException catch (e) {
       print('Khan${e.toString()}');
       Utils.toastMessage(e.toString());
+      //  navigator of context not working
+    navigatorKey.currentState!.popUntil((route) => route.isFirst);
     }
 
-    // //navigator of context not working
-    // navigatorKey.currentState!.popUntil((route) => route.isFirst);
+   
   }
+
+
 }
