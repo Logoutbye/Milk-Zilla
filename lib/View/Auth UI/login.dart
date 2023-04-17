@@ -218,7 +218,15 @@ class _LoginScreenState extends State<LoginScreen> {
                                     child: Align(
                                       alignment: Alignment.topRight,
                                       child: TextButton(
-                                        onPressed: () {},
+                                        onPressed: () {
+                                          if (emailTextController
+                                              .text.isEmpty) {
+                                            Utils.flushBarErrorMessage(
+                                                'Please Enter Email', context);
+                                          } else {
+                                            firebaseForgetPassword(context);
+                                          }
+                                        },
                                         child: Text('Forgot password!'),
                                       ),
                                     ),
@@ -229,7 +237,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   RoundButton(
                                     title: 'Login',
                                     onpress: () {
-                                      FirebaseLogin();
+                                      FirebaseLogin(context);
                                     },
                                     width: 140,
                                   ),
@@ -288,24 +296,25 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-  Future FirebaseLogin() async {
+  Future FirebaseLogin(BuildContext parentContext) async {
     showDialog(
-        context: context,
+        context: parentContext,
         barrierDismissible: true,
         builder: (context) => Center(
               child: Lottie.asset('assets/animations/loading.json'),
             ));
     try {
-      await FirebaseAuth.instance.signInWithEmailAndPassword(
+      await FirebaseAuth.instance
+          .signInWithEmailAndPassword(
               email: emailTextController.text.trim(),
               password: PasswordTextController.text.trim())
           .then((UserCredential user_credentials) {
         // print("object ${user_credentials.user.toString()}");
         // print("object ${user_credentials.credential!.signInMethod}");
         // print("object ${user_credentials.credential!.token}");
-
-        //  navigator of context not working
-    navigatorKey.currentState!.popUntil((route) => route.isFirst);
+          emailTextController.clear();
+          PasswordTextController.clear();
+        Navigator.of(parentContext).pop();
         if (widget.whichUser == 'Buyer') {
           Navigator.of(context)
               .push(MaterialPageRoute(builder: (context) => BuyerScreen()));
@@ -315,25 +324,48 @@ class _LoginScreenState extends State<LoginScreen> {
         } else {
           Navigator.of(context)
               .push(MaterialPageRoute(builder: (context) => InspectorScreen()));
+
         }
       }).onError((FirebaseAuthException error, stackTrace) {
         if (error.code == "wrong-password") {
           print("The password is invalid");
-          Utils.toastMessage(
-              "The password is invalid");
-              //  navigator of context not working
-        navigatorKey.currentState!.popUntil((route) => route.isFirst);
+          Utils.toastMessage("The password is invalid");
+          Navigator.of(parentContext).pop();
         }
       });
     } on FirebaseAuthException catch (e) {
       print('Khan${e.toString()}');
       Utils.toastMessage(e.toString());
-      //  navigator of context not working
-    navigatorKey.currentState!.popUntil((route) => route.isFirst);
+      Navigator.of(parentContext).pop();
     }
-
-   
   }
 
+  //to forget password we call this function
+  firebaseForgetPassword(BuildContext parentContext) async {
+    showDialog(
+        context: parentContext,
+        barrierDismissible: true,
+        builder: (context) => Center(
+              child: Lottie.asset('assets/animations/loading.json'),
+            ));
+    try {
+      await FirebaseAuth.instance
+          .sendPasswordResetEmail(
+        email: emailTextController.text.trim(),
+      )
+          .then((g) {
+        Utils.toastMessage('Please Check Email to Reset Password');
 
+        Navigator.of(parentContext).pop();
+      }).onError((FirebaseAuthException error, stackTrace) {
+        Utils.toastMessage(error.toString());
+
+        Navigator.of(parentContext).pop();
+      });
+    } on FirebaseAuthException catch (e) {
+      Utils.toastMessage(e.toString());
+
+      Navigator.of(parentContext).pop();
+    }
+  }
 }

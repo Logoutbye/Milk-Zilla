@@ -416,7 +416,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                                   RoundButton(
                                     title: 'Sign Up',
                                     onpress: () {
-                                      FirebaseRegistration();
+                                      FirebaseRegistration(context);
                                     },
                                     width: 140,
                                   ),
@@ -441,9 +441,9 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
     );
   }
 
-  Future FirebaseRegistration() async {
+  Future FirebaseRegistration(BuildContext parentContext) async {
     showDialog(
-        context: context,
+        context: parentContext,
         barrierDismissible: false,
         builder: (context) => Center(
               child: Lottie.asset('assets/animations/loading.json'),
@@ -454,8 +454,8 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
               email: emailTextController.text.trim(),
               password: PasswordTextController.text.trim())
           .then((UserCredential user_credentials) {
-        //  navigator of context not working
-        navigatorKey.currentState!.popUntil((route) => route.isFirst);
+        Navigator.of(parentContext).pop();
+
         if (widget.whichUser == 'Buyer') {
           Navigator.of(context)
               .push(MaterialPageRoute(builder: (context) => BuyerScreen()));
@@ -471,15 +471,13 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
           print("The email address is already in use by another account");
           Utils.toastMessage(
               "The email address is already in use by another account");
-              //  navigator of context not working
-        navigatorKey.currentState!.popUntil((route) => route.isFirst);
+          Navigator.of(parentContext).pop();
         }
       });
     } on FirebaseAuthException catch (e) {
       print('Khan${e.toString()}');
       Utils.toastMessage(e.toString());
-      //  navigator of context not working
-      navigatorKey.currentState!.popUntil((route) => route.isFirst);
+      Navigator.of(parentContext).pop();
     }
   }
 }
