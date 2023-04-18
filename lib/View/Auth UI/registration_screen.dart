@@ -2,14 +2,12 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
-
 import '../../Utils/utils.dart';
-import '../../main.dart';
 import '../../res/Components/round_button.dart';
 import '../../res/my_colors.dart';
-import '../User_UI/buyer_screen.dart';
-import '../User_UI/insector_screen.dart';
-import '../User_UI/seller_screen.dart';
+import '../Buyer_UI/buyer_screen.dart';
+import '../Inspector_UI/insector_screen.dart';
+import '../Seller_UI/seller_screen.dart';
 
 class RegistrationScreen extends StatefulWidget {
   String whichUser;
@@ -89,7 +87,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                     child: Center(
                       child: Container(
                         width: MediaQuery.of(context).size.width / 1.2,
-                        height: MediaQuery.of(context).size.height / 1.55,
+                        height: MediaQuery.of(context).size.height / 2,
                         decoration: BoxDecoration(
                           color: MyColors.kSecondary,
                           borderRadius: BorderRadius.circular(20),

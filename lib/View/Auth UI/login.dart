@@ -3,13 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:milk_zilla/Utils/utils.dart';
 import 'package:milk_zilla/View/Auth%20UI/registration_screen.dart';
-import 'package:milk_zilla/View/User_UI/buyer_screen.dart';
-import 'package:milk_zilla/View/User_UI/insector_screen.dart';
-import 'package:milk_zilla/View/User_UI/seller_screen.dart';
-import 'package:milk_zilla/main.dart';
-
 import '../../res/Components/round_button.dart';
 import '../../res/my_colors.dart';
+import '../Buyer_UI/buyer_screen.dart';
+import '../Inspector_UI/insector_screen.dart';
+import '../Seller_UI/seller_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   String whichUser;
