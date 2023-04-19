@@ -5,6 +5,7 @@ class PriceList {
   String? yougurt;
   String? butter;
   String? desi_ghee;
+  String? delivery_charges;
 
   PriceList({
     required this.cow_milk,
@@ -12,6 +13,8 @@ class PriceList {
     required this.mix_milk,
     required this.yougurt,
     required this.desi_ghee,
+    required this.delivery_charges,
+    required this.butter,
   });
 
   PriceList.fromJson(Map<String, dynamic> json) {
@@ -20,6 +23,8 @@ class PriceList {
     mix_milk = json['mix_milk'];
     yougurt = json['yougurt'];
     desi_ghee = json['desi_ghee'];
+    butter = json['butter'];
+    delivery_charges = json['delivery_charges'];
   }
 
   Map<String, dynamic> toJson() {
@@ -29,6 +34,8 @@ class PriceList {
     data['mix_milk'] = this.mix_milk;
     data['yougurt'] = this.yougurt;
     data['desi_ghee'] = this.desi_ghee;
+    data['butter'] = this.butter;
+    data['delivery_charges'] = this.delivery_charges;
     return data;
   }
 

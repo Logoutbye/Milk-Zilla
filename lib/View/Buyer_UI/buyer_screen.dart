@@ -1,10 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:lottie/lottie.dart';
-import 'package:milk_zilla/Model/price_list_model.dart';
 import 'package:milk_zilla/View/Buyer_UI/check_out_screen.dart';
 import 'package:milk_zilla/View/Buyer_UI/price_list.dart';
 import 'package:milk_zilla/res/Components/my_drawer.dart';
@@ -336,5 +332,21 @@ class _BuyerScreenState extends State<BuyerScreen> {
       ),
     );
   }
+ Future readPriceListFromDatabase() async {
+// get Price by id
+    final docPrices =
+        FirebaseFirestore.instance.collection('Price List').doc('items');
+    final snapshot = await docPrices.get();
 
+    if (snapshot.exists) {
+      Map<String, dynamic>? data = snapshot.data();
+    String  buffalo_milk = data!['buffalo_milk'];
+      String yougurt = data['yougurt'];
+      String cow_milk = data['cow_milk'];
+      String delivery_charges = data['delivery_charges'];
+      String mix_milk = data['mix_milk'];
+      String desi_ghee = data['desi_ghee'];
+
+    }
+  }
 }
