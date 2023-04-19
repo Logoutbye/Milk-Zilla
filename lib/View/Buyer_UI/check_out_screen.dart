@@ -1,18 +1,34 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:milk_zilla/res/constanst.dart';
 import 'package:milk_zilla/res/my_colors.dart';
+import 'package:provider/provider.dart';
 
-final priceTextStyle = TextStyle(
-  color: Colors.grey.shade600,
-  fontSize: 20.0,
-  fontWeight: FontWeight.bold,
-);
+import '../../Model/order_item_model.dart';
+import '../../Model/price_list_model.dart';
+import '../../provider/Sopping_item_provider.dart';
+import '../../res/Components/order_list_item.dart';
 
-class CheckOutScreen extends StatelessWidget {
+class CheckOutScreen extends StatefulWidget {
   // static const String path = "lib/src/pages/food/food_checkout.dart";
 
   const CheckOutScreen({super.key});
+
+  @override
+  State<CheckOutScreen> createState() => _CheckOutScreenState();
+}
+
+class _CheckOutScreenState extends State<CheckOutScreen> {
+  @override
+  void initState() {
+    getRealTimePrices();
+    // TODO: implement initState
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
+    final provider = Provider.of<ShoppingItemProvider>(context, listen: true);
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -26,7 +42,6 @@ class CheckOutScreen extends StatelessWidget {
       extendBodyBehindAppBar: true,
       body: Stack(
         children: [
-        
           ListView(
             padding: const EdgeInsets.fromLTRB(
               16.0,
@@ -44,35 +59,74 @@ class CheckOutScreen extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 30.0),
-              OrderListItem(
-                item: OrderItem(
-                  title: "Buffalo Milk",
-                  qty: 2,
-                  price: 12,
-                  bgColor: Colors.deepOrange,
-                  // image: burger,
+              if (provider.getCount('Buffalo Milk') > 0)
+                OrderListItem(
+                  item: OrderItemModel(
+                    name: "Buffalo Milk",
+                    quantity: provider.getCount('Buffalo Milk'),
+                    price: 2,
+                    onPressedDecrement: () =>
+                        provider.decrementCount('Buffalo Milk'),
+                    onPressedIncrement: () =>
+                        provider.incrementCount('Buffalo Milk'),
+                  ),
                 ),
-              ),
-              const SizedBox(height: 20.0),
-              OrderListItem(
-                item: OrderItem(
-                    title: "Yougurt",
-                    qty: 1,
-                    price: 15,
-                    bgColor: Colors.deepOrange,
-                    // image: burger1
-                    ),
-              ),
-              const SizedBox(height: 20.0),
-              OrderListItem(
-                item: OrderItem(
-                    title: "Cow Milk",
-                    qty: 1,
-                    price: 400,
-                    bgColor: Colors.deepOrange,
-                    // image: frenchFries
-                    ),
-              ),
+              if (provider.getCount('Cow Milk') > 0)
+                OrderListItem(
+                  item: OrderItemModel(
+                    name: "Cow Milk",
+                    quantity: provider.getCount('Cow Milk'),
+                    price: 2,
+                    onPressedDecrement: () =>
+                        provider.decrementCount('Cow Milk'),
+                    onPressedIncrement: () =>
+                        provider.incrementCount('Cow Milk'),
+                  ),
+                ),
+              if (provider.getCount('Mix Milk') > 0)
+                OrderListItem(
+                  item: OrderItemModel(
+                    name: "Mix Milk",
+                    quantity: provider.getCount('Mix Milk'),
+                    price: 2,
+                    onPressedDecrement: () =>
+                        provider.decrementCount('Mix Milk'),
+                    onPressedIncrement: () =>
+                        provider.incrementCount('Mix Milk'),
+                  ),
+                ),
+              if (provider.getCount('Yogurt') > 0)
+                OrderListItem(
+                  item: OrderItemModel(
+                    name: "Yogurt",
+                    quantity: provider.getCount('Yogurt'),
+                    price: 2,
+                    onPressedDecrement: () => provider.decrementCount('Yogurt'),
+                    onPressedIncrement: () => provider.incrementCount('Yogurt'),
+                  ),
+                ),
+              if (provider.getCount('Butter') > 0)
+                OrderListItem(
+                  item: OrderItemModel(
+                    name: "Butter",
+                    quantity: provider.getCount('Butter'),
+                    price: 2,
+                    onPressedDecrement: () => provider.decrementCount('Butter'),
+                    onPressedIncrement: () => provider.incrementCount('Butter'),
+                  ),
+                ),
+              if (provider.getCount('Desi Ghee') > 0)
+                OrderListItem(
+                  item: OrderItemModel(
+                    name: "Desi Ghee",
+                    quantity: provider.getCount('Desi Ghee'),
+                    price: 2,
+                    onPressedDecrement: () =>
+                        provider.decrementCount('Desi Ghee'),
+                    onPressedIncrement: () =>
+                        provider.incrementCount('Desi Ghee'),
+                  ),
+                ),
               const SizedBox(height: 20.0),
               _buildDivider(),
               const SizedBox(height: 20.0),
@@ -119,8 +173,7 @@ class CheckOutScreen extends StatelessWidget {
                     elevation: 0,
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(15.0)),
-                    backgroundColor: 
-                    MyColors.kPrimary,
+                    backgroundColor: MyColors.kPrimary,
                   ),
                   child: const Text(
                     "Proceed Order",
@@ -129,7 +182,10 @@ class CheckOutScreen extends StatelessWidget {
                       fontSize: 18.0,
                     ),
                   ),
-                  onPressed: () {},
+                  onPressed: () {
+                    print('ss${provider.getCount('Buffalo Milk')}');
+                    getRealTimePrices();
+                  },
                 ),
               ),
             ],
@@ -149,87 +205,26 @@ class CheckOutScreen extends StatelessWidget {
       ),
     );
   }
-}
 
-class OrderItem {
-  final String? title;
-  final int? qty;
-  final double? price;
-  final Color? bgColor;
-  OrderItem({this.title, this.qty, this.price,  this.bgColor});
-}
+  Future<PriceList?> getRealTimePrices() async {
+    FirebaseFirestore firestore = FirebaseFirestore.instance;
 
-class OrderListItem extends StatelessWidget {
-  final OrderItem? item;
+    // get document reference
+    DocumentReference documentReference =
+        firestore.collection('Price List').doc('items');
 
-  const OrderListItem({Key? key, this.item}) : super(key: key);
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 8.0),
-      child: Row(
-        children: [
-         
-          const SizedBox(width: 20.0),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Text(
-                  item!.title!,
-                  style: const TextStyle(
-                    color: Colors.black,
-                    fontSize: 18.0,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                const SizedBox(height: 10.0),
-                Container(
-                  decoration: BoxDecoration(
-                    border: Border.all(
-                      color: Colors.grey,
-                      width: 1.0,
-                    ),
-                    borderRadius: BorderRadius.circular(10.0),
-                  ),
-                  height: 40.0,
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      IconButton(
-                        iconSize: 18.0,
-                        padding: const EdgeInsets.all(2.0),
-                        icon: const Icon(Icons.remove),
-                        onPressed: () {},
-                      ),
-                      Text(
-                        "${item!.qty}",
-                        style: const TextStyle(
-                          color: Colors.black,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 18.0,
-                        ),
-                      ),
-                      IconButton(
-                        iconSize: 18.0,
-                        padding: const EdgeInsets.all(2.0),
-                        icon: const Icon(Icons.add),
-                        onPressed: () {},
-                      ),
-                    ],
-                  ),
-                )
-              ],
-            ),
-          ),
-          const SizedBox(width: 10.0),
-          Text(
-            "Rs ${item!.price! * item!.qty!}",
-            style: priceTextStyle,
-          ),
-        ],
-      ),
-    );
+    // get document snapshot
+    DocumentSnapshot documentSnapshot = await documentReference.get();
+
+    // check if document exists
+    if (documentSnapshot.exists) {
+      // get document data
+      Map<String, dynamic>? data =
+          documentSnapshot.data() as Map<String, dynamic>?;
+
+      // access specific fields
+      String buffalo_milk = data!['buffalo_milk'];
+      print('prices::${buffalo_milk}');
+    }
   }
 }

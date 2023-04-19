@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:milk_zilla/provider/selected_item_provider.dart';
+import 'package:milk_zilla/View/Buyer_UI/helper.dart';
+import 'package:milk_zilla/provider/Sopping_item_provider.dart';
 import 'package:provider/provider.dart';
 import 'View/my_home_page.dart';
 
@@ -20,7 +21,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-      create: (_) => SelectedItemProvider(),
+      create: (_) => ShoppingItemProvider(),
       child: MaterialApp(
         // navigatorKey: navigatorKey,
         title: 'Milk Zilla',
@@ -36,7 +37,7 @@ class MyApp extends StatelessWidget {
           // is not restarted.
           primarySwatch: Colors.green,
         ),
-        home: const MyHomePage(),
+        home:  MyHomePage(),
       ),
     );
   }
