@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:milk_zilla/View/Buyer_UI/check_out_screen.dart';
 import 'package:milk_zilla/View/Buyer_UI/price_list.dart';
+import 'package:milk_zilla/provider/selected_item_provider.dart';
 import 'package:milk_zilla/res/Components/my_drawer.dart';
+import 'package:provider/provider.dart';
 
 import '../../res/my_colors.dart';
 
@@ -17,6 +19,8 @@ class BuyerScreen extends StatefulWidget {
 class _BuyerScreenState extends State<BuyerScreen> {
   @override
   Widget build(BuildContext context) {
+    final selectedItemProvider = Provider.of<SelectedItemProvider>(context);
+    print("build whole");
     return Scaffold(
       backgroundColor: MyColors.kWhite,
       appBar: AppBar(
@@ -103,7 +107,8 @@ class _BuyerScreenState extends State<BuyerScreen> {
                         fontWeight: FontWeight.bold)),
                 Spacer(),
                 InkWell(
-                  onTap: () => Navigator.of(context).push(MaterialPageRoute(builder: (context)=>priceList())),
+                  onTap: () => Navigator.of(context).push(
+                      MaterialPageRoute(builder: (context) => priceList())),
                   child: Text('Price List',
                       style: TextStyle(
                           color: MyColors.kPrimary,
@@ -262,42 +267,54 @@ class _BuyerScreenState extends State<BuyerScreen> {
           SizedBox(
             height: 30,
           ),
-          Container(
-            width: MediaQuery.of(context).size.width / 1.2,
-            height: MediaQuery.of(context).size.height / 10,
-            decoration: BoxDecoration(boxShadow: [
-              BoxShadow(
-                color: MyColors.kshadow,
-                blurRadius: 9,
-                offset: Offset(2, 2), // Shadow position
-              ),
-            ], color: MyColors.kWhite, borderRadius: BorderRadius.circular(49)),
-            child: Row(
-              children: [
-                IconButton(
-                    onPressed: () {},
-                    icon: Icon(
-                      Icons.remove,
-                      size: 33,
-                    )),
-                Spacer(),
-                Text('\$ Counter'),
-                Spacer(),
-                IconButton(
-                    onPressed: () {},
-                    icon: Icon(
-                      Icons.add,
-                      size: 33,
-                    ))
-              ],
-            ),
+          Consumer<SelectedItemProvider>(
+            builder: (BuildContext context, value, Widget? child) {
+              return Container(
+                width: MediaQuery.of(context).size.width / 1.2,
+                height: MediaQuery.of(context).size.height / 10,
+                decoration: BoxDecoration(
+                    boxShadow: [
+                      BoxShadow(
+                        color: MyColors.kshadow,
+                        blurRadius: 9,
+                        offset: Offset(2, 2), // Shadow position
+                      ),
+                    ],
+                    color: MyColors.kWhite,
+                    borderRadius: BorderRadius.circular(49)),
+                child: Row(
+                  children: [
+                    IconButton(
+                        onPressed: () {
+                          value.decrementSelectedItem();
+                        },
+                        icon: Icon(
+                          Icons.remove,
+                          size: 33,
+                        )),
+                    Spacer(),
+                    Text('${value.selectedItem}'),
+                    Spacer(),
+                    IconButton(
+                        onPressed: () {
+                          value.incrementSelectedItem();
+                        },
+                        icon: Icon(
+                          Icons.add,
+                          size: 33,
+                        ))
+                  ],
+                ),
+              );
+            },
           ),
           SizedBox(
             height: 30,
           ),
           InkWell(
             onTap: () {
-              Navigator.of(context).push(MaterialPageRoute(builder: (context)=>CheckOutScreen()));
+              Navigator.of(context).push(
+                  MaterialPageRoute(builder: (context) => CheckOutScreen()));
             },
             child: Container(
               width: MediaQuery.of(context).size.width / 1.2,
@@ -320,10 +337,10 @@ class _BuyerScreenState extends State<BuyerScreen> {
                     padding: const EdgeInsets.only(left: 12.0),
                     child: Text('\$which Milk - \$how much Litre'),
                   ),
-                   Icon(
-                        Icons.arrow_forward,
-                        size: 33,
-                      )
+                  Icon(
+                    Icons.arrow_forward,
+                    size: 33,
+                  )
                 ],
               ),
             ),
@@ -331,22 +348,5 @@ class _BuyerScreenState extends State<BuyerScreen> {
         ],
       ),
     );
-  }
- Future readPriceListFromDatabase() async {
-// get Price by id
-    final docPrices =
-        FirebaseFirestore.instance.collection('Price List').doc('items');
-    final snapshot = await docPrices.get();
-
-    if (snapshot.exists) {
-      Map<String, dynamic>? data = snapshot.data();
-    String  buffalo_milk = data!['buffalo_milk'];
-      String yougurt = data['yougurt'];
-      String cow_milk = data['cow_milk'];
-      String delivery_charges = data['delivery_charges'];
-      String mix_milk = data['mix_milk'];
-      String desi_ghee = data['desi_ghee'];
-
-    }
   }
 }
