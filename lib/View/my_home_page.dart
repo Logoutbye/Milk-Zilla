@@ -1,10 +1,13 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/src/widgets/container.dart';
+import 'package:flutter/src/widgets/framework.dart';
 import 'package:lottie/lottie.dart';
 import 'package:milk_zilla/Utils/utils.dart';
 import 'package:milk_zilla/View/Auth%20UI/login.dart';
+import 'package:milk_zilla/View/Auth%20UI/registration_screen.dart';
+import 'package:milk_zilla/View/Buyer_UI/buyer_screen.dart';
 import 'package:milk_zilla/res/my_colors.dart';
-import 'Buyer_UI/buyer_screen.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key});

@@ -3,11 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:milk_zilla/Utils/utils.dart';
 import 'package:milk_zilla/View/Auth%20UI/registration_screen.dart';
+import 'package:milk_zilla/View/Buyer_UI/buyer_screen.dart';
+import 'package:milk_zilla/View/Inspector_UI/insector_screen.dart';
+import 'package:milk_zilla/View/Seller_UI/seller_screen.dart';
+import 'package:milk_zilla/main.dart';
+
 import '../../res/Components/round_button.dart';
 import '../../res/my_colors.dart';
-import '../Buyer_UI/buyer_screen.dart';
-import '../Inspector_UI/insector_screen.dart';
-import '../Seller_UI/seller_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   String whichUser;
@@ -221,8 +223,12 @@ class _LoginScreenState extends State<LoginScreen> {
                                               .text.isEmpty) {
                                             Utils.flushBarErrorMessage(
                                                 'Please Enter Email', context);
-                                          } else {
+                                          } else if(emailTextController
+                                              .text.isNotEmpty&&PasswordTextController.text.isEmpty){
                                             firebaseForgetPassword(context);
+                                          }else{
+                                             Utils.flushBarErrorMessage(
+                                                'Please enter only email', context);
                                           }
                                         },
                                         child: Text('Forgot password!'),
@@ -310,8 +316,8 @@ class _LoginScreenState extends State<LoginScreen> {
         // print("object ${user_credentials.user.toString()}");
         // print("object ${user_credentials.credential!.signInMethod}");
         // print("object ${user_credentials.credential!.token}");
-          emailTextController.clear();
-          PasswordTextController.clear();
+        emailTextController.clear();
+        PasswordTextController.clear();
         Navigator.of(parentContext).pop();
         if (widget.whichUser == 'Buyer') {
           Navigator.of(context)
@@ -322,19 +328,27 @@ class _LoginScreenState extends State<LoginScreen> {
         } else {
           Navigator.of(context)
               .push(MaterialPageRoute(builder: (context) => InspectorScreen()));
-
         }
       }).onError((FirebaseAuthException error, stackTrace) {
         if (error.code == "wrong-password") {
           print("The password is invalid");
           Utils.toastMessage("The password is invalid");
           Navigator.of(parentContext).pop();
+          emailTextController.clear();
+          PasswordTextController.clear();
+        } else {
+          Utils.toastMessage(error.toString());
+          Navigator.of(parentContext).pop();
+          emailTextController.clear();
+          PasswordTextController.clear();
         }
       });
     } on FirebaseAuthException catch (e) {
       print('Khan${e.toString()}');
       Utils.toastMessage(e.toString());
       Navigator.of(parentContext).pop();
+      emailTextController.clear();
+      PasswordTextController.clear();
     }
   }
 

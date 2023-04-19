@@ -2,7 +2,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
+
 import '../../Utils/utils.dart';
+import '../../main.dart';
 import '../../res/Components/round_button.dart';
 import '../../res/my_colors.dart';
 import '../Buyer_UI/buyer_screen.dart';
@@ -87,7 +89,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                     child: Center(
                       child: Container(
                         width: MediaQuery.of(context).size.width / 1.2,
-                        height: MediaQuery.of(context).size.height / 2,
+                        height: MediaQuery.of(context).size.height / 1.55,
                         decoration: BoxDecoration(
                           color: MyColors.kSecondary,
                           borderRadius: BorderRadius.circular(20),
@@ -364,7 +366,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                                       ),
                                     ),
                                   ),
-                            
+
                                   // Password TextField
                                   Container(
                                     // color: Colors.red,
@@ -407,7 +409,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                                       ),
                                     ),
                                   ),
-                            
+
                                   SizedBox(
                                     height: 30,
                                   ),
@@ -420,7 +422,8 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                                     width: 140,
                                   ),
                                   SizedBox(
-                                    height: MediaQuery.of(context).size.height/2.5,
+                                    height: MediaQuery.of(context).size.height /
+                                        2.5,
                                   ),
                                 ],
                               ),
@@ -503,12 +506,36 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
         if (widget.whichUser == 'Buyer') {
           Navigator.of(context)
               .push(MaterialPageRoute(builder: (context) => BuyerScreen()));
+          emailTextController.clear();
+          PasswordTextController.clear();
+          mobileNumberTextController.clear();
+          cityTextControl.clear();
+          emailTextController.clear();
+          nameTextControl.clear();
+          shopAdressTextControl.clear();
+          shopNameTextControl.clear();
         } else if (widget.whichUser == 'Seller') {
           Navigator.of(context)
               .push(MaterialPageRoute(builder: (context) => SellerScreen()));
+          emailTextController.clear();
+          PasswordTextController.clear();
+          mobileNumberTextController.clear();
+          cityTextControl.clear();
+          emailTextController.clear();
+          nameTextControl.clear();
+          shopAdressTextControl.clear();
+          shopNameTextControl.clear();
         } else {
           Navigator.of(context)
               .push(MaterialPageRoute(builder: (context) => InspectorScreen()));
+          emailTextController.clear();
+          PasswordTextController.clear();
+          mobileNumberTextController.clear();
+          cityTextControl.clear();
+          emailTextController.clear();
+          nameTextControl.clear();
+          shopAdressTextControl.clear();
+          shopNameTextControl.clear();
         }
       }).onError((FirebaseAuthException error, stackTrace) {
         if (error.code == "email-already-in-use") {
@@ -516,12 +543,23 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
           Utils.toastMessage(
               "The email address is already in use by another account");
           Navigator.of(parentContext).pop();
+        } else {
+          Utils.toastMessage(error.toString());
+          Navigator.of(parentContext).pop();
         }
       });
     } on FirebaseAuthException catch (e) {
       print('Khan${e.toString()}');
       Utils.toastMessage(e.toString());
       Navigator.of(parentContext).pop();
+      emailTextController.clear();
+      PasswordTextController.clear();
+      mobileNumberTextController.clear();
+      cityTextControl.clear();
+      emailTextController.clear();
+      nameTextControl.clear();
+      shopAdressTextControl.clear();
+      shopNameTextControl.clear();
     }
   }
 }
