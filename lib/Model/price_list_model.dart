@@ -21,7 +21,7 @@ class PriceList {
     cow_milk = json['cow_milk'];
     buffalo_milk = json['buffalo_milk'];
     mix_milk = json['mix_milk'];
-    yougurt = json['yougurt'];
+    yougurt = json['yogurt'];
     desi_ghee = json['desi_ghee'];
     butter = json['butter'];
     delivery_charges = json['delivery_charges'];
@@ -32,7 +32,7 @@ class PriceList {
     data['cow_milk'] = this.cow_milk;
     data['buffalo_milk'] = this.buffalo_milk;
     data['mix_milk'] = this.mix_milk;
-    data['yougurt'] = this.yougurt;
+    data['yogurt'] = this.yougurt;
     data['desi_ghee'] = this.desi_ghee;
     data['butter'] = this.butter;
     data['delivery_charges'] = this.delivery_charges;

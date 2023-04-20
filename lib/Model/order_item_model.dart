@@ -4,6 +4,8 @@ class OrderItemModel {
   final String? name;
   final int? quantity;
   var price;
+  var unit;
+  
   final VoidCallback onPressedDecrement;
   final VoidCallback onPressedIncrement;
   OrderItemModel({
@@ -12,5 +14,6 @@ class OrderItemModel {
     required this.name,
     required this.quantity,
     required this.price,
+    required this.unit,
   });
 }

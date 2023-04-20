@@ -11,7 +11,7 @@ class OrderListItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(8),
+      padding: const EdgeInsets.all(4),
       child: Row(
         children: [
           const SizedBox(width: 20.0),
@@ -38,30 +38,33 @@ class OrderListItem extends StatelessWidget {
                     borderRadius: BorderRadius.circular(10.0),
                   ),
                   height: 40.0,
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      IconButton(
-                        iconSize: 18.0,
-                        padding: const EdgeInsets.all(2.0),
-                        icon: const Icon(Icons.remove),
-                        onPressed: item!.onPressedDecrement,
-                      ),
-                      Text(
-                        "${item!.quantity}",
-                        style: const TextStyle(
-                          color: Colors.black,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 18.0,
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        // IconButton(
+                        //   iconSize: 18.0,
+                        //   padding: const EdgeInsets.all(2.0),
+                        //   icon: const Icon(Icons.remove),
+                        //   onPressed: item!.onPressedDecrement,
+                        // ),
+                        Text(
+                          "${item!.quantity} ${item!.unit}",
+                          style: const TextStyle(
+                            color: Colors.black,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 18.0,
+                          ),
                         ),
-                      ),
-                      IconButton(
-                        iconSize: 18.0,
-                        padding: const EdgeInsets.all(2.0),
-                        icon: const Icon(Icons.add),
-                        onPressed: item!.onPressedIncrement,
-                      ),
-                    ],
+                        // IconButton(
+                        //   iconSize: 18.0,
+                        //   padding: const EdgeInsets.all(2.0),
+                        //   icon: const Icon(Icons.add),
+                        //   onPressed: item!.onPressedIncrement,
+                        // ),
+                      ],
+                    ),
                   ),
                 )
               ],

@@ -20,9 +20,13 @@ class CheckOutScreen extends StatefulWidget {
 }
 
 class _CheckOutScreenState extends State<CheckOutScreen> {
+  var totalPrice;
+
   @override
   void initState() {
+    calculatetotalPrices();
     getRealTimePricesFromDatabase();
+
     // TODO: implement initState
     super.initState();
   }
@@ -72,6 +76,7 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
                       OrderListItem(
                         item: OrderItemModel(
                           name: "Buffalo Milk",
+                          unit: 'Litre',
                           quantity: provider.getCount('Buffalo Milk'),
                           price: snapshot.data.buffalo_milk,
                           onPressedDecrement: () =>
@@ -84,8 +89,9 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
                       OrderListItem(
                         item: OrderItemModel(
                           name: "Cow Milk",
+                          unit: 'Litre',
                           quantity: provider.getCount('Cow Milk'),
-                          price:  snapshot.data.cow_milk,
+                          price: snapshot.data.cow_milk,
                           onPressedDecrement: () =>
                               provider.decrementCount('Cow Milk'),
                           onPressedIncrement: () =>
@@ -96,6 +102,7 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
                       OrderListItem(
                         item: OrderItemModel(
                           name: "Mix Milk",
+                          unit: 'Litre',
                           quantity: provider.getCount('Mix Milk'),
                           price: snapshot.data.mix_milk,
                           onPressedDecrement: () =>
@@ -108,6 +115,7 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
                       OrderListItem(
                         item: OrderItemModel(
                           name: "Yogurt",
+                          unit: 'KG',
                           quantity: provider.getCount('Yogurt'),
                           price: snapshot.data.yougurt,
                           onPressedDecrement: () =>
@@ -120,6 +128,7 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
                       OrderListItem(
                         item: OrderItemModel(
                           name: "Butter",
+                          unit: 'KG',
                           quantity: provider.getCount('Butter'),
                           price: snapshot.data.butter,
                           onPressedDecrement: () =>
@@ -132,6 +141,7 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
                       OrderListItem(
                         item: OrderItemModel(
                           name: "Desi Ghee",
+                          unit: 'KG',
                           quantity: provider.getCount('Desi Ghee'),
                           price: snapshot.data.desi_ghee,
                           onPressedDecrement: () =>
@@ -143,7 +153,7 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
                     const SizedBox(height: 20.0),
                     _buildDivider(),
                     const SizedBox(height: 20.0),
-                    Row(
+                  totalPrice>snapshot.data.delivery_charges? Row(
                       children: [
                         const SizedBox(width: 40.0),
                         Text(
@@ -157,11 +167,11 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
                         ),
                         const SizedBox(width: 20.0),
                       ],
-                    ),
+                    ): Center(child: Text('Must Select atleast one Item', style: priceTextStyle,)),
                     const SizedBox(height: 20.0),
                     _buildDivider(),
                     const SizedBox(height: 10.0),
-                    Row(
+                 totalPrice>snapshot.data.delivery_charges?   Row(
                       children: [
                         const SizedBox(width: 40.0),
                         Text(
@@ -170,13 +180,13 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
                         ),
                         const Spacer(),
                         Text(
-                          "Rs 400",
+                          "Rs $totalPrice",
                           style:
                               priceTextStyle.copyWith(color: MyColors.kPrimary),
                         ),
                         const SizedBox(width: 20.0),
                       ],
-                    ),
+                    ):SizedBox(),
                     const SizedBox(height: 10.0),
                     Padding(
                       padding: const EdgeInsets.symmetric(
@@ -189,16 +199,20 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
                               borderRadius: BorderRadius.circular(15.0)),
                           backgroundColor: MyColors.kPrimary,
                         ),
-                        child: const Text(
-                          "Proceed Order",
+                        child: Text(totalPrice>snapshot.data.delivery_charges?
+                          "Proceed Order":"Select Items",
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 18.0,
                           ),
                         ),
                         onPressed: () {
-                          print('ss${provider.getCount('Buffalo Milk')}');
-                          getRealTimePricesFromDatabase();
+                        if(  totalPrice>snapshot.data.delivery_charges){
+
+                        }else{
+                          Navigator.pop(context);
+                        }
+                          
                         },
                       ),
                     ),
@@ -225,15 +239,118 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
     );
   }
 
+  calculatetotalPrices() async {
+    final provider = Provider.of<ShoppingItemProvider>(context, listen: false);
+
+    var buffalo_milk_price;
+    var cow_milk_price;
+    var mix_milk_price;
+    var yogurt_price;
+    var butter_price;
+    var desi_ghee_price;
+    var delivery_charges;
+
+    var newbuffalo_milk_price;
+    var newcow_milk_price;
+    var newmix_milk_price;
+    var newyogurt_price;
+    var newbutter_price;
+    var newdesi_ghee_price;
+
+    FirebaseFirestore firestore = FirebaseFirestore.instance;
+    // get document reference
+    DocumentReference documentReference =
+        firestore.collection('Price List').doc('items');
+    // get document snapshot
+    DocumentSnapshot documentSnapshot = await documentReference.get();
+    // check if document exists
+    if (documentSnapshot.exists) {
+      // get document data
+      Map<String, dynamic>? data =
+          documentSnapshot.data() as Map<String, dynamic>?;
+
+      // access specific fields
+      buffalo_milk_price = data!['buffalo_milk'];
+      cow_milk_price = data['cow_milk'];
+      mix_milk_price = data['mix_milk'];
+      yogurt_price = data['yogurt'];
+      butter_price = data['butter'];
+      desi_ghee_price = data['desi_ghee'];
+      delivery_charges = data['delivery_charges'];
+
+      print('buffalo_milk_price::${buffalo_milk_price}');
+      print('cow_milk_price::${cow_milk_price}');
+      print('mix_milk_price::${mix_milk_price}');
+      print('yogurt_price::${yogurt_price}');
+      print('butter_price::${butter_price}');
+      print('desi_ghee_price::${desi_ghee_price}');
+      print('delivery_charges::${delivery_charges}');
+
+      if (provider.getCount('Buffalo Milk') > 0) {
+        newbuffalo_milk_price =
+            provider.getCount('Buffalo Milk') * buffalo_milk_price;
+        print('New Price is::$newbuffalo_milk_price');
+      }else{
+        print('Price is nulll');
+        newbuffalo_milk_price =0;
+      }
+      if (provider.getCount('Cow Milk') > 0) {
+        newcow_milk_price = provider.getCount('Cow Milk') * cow_milk_price;
+        print('New Price is::$newcow_milk_price');
+      }else{
+        print('Price is nulll');
+        newcow_milk_price =0;
+      }
+      if (provider.getCount('Mix Milk') > 0) {
+        newmix_milk_price = provider.getCount('Mix Milk') * mix_milk_price;
+        print('New Price is::$newmix_milk_price');
+      }else{
+        print('Price is nulll');
+        newmix_milk_price =0;
+      }
+      if (provider.getCount('Yogurt') > 0) {
+        newyogurt_price = provider.getCount('Yogurt') * yogurt_price;
+        print('New Price is::$newyogurt_price');
+      }else{
+        print('Price is nulll');
+        newyogurt_price =0;
+      }
+      if (provider.getCount('Butter') > 0) {
+        newbutter_price = provider.getCount('Butter') * butter_price;
+        print('New Price is::$newbutter_price');
+      }else{
+        print('Price is nulll');
+        newbutter_price =0;
+      }
+      if (provider.getCount('Desi Ghee') > 0) {
+        newdesi_ghee_price = provider.getCount('Desi Ghee') * desi_ghee_price;
+        print('New Price is::$newdesi_ghee_price');
+      }else{
+        print('Price is nulll');
+        newdesi_ghee_price =0;
+      }
+      print('about to calculate');
+
+      totalPrice = newbuffalo_milk_price +
+          newcow_milk_price +
+          newmix_milk_price +
+          newyogurt_price +
+          newbutter_price +
+          newdesi_ghee_price +
+          delivery_charges;
+      print('Total Price is :$totalPrice');
+    }
+  }
+
   Future<PriceList?> getRealTimePricesFromDatabase() async {
-   final docPrices =
+    final docPrices =
         FirebaseFirestore.instance.collection('Price List').doc('items');
     final snapshot = await docPrices.get();
 
     if (snapshot.exists) {
       return PriceList.fromJson(snapshot.data()!);
-    } 
-   
+    }
+
     // FirebaseFirestore firestore = FirebaseFirestore.instance;
 
     // // get document reference

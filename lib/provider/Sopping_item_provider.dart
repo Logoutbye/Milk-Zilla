@@ -27,6 +27,29 @@ import 'package:flutter/foundation.dart';
 //   }
 // }
 class ShoppingItemProvider with ChangeNotifier {
+  // var _totalPrice = 0;
+
+  //  get totalPrice => _totalPrice;
+  //  CalculatePrices(
+  //   var newbuffalo_milk_price ,
+  //   var newcow_milk_price ,
+  //   var newmix_milk_price ,
+  //   var newyogurt_price ,
+  //   var newbutter_price ,
+  //   var newdesi_ghee_price ,
+  //   var delivery_charges
+  //  ) {
+  //  _totalPrice = 
+  //        newbuffalo_milk_price +
+  //        newcow_milk_price +
+  //        newmix_milk_price +
+  //        newyogurt_price +
+  //        newbutter_price +
+  //        newdesi_ghee_price +
+  //        delivery_charges;
+  //   notifyListeners();
+  // }
+
   Map<String, int> _counts = {
     'Buffalo Milk': 0,
     'Cow Milk': 0,
