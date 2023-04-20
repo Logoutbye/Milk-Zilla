@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class OrderItemModel {
   final String? name;
   final int? quantity;
-  final double? price;
+  var price;
   final VoidCallback onPressedDecrement;
   final VoidCallback onPressedIncrement;
   OrderItemModel({

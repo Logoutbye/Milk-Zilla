@@ -1,11 +1,11 @@
 class PriceList {
-  String? cow_milk;
-  String? buffalo_milk;
-  String? mix_milk;
-  String? yougurt;
-  String? butter;
-  String? desi_ghee;
-  String? delivery_charges;
+  var cow_milk;
+  var buffalo_milk;
+  var mix_milk;
+  var yougurt;
+  var butter;
+  var desi_ghee;
+  var delivery_charges;
 
   PriceList({
     required this.cow_milk,

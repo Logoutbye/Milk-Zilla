@@ -195,7 +195,7 @@ class _priceListState extends State<priceList> {
                 ],
               );
             } else {
-              return Text('Something went wrong!');
+              return Center(child: Text('Something went wrong!'));
             }
           }
 
