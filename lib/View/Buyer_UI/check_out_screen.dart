@@ -21,10 +21,12 @@ class CheckOutScreen extends StatefulWidget {
 
 class _CheckOutScreenState extends State<CheckOutScreen> {
   var totalPrice;
-  
-var totalItems ;
+
+  var totalQuantity;
+
   @override
   void initState() {
+    print('init total price is $totalPrice && total items are $totalQuantity');
     calculatetotalPrices();
     getRealTimePricesFromDatabase();
 
@@ -152,6 +154,26 @@ var totalItems ;
                         ),
                       ),
                     const SizedBox(height: 20.0),
+                    totalQuantity == 0 ? SizedBox() : _buildDivider(),
+                    const SizedBox(height: 20.0),
+                    totalQuantity == 0
+                        ? SizedBox()
+                        : Row(
+                            children: [
+                              const SizedBox(width: 40.0),
+                              Text(
+                                totalQuantity == 1 ? 'Item' : "Items",
+                                style: priceTextStyle,
+                              ),
+                              const Spacer(),
+                              Text(
+                                "${totalQuantity}",
+                                style: priceTextStyle,
+                              ),
+                              const SizedBox(width: 20.0),
+                            ],
+                          ),
+                    const SizedBox(height: 20.0),
                     _buildDivider(),
                     const SizedBox(height: 20.0),
                     totalPrice > snapshot.data.delivery_charges
@@ -267,6 +289,13 @@ var totalItems ;
     var newbutter_price;
     var newdesi_ghee_price;
 
+    var buffalo_milk_quantity;
+    var cow_milk_quantity;
+    var mix_milk_quantity;
+    var yogurt_quantity;
+    var butter_quantity;
+    var desi_ghee_quantity;
+
     FirebaseFirestore firestore = FirebaseFirestore.instance;
     // get document reference
     DocumentReference documentReference =
@@ -300,44 +329,57 @@ var totalItems ;
         newbuffalo_milk_price =
             provider.getCount('Buffalo Milk') * buffalo_milk_price;
         print('New Price is::$newbuffalo_milk_price');
+
+        buffalo_milk_quantity = 1;
       } else {
         print('Price is nulll');
         newbuffalo_milk_price = 0;
+        buffalo_milk_quantity = 0;
       }
       if (provider.getCount('Cow Milk') > 0) {
         newcow_milk_price = provider.getCount('Cow Milk') * cow_milk_price;
         print('New Price is::$newcow_milk_price');
+        cow_milk_quantity = 1;
       } else {
         print('Price is nulll');
         newcow_milk_price = 0;
+        cow_milk_quantity = 0;
       }
       if (provider.getCount('Mix Milk') > 0) {
         newmix_milk_price = provider.getCount('Mix Milk') * mix_milk_price;
         print('New Price is::$newmix_milk_price');
+        mix_milk_quantity = 1;
       } else {
         print('Price is nulll');
         newmix_milk_price = 0;
+        mix_milk_quantity = 0;
       }
       if (provider.getCount('Yogurt') > 0) {
         newyogurt_price = provider.getCount('Yogurt') * yogurt_price;
         print('New Price is::$newyogurt_price');
+        yogurt_quantity = 1;
       } else {
         print('Price is nulll');
         newyogurt_price = 0;
+        yogurt_quantity = 0;
       }
       if (provider.getCount('Butter') > 0) {
         newbutter_price = provider.getCount('Butter') * butter_price;
         print('New Price is::$newbutter_price');
+        butter_quantity = 1;
       } else {
         print('Price is nulll');
         newbutter_price = 0;
+        butter_quantity = 0;
       }
       if (provider.getCount('Desi Ghee') > 0) {
         newdesi_ghee_price = provider.getCount('Desi Ghee') * desi_ghee_price;
         print('New Price is::$newdesi_ghee_price');
+        desi_ghee_quantity = 1;
       } else {
         print('Price is nulll');
         newdesi_ghee_price = 0;
+        desi_ghee_quantity = 0;
       }
       print('about to calculate');
 
@@ -375,6 +417,14 @@ var totalItems ;
           newdesi_ghee_price +
           delivery_charges;
       print('Total Price is :$totalPrice');
+
+      totalQuantity = buffalo_milk_quantity +
+          cow_milk_quantity +
+          mix_milk_quantity +
+          yogurt_quantity +
+          butter_quantity +
+          desi_ghee_quantity;
+      print('Total Quantity is :$totalQuantity');
     }
   }
 
