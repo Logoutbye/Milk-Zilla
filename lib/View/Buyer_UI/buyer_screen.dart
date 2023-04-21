@@ -33,18 +33,24 @@ class _BuyerScreenState extends State<BuyerScreen> {
         title: Row(
           children: [
             Padding(
-              padding: const EdgeInsets.only(left: 18.0),
-              child: Container(
-                  width: MediaQuery.of(context).size.width / 3.5,
-                  height: MediaQuery.of(context).size.height / 20,
-                  decoration: BoxDecoration(
-                      color: MyColors.kPrimary,
-                      borderRadius: BorderRadius.circular(15)),
-                  child: Center(
-                      child: Text(
-                    'My Orders',
-                    style: TextStyle(color: MyColors.kWhite),
-                  ))),
+              padding: const EdgeInsets.only(left: 8),
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  padding: const EdgeInsets.all(10.0),
+                  elevation: 0,
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(15.0)),
+                  backgroundColor: MyColors.kPrimary,
+                ),
+                child: Text(
+                  'My Orders',
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 18.0,
+                  ),
+                ),
+                onPressed: () {},
+              ),
             ),
           ],
         ),
@@ -196,55 +202,67 @@ class _BuyerScreenState extends State<BuyerScreen> {
                     CreateAnOrder(
                       itemname: 'Buffalo Milk',
                       onPressedDecrement: () =>
-                          Provider.of<ShoppingItemProvider>(context, listen: false)
+                          Provider.of<ShoppingItemProvider>(context,
+                                  listen: false)
                               .decrementCount('Buffalo Milk'),
                       onPressedIncrement: () =>
-                          Provider.of<ShoppingItemProvider>(context, listen: false)
+                          Provider.of<ShoppingItemProvider>(context,
+                                  listen: false)
                               .incrementCount('Buffalo Milk'),
                     ),
                     CreateAnOrder(
                       itemname: 'Cow Milk',
                       onPressedDecrement: () =>
-                          Provider.of<ShoppingItemProvider>(context, listen: false)
+                          Provider.of<ShoppingItemProvider>(context,
+                                  listen: false)
                               .decrementCount('Cow Milk'),
                       onPressedIncrement: () =>
-                          Provider.of<ShoppingItemProvider>(context, listen: false)
+                          Provider.of<ShoppingItemProvider>(context,
+                                  listen: false)
                               .incrementCount('Cow Milk'),
                     ),
                     CreateAnOrder(
                       itemname: 'Mix Milk',
                       onPressedDecrement: () =>
-                          Provider.of<ShoppingItemProvider>(context, listen: false)
+                          Provider.of<ShoppingItemProvider>(context,
+                                  listen: false)
                               .decrementCount('Mix Milk'),
                       onPressedIncrement: () =>
-                          Provider.of<ShoppingItemProvider>(context, listen: false)
+                          Provider.of<ShoppingItemProvider>(context,
+                                  listen: false)
                               .incrementCount('Mix Milk'),
                     ),
                     CreateAnOrder(
                       itemname: 'Yogurt',
                       onPressedDecrement: () =>
-                          Provider.of<ShoppingItemProvider>(context, listen: false)
+                          Provider.of<ShoppingItemProvider>(context,
+                                  listen: false)
                               .decrementCount('Yogurt'),
                       onPressedIncrement: () =>
-                          Provider.of<ShoppingItemProvider>(context, listen: false)
+                          Provider.of<ShoppingItemProvider>(context,
+                                  listen: false)
                               .incrementCount('Yogurt'),
                     ),
                     CreateAnOrder(
                       itemname: 'Butter',
                       onPressedDecrement: () =>
-                          Provider.of<ShoppingItemProvider>(context, listen: false)
+                          Provider.of<ShoppingItemProvider>(context,
+                                  listen: false)
                               .decrementCount('Butter'),
                       onPressedIncrement: () =>
-                          Provider.of<ShoppingItemProvider>(context, listen: false)
+                          Provider.of<ShoppingItemProvider>(context,
+                                  listen: false)
                               .incrementCount('Butter'),
                     ),
                     CreateAnOrder(
                       itemname: 'Desi Ghee',
                       onPressedDecrement: () =>
-                          Provider.of<ShoppingItemProvider>(context, listen: false)
+                          Provider.of<ShoppingItemProvider>(context,
+                                  listen: false)
                               .decrementCount('Desi Ghee'),
                       onPressedIncrement: () =>
-                          Provider.of<ShoppingItemProvider>(context, listen: false)
+                          Provider.of<ShoppingItemProvider>(context,
+                                  listen: false)
                               .incrementCount('Desi Ghee'),
                     ),
                   ],
@@ -254,38 +272,39 @@ class _BuyerScreenState extends State<BuyerScreen> {
             SizedBox(
               height: 30,
             ),
-            InkWell(
-              onTap: () {
-                Navigator.of(context).push(
-                    MaterialPageRoute(builder: (context) => CheckOutScreen()));
-              },
-              child: Container(
-                width: MediaQuery.of(context).size.width / 1.2,
-                height: MediaQuery.of(context).size.height / 10,
-                decoration: BoxDecoration(
-                    boxShadow: [
-                      BoxShadow(
-                        color: MyColors.kWhite,
-                        blurRadius: 9,
-                        offset: Offset(2, 2), // Shadow position
-                      ),
-                    ],
-                    color: MyColors.kshadow,
-                    borderRadius: BorderRadius.circular(29)),
+            Padding(
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 32.0, vertical: 8.0),
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  padding: const EdgeInsets.all(16.0),
+                  elevation: 0,
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(15.0)),
+                  backgroundColor: MyColors.kPrimary,
+                ),
                 child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(12.0,0,8,0),
-                      child: Text('Review Cart',style: TextStyle(color: Color.fromARGB(255, 0, 0, 0),fontSize: 22,fontWeight: FontWeight.bold,)),
+                    Text(
+                      'Review Cart',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 18.0,
+                      ),
                     ),
+                    Spacer(),
                     Icon(
                       Icons.arrow_forward,
                       size: 33,
                     )
                   ],
                 ),
+                onPressed: () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => CheckOutScreen()));
+                },
               ),
             ),
           ],

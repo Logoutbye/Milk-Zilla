@@ -21,7 +21,8 @@ class CheckOutScreen extends StatefulWidget {
 
 class _CheckOutScreenState extends State<CheckOutScreen> {
   var totalPrice;
-
+  
+var totalItems ;
   @override
   void initState() {
     calculatetotalPrices();
@@ -153,40 +154,49 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
                     const SizedBox(height: 20.0),
                     _buildDivider(),
                     const SizedBox(height: 20.0),
-                  totalPrice>snapshot.data.delivery_charges? Row(
-                      children: [
-                        const SizedBox(width: 40.0),
-                        Text(
-                          "Delivery Charges",
-                          style: priceTextStyle,
-                        ),
-                        const Spacer(),
-                        Text(
-                          "Rs ${snapshot.data.delivery_charges}",
-                          style: priceTextStyle,
-                        ),
-                        const SizedBox(width: 20.0),
-                      ],
-                    ): Center(child: Text('Must Select atleast one Item', style: priceTextStyle,)),
+                    totalPrice > snapshot.data.delivery_charges
+                        ? Row(
+                            children: [
+                              const SizedBox(width: 40.0),
+                              Text(
+                                "Delivery Charges",
+                                style: priceTextStyle,
+                              ),
+                              const Spacer(),
+                              Text(
+                                "Rs ${snapshot.data.delivery_charges}",
+                                style: priceTextStyle,
+                              ),
+                              const SizedBox(width: 20.0),
+                            ],
+                          )
+                        : Center(
+                            child: Text(
+                            'Must Select atleast one Item',
+                            style: priceTextStyle,
+                          )),
                     const SizedBox(height: 20.0),
                     _buildDivider(),
                     const SizedBox(height: 10.0),
-                 totalPrice>snapshot.data.delivery_charges?   Row(
-                      children: [
-                        const SizedBox(width: 40.0),
-                        Text(
-                          "Total",
-                          style: priceTextStyle.copyWith(color: Colors.black),
-                        ),
-                        const Spacer(),
-                        Text(
-                          "Rs $totalPrice",
-                          style:
-                              priceTextStyle.copyWith(color: MyColors.kPrimary),
-                        ),
-                        const SizedBox(width: 20.0),
-                      ],
-                    ):SizedBox(),
+                    totalPrice > snapshot.data.delivery_charges
+                        ? Row(
+                            children: [
+                              const SizedBox(width: 40.0),
+                              Text(
+                                "Total",
+                                style: priceTextStyle.copyWith(
+                                    color: Colors.black),
+                              ),
+                              const Spacer(),
+                              Text(
+                                "Rs $totalPrice",
+                                style: priceTextStyle.copyWith(
+                                    color: MyColors.kPrimary),
+                              ),
+                              const SizedBox(width: 20.0),
+                            ],
+                          )
+                        : SizedBox(),
                     const SizedBox(height: 10.0),
                     Padding(
                       padding: const EdgeInsets.symmetric(
@@ -199,20 +209,20 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
                               borderRadius: BorderRadius.circular(15.0)),
                           backgroundColor: MyColors.kPrimary,
                         ),
-                        child: Text(totalPrice>snapshot.data.delivery_charges?
-                          "Proceed Order":"Select Items",
+                        child: Text(
+                          totalPrice > snapshot.data.delivery_charges
+                              ? "Proceed Order"
+                              : "Select Items",
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 18.0,
                           ),
                         ),
                         onPressed: () {
-                        if(  totalPrice>snapshot.data.delivery_charges){
-
-                        }else{
-                          Navigator.pop(context);
-                        }
-                          
+                          if (totalPrice > snapshot.data.delivery_charges) {
+                          } else {
+                            Navigator.pop(context);
+                          }
                         },
                       ),
                     ),
@@ -290,46 +300,72 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
         newbuffalo_milk_price =
             provider.getCount('Buffalo Milk') * buffalo_milk_price;
         print('New Price is::$newbuffalo_milk_price');
-      }else{
+      } else {
         print('Price is nulll');
-        newbuffalo_milk_price =0;
+        newbuffalo_milk_price = 0;
       }
       if (provider.getCount('Cow Milk') > 0) {
         newcow_milk_price = provider.getCount('Cow Milk') * cow_milk_price;
         print('New Price is::$newcow_milk_price');
-      }else{
+      } else {
         print('Price is nulll');
-        newcow_milk_price =0;
+        newcow_milk_price = 0;
       }
       if (provider.getCount('Mix Milk') > 0) {
         newmix_milk_price = provider.getCount('Mix Milk') * mix_milk_price;
         print('New Price is::$newmix_milk_price');
-      }else{
+      } else {
         print('Price is nulll');
-        newmix_milk_price =0;
+        newmix_milk_price = 0;
       }
       if (provider.getCount('Yogurt') > 0) {
         newyogurt_price = provider.getCount('Yogurt') * yogurt_price;
         print('New Price is::$newyogurt_price');
-      }else{
+      } else {
         print('Price is nulll');
-        newyogurt_price =0;
+        newyogurt_price = 0;
       }
       if (provider.getCount('Butter') > 0) {
         newbutter_price = provider.getCount('Butter') * butter_price;
         print('New Price is::$newbutter_price');
-      }else{
+      } else {
         print('Price is nulll');
-        newbutter_price =0;
+        newbutter_price = 0;
       }
       if (provider.getCount('Desi Ghee') > 0) {
         newdesi_ghee_price = provider.getCount('Desi Ghee') * desi_ghee_price;
         print('New Price is::$newdesi_ghee_price');
-      }else{
+      } else {
         print('Price is nulll');
-        newdesi_ghee_price =0;
+        newdesi_ghee_price = 0;
       }
       print('about to calculate');
+
+      var bufaloItems = provider.getCount('Buffalo Milk') >0  ? 1 :0 ;
+      var cowItems = provider.getCount('Cow Milk') >0  ? 1 :0 ;
+      var mixItems = provider.getCount('Mix Milk') >0  ? 1 :0 ;
+      var yougurtItems = provider.getCount('Yogurt') >0  ? 1 :0 ;
+      var butterItems = provider.getCount('Butter') >0  ? 1 :0 ;
+      var desiItems = provider.getCount('Desi Ghee') >0  ? 1 :0 ;
+
+      totalItems = 
+          butterItems +
+          cowItems +
+          mixItems +
+          yougurtItems +
+          butterItems +
+          desiItems;
+       print('total item :: ${totalItems}');
+
+
+      //  totalItems = 
+      //     provider.getCount('Buffalo Milk') == 0 ? 0 : 1 +
+      //     provider.getCount('Cow Milk') == 0 ? 0 : 1 +
+      //     provider.getCount('Mix Milk') == 0 ? 0 : 1 +
+      //     provider.getCount('Yogurt') == 0 ? 0 : 1 +
+      //     provider.getCount('Butter') == 0 ? 0 : 1 +
+      //     provider.getCount('Desi Ghee')== 0 ? 0 : 1  ;
+      //     print('total item :: ${totalItems}');
 
       totalPrice = newbuffalo_milk_price +
           newcow_milk_price +
