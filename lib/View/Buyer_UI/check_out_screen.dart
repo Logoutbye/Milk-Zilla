@@ -383,32 +383,6 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
       }
       print('about to calculate');
 
-      var bufaloItems = provider.getCount('Buffalo Milk') >0  ? 1 :0 ;
-      var cowItems = provider.getCount('Cow Milk') >0  ? 1 :0 ;
-      var mixItems = provider.getCount('Mix Milk') >0  ? 1 :0 ;
-      var yougurtItems = provider.getCount('Yogurt') >0  ? 1 :0 ;
-      var butterItems = provider.getCount('Butter') >0  ? 1 :0 ;
-      var desiItems = provider.getCount('Desi Ghee') >0  ? 1 :0 ;
-
-      totalItems = 
-          butterItems +
-          cowItems +
-          mixItems +
-          yougurtItems +
-          butterItems +
-          desiItems;
-       print('total item :: ${totalItems}');
-
-
-      //  totalItems = 
-      //     provider.getCount('Buffalo Milk') == 0 ? 0 : 1 +
-      //     provider.getCount('Cow Milk') == 0 ? 0 : 1 +
-      //     provider.getCount('Mix Milk') == 0 ? 0 : 1 +
-      //     provider.getCount('Yogurt') == 0 ? 0 : 1 +
-      //     provider.getCount('Butter') == 0 ? 0 : 1 +
-      //     provider.getCount('Desi Ghee')== 0 ? 0 : 1  ;
-      //     print('total item :: ${totalItems}');
-
       totalPrice = newbuffalo_milk_price +
           newcow_milk_price +
           newmix_milk_price +
