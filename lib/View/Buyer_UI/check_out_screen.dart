@@ -26,12 +26,12 @@ class CheckOutScreen extends StatefulWidget {
 class _CheckOutScreenState extends State<CheckOutScreen> {
   var totalPrice;
 
-  var totalQuantity;
+  var totalItems;
   var generateOrderNumber = MyStaticComponents.generateOrderNumber();
   final user = FirebaseAuth.instance.currentUser;
   @override
   void initState() {
-    print('init total price is $totalPrice && total items are $totalQuantity');
+    print('init total price is $totalPrice && total items are $totalItems');
     calculatetotalPrices();
     getRealTimePricesFromDatabase();
 
@@ -164,20 +164,20 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
                         ),
                       ),
                     const SizedBox(height: 20.0),
-                    totalQuantity == 0 ? SizedBox() : _buildDivider(),
+                    totalItems == 0 ? SizedBox() : _buildDivider(),
                     const SizedBox(height: 20.0),
-                    totalQuantity == 0
+                    totalItems == 0
                         ? SizedBox()
                         : Row(
                             children: [
                               const SizedBox(width: 40.0),
                               Text(
-                                totalQuantity == 1 ? 'Item' : "Items",
+                                totalItems == 1 ? 'Item' : "Items",
                                 style: priceTextStyle,
                               ),
                               const Spacer(),
                               Text(
-                                "${totalQuantity}",
+                                "${totalItems}",
                                 style: priceTextStyle,
                               ),
                               const SizedBox(width: 20.0),
@@ -285,17 +285,33 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
                                   'item_name': 'Butter',
                                   'item_quantity': provider.getCount('Butter'),
                                   'item_price': 10,
-                                },if (provider.getCount('Mix Milk') > 0)
+                                },
+                              if (provider.getCount('Mix Milk') > 0)
                                 {
                                   'item_name': 'Desi Ghee',
-                                  'item_quantity': provider.getCount('Desi Ghee'),
+                                  'item_quantity':
+                                      provider.getCount('Desi Ghee'),
                                   'item_price': 10,
                                 },
                             ];
 
+                            // CreateAnOrderInFireBase(
+                            //     context,
+                            //     totalQuantity,
+                            //     totalPrice,
+                            //     generateOrderNumber,
+                            //     '${user!.email}',
+                            //     orderDetails);
+
+                            ///////////////////////////////
+                            //                               List<Map<String, dynamic>> items = [
+                            // {'item_name': 'Item 1', 'item_price': 10.0, 'item_quantity': 2},
+                            // {'item_name': 'Item 2', 'item_price': 5.0, 'item_quantity': 3},
+// ];
+
                             CreateAnOrderInFireBase(
                                 context,
-                                totalQuantity,
+                                totalItems,
                                 totalPrice,
                                 generateOrderNumber,
                                 '${user!.email}',
@@ -450,13 +466,13 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
           delivery_charges;
       print('Total Price is :$totalPrice');
 
-      totalQuantity = buffalo_milk_quantity +
+      totalItems = buffalo_milk_quantity +
           cow_milk_quantity +
           mix_milk_quantity +
           yogurt_quantity +
           butter_quantity +
           desi_ghee_quantity;
-      print('Total Quantity is :$totalQuantity');
+      print('Total Quantity is :$totalItems');
     }
   }
 
@@ -474,55 +490,59 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
               child: Lottie.asset('assets/animations/loading.json'),
             ));
     try {
+      // await FirebaseFirestore.instance
+      //     .collection('Orders')
+      //     .doc('$orderIdPassed')
+      //     .set({
+      //   'orderMadeBy': emailPassed,
+      //   'totalItems': totalItemsPassed,
+      //   'totalPrice': totalPricePassed,
+
       await FirebaseFirestore.instance
           .collection('Orders')
           .doc('$orderIdPassed')
           .set({
-        'orderMadeBy': emailPassed,
-        'totalItems': totalItemsPassed,
-        'totalPrice': totalPricePassed,
+        'Order Made By': emailPassed,
+        'Total Ammount': totalPricePassed,
+        'Total Items': totalItems,
+        'order_details': orderDetails
+            .map((item) => {
+                  'item_name': item['item_name'],
+                  'item_price': item['item_price'],
+                  'item_quantity': item['item_quantity'],
+                })
+            .toList(),
+      })
 
-        // await FirebaseFirestore.instance
-        //     .collection('Orders')
-        //     .doc('$orderId')
-        //     .set({
-        //   'Order Made By': email,
-        //   'order_details': orderDetails
-        //       .map((item) => {
-        //             'item_name': item['item_name'],
-        //             'item_price': item['item_price'],
-        //             'item_quantity': item['item_quantity'],
-        //           })
-        //       .toList(),
+          // ;
+          // for (var item in orderDetails) {
+          //   await FirebaseFirestore.instance
+          //       .collection('Orders')
+          //       .doc('$orderIdPassed')
+          //       .collection('orderDetails')
+          //       .add({
+          //     'itemName': item['item_name'],
+          //     'itemQuantity': item['item_quantity'],
+          //     'itemPrice': item['item_price'],
+          //   })
+          .then((value) {
+        Provider.of<ShoppingItemProvider>(context, listen: false)
+            .reset('Buffalo Milk');
+        Provider.of<ShoppingItemProvider>(context, listen: false)
+            .reset('Cow Milk');
+        Provider.of<ShoppingItemProvider>(context, listen: false)
+            .reset('Mix Milk');
+        Provider.of<ShoppingItemProvider>(context, listen: false)
+            .reset('Yogurt');
+        Provider.of<ShoppingItemProvider>(context, listen: false)
+            .reset('Butter');
+        Provider.of<ShoppingItemProvider>(context, listen: false)
+            .reset('Desi Ghee');
+
+        Utils.toastMessage('Order Created SuccessFully');
+        Navigator.of(parentContext).pop();
       });
-
-      for (var item in orderDetails) {
-        await FirebaseFirestore.instance
-            .collection('Orders')
-            .doc('$orderIdPassed')
-            .collection('orderDetails')
-            .add({
-          'itemName': item['item_name'],
-          'itemQuantity': item['item_quantity'],
-          'itemPrice': item['item_price'],
-        }).then((value) {
-          Provider.of<ShoppingItemProvider>(context, listen: false)
-              .reset('Buffalo Milk');
-          Provider.of<ShoppingItemProvider>(context, listen: false)
-              .reset('Cow Milk');
-          Provider.of<ShoppingItemProvider>(context, listen: false)
-              .reset('Mix Milk');
-          Provider.of<ShoppingItemProvider>(context, listen: false)
-              .reset('Yogurt');
-          Provider.of<ShoppingItemProvider>(context, listen: false)
-              .reset('Butter');
-          Provider.of<ShoppingItemProvider>(context, listen: false)
-              .reset('Desi Ghee');
-
-          Utils.toastMessage('Order Created SuccessFully');
-          Navigator.of(parentContext).pop();
-        });
-      }
+      // }
     } catch (e) {
       print('Error adding order: $e');
       Utils.toastMessage('$e');
