@@ -80,7 +80,7 @@ class _BuyerScreenState extends State<BuyerScreen> {
             Container(
               height: MediaQuery.of(context).size.height / 6,
               // width: MediaQuery.of(context).size.width/1.4,
-              child: Lottie.asset('assets/animations/loading.json'),
+              child: Lottie.asset('assets/animations/feader.json'),
             ),
             Container(
               child: RichText(

@@ -537,7 +537,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
           //get the approval status as soon as the user is created and navigate to relavent screen
           await FirestoreHelper.initializeToCheckStatus();
           await FirestoreHelper.initializeToCheckStatusForBuyers();
-         
+
           var currentInspectorStatusInFirestore =
               await FirestoreHelper.currentInspectorStatusInFirestore;
 

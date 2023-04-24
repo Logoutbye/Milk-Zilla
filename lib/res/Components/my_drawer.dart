@@ -15,7 +15,7 @@ class _MyAppDrawerState extends State<MyAppDrawer> {
   @override
   Widget build(BuildContext context) {
     final user = FirebaseAuth.instance.currentUser!;
-    
+
     return Drawer(
       child: ListView(
         padding: const EdgeInsets.all(0),
@@ -34,10 +34,10 @@ class _MyAppDrawerState extends State<MyAppDrawer> {
                   .removeWhichUserLoggedInFromSharedPreferences();
 
               FirebaseAuth.instance.signOut();
-              // Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=>MyHomePage()));
               Navigator.pop(context);
-              navigatorKey.currentState!.popUntil((route) => route.isFirst);
-              
+              Navigator.of(context).pushReplacement(
+                  MaterialPageRoute(builder: (context) => MyHomePage()));
+              // navigatorKey.currentState!.popUntil((route) => route.isFirst);
             },
           ),
         ],

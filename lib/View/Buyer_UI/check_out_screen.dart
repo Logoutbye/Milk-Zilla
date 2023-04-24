@@ -1,6 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
+import 'package:milk_zilla/Utils/utils.dart';
+import 'package:milk_zilla/main.dart';
+import 'package:milk_zilla/res/Components/error_screen.dart';
 import 'package:milk_zilla/res/constanst.dart';
 import 'package:milk_zilla/res/my_colors.dart';
 import 'package:provider/provider.dart';
@@ -23,13 +27,17 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
   var totalPrice;
 
   var totalQuantity;
-
+  var generateOrderNumber = MyStaticComponents.generateOrderNumber();
+  final user = FirebaseAuth.instance.currentUser;
   @override
   void initState() {
     print('init total price is $totalPrice && total items are $totalQuantity');
     calculatetotalPrices();
     getRealTimePricesFromDatabase();
 
+    print('unique order number for order:: $generateOrderNumber');
+    print('email of current user for order${user!.email}');
+    // 1682363470245254
     // TODO: implement initState
     super.initState();
   }
@@ -40,6 +48,8 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
+        automaticallyImplyLeading: false,
+        // title: Text('Order Id ${generateOrderNumber}',style: TextStyle(color: MyColors.kPrimary),),
         backgroundColor: Colors.transparent,
         elevation: 0,
         iconTheme: const IconThemeData(
@@ -242,6 +252,54 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
                         ),
                         onPressed: () {
                           if (totalPrice > snapshot.data.delivery_charges) {
+                            List<Map<dynamic, dynamic>> orderDetails = [
+                              if (provider.getCount('Buffalo Milk') > 0)
+                                {
+                                  'item_name': 'Buffalo Milk',
+                                  'item_quantity':
+                                      provider.getCount('Buffalo Milk'),
+                                  'item_price': 10,
+                                },
+                              if (provider.getCount('Cow Milk') > 0)
+                                {
+                                  'item_name': 'Cow Milk',
+                                  'item_quantity':
+                                      provider.getCount('Cow Milk'),
+                                  'item_price': 5.0,
+                                },
+                              if (provider.getCount('Mix Milk') > 0)
+                                {
+                                  'item_name': 'Mix Milk',
+                                  'item_quantity':
+                                      provider.getCount('Mix Milk'),
+                                  'item_price': 10,
+                                },
+                              if (provider.getCount('Mix Milk') > 0)
+                                {
+                                  'item_name': 'Yogurt',
+                                  'item_quantity': provider.getCount('Yogurt'),
+                                  'item_price': 10,
+                                },
+                              if (provider.getCount('Mix Milk') > 0)
+                                {
+                                  'item_name': 'Butter',
+                                  'item_quantity': provider.getCount('Butter'),
+                                  'item_price': 10,
+                                },if (provider.getCount('Mix Milk') > 0)
+                                {
+                                  'item_name': 'Desi Ghee',
+                                  'item_quantity': provider.getCount('Desi Ghee'),
+                                  'item_price': 10,
+                                },
+                            ];
+
+                            CreateAnOrderInFireBase(
+                                context,
+                                totalQuantity,
+                                totalPrice,
+                                generateOrderNumber,
+                                '${user!.email}',
+                                orderDetails);
                           } else {
                             Navigator.pop(context);
                           }
@@ -400,6 +458,78 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
           desi_ghee_quantity;
       print('Total Quantity is :$totalQuantity');
     }
+  }
+
+  Future<void> CreateAnOrderInFireBase(
+      BuildContext parentContext,
+      var totalItemsPassed,
+      var totalPricePassed,
+      var orderIdPassed,
+      String emailPassed,
+      List<Map<dynamic, dynamic>> orderDetails) async {
+    showDialog(
+        context: parentContext,
+        barrierDismissible: false,
+        builder: (context) => Center(
+              child: Lottie.asset('assets/animations/loading.json'),
+            ));
+    try {
+      await FirebaseFirestore.instance
+          .collection('Orders')
+          .doc('$orderIdPassed')
+          .set({
+        'orderMadeBy': emailPassed,
+        'totalItems': totalItemsPassed,
+        'totalPrice': totalPricePassed,
+
+        // await FirebaseFirestore.instance
+        //     .collection('Orders')
+        //     .doc('$orderId')
+        //     .set({
+        //   'Order Made By': email,
+        //   'order_details': orderDetails
+        //       .map((item) => {
+        //             'item_name': item['item_name'],
+        //             'item_price': item['item_price'],
+        //             'item_quantity': item['item_quantity'],
+        //           })
+        //       .toList(),
+      });
+
+      for (var item in orderDetails) {
+        await FirebaseFirestore.instance
+            .collection('Orders')
+            .doc('$orderIdPassed')
+            .collection('orderDetails')
+            .add({
+          'itemName': item['item_name'],
+          'itemQuantity': item['item_quantity'],
+          'itemPrice': item['item_price'],
+        }).then((value) {
+          Provider.of<ShoppingItemProvider>(context, listen: false)
+              .reset('Buffalo Milk');
+          Provider.of<ShoppingItemProvider>(context, listen: false)
+              .reset('Cow Milk');
+          Provider.of<ShoppingItemProvider>(context, listen: false)
+              .reset('Mix Milk');
+          Provider.of<ShoppingItemProvider>(context, listen: false)
+              .reset('Yogurt');
+          Provider.of<ShoppingItemProvider>(context, listen: false)
+              .reset('Butter');
+          Provider.of<ShoppingItemProvider>(context, listen: false)
+              .reset('Desi Ghee');
+
+          Utils.toastMessage('Order Created SuccessFully');
+          Navigator.of(parentContext).pop();
+        });
+      }
+    } catch (e) {
+      print('Error adding order: $e');
+      Utils.toastMessage('$e');
+      Navigator.of(parentContext).pop();
+    }
+
+    Navigator.of(context).pop();
   }
 
   Future<PriceListModel?> getRealTimePricesFromDatabase() async {

@@ -74,4 +74,8 @@ class ShoppingItemProvider with ChangeNotifier {
         _counts[productType]! < 1 ? 0 : getCount(productType) - 1;
     notifyListeners();
   }
+  void reset(String productType) {
+    _counts[productType] = 0;
+    notifyListeners();
+  }
 }
