@@ -3,10 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:milk_zilla/Utils/utils.dart';
 import 'package:milk_zilla/View/Auth%20UI/registration_screen.dart';
+import 'package:milk_zilla/View/Auth%20UI/registration_status.dart';
 import 'package:milk_zilla/View/Buyer_UI/buyer_screen.dart';
 import 'package:milk_zilla/View/Inspector_UI/insector_screen.dart';
 import 'package:milk_zilla/View/Seller_UI/seller_screen.dart';
 import 'package:milk_zilla/main.dart';
+import 'package:milk_zilla/res/Components/firebase_helper.dart';
+import 'package:milk_zilla/res/Components/my_shared_prefrences.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../res/Components/round_button.dart';
 import '../../res/my_colors.dart';
@@ -29,6 +33,8 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   void initState() {
     whichUser = widget.whichUser;
+    var whichi = MySharedPrefencesSessionHandling.whichUserLoggedIn;
+    print('$whichi');
     // TODO: implement initState
     super.initState();
   }
@@ -223,12 +229,15 @@ class _LoginScreenState extends State<LoginScreen> {
                                               .text.isEmpty) {
                                             Utils.flushBarErrorMessage(
                                                 'Please Enter Email', context);
-                                          } else if(emailTextController
-                                              .text.isNotEmpty&&PasswordTextController.text.isEmpty){
+                                          } else if (emailTextController
+                                                  .text.isNotEmpty &&
+                                              PasswordTextController
+                                                  .text.isEmpty) {
                                             firebaseForgetPassword(context);
-                                          }else{
-                                             Utils.flushBarErrorMessage(
-                                                'Please enter only email', context);
+                                          } else {
+                                            Utils.flushBarErrorMessage(
+                                                'Please enter only email',
+                                                context);
                                           }
                                         },
                                         child: Text('Forgot password!'),
@@ -238,12 +247,11 @@ class _LoginScreenState extends State<LoginScreen> {
                                   SizedBox(
                                     height: 5,
                                   ),
-                                  RoundButton(
+                                  MyElevatedButton(
                                     title: 'Login',
                                     onpress: () {
                                       FirebaseLogin(context);
                                     },
-                                    width: 140,
                                   ),
                                   GestureDetector(
                                     onTap: () {
@@ -319,15 +327,50 @@ class _LoginScreenState extends State<LoginScreen> {
         emailTextController.clear();
         PasswordTextController.clear();
         Navigator.of(parentContext).pop();
+
+        //if login is successfull then store the user type for next time user opens app and navigation to relvant screen
+        MySharedPrefencesSessionHandling
+            .setOrupdateWhichUserLoggedInSharedPreferences('${whichUser}');
+        print('trying to store in shared prefrences ${whichUser}');
+
+        FirestoreHelper.initializeToCheckStatus();
+        FirestoreHelper.initializeToCheckStatusForBuyers();
+        var currentSellerStatusInFirestore =
+            FirestoreHelper.currentSellerStatusInFirestore;
+        print('currentUserStatusInFirestore::$currentSellerStatusInFirestore');
+        var currentInspectorStatusInFirestore =
+            FirestoreHelper.currentInspectorStatusInFirestore;
+        print('currentUserStatusInFirestore::$currentSellerStatusInFirestore');
+
         if (widget.whichUser == 'Buyer') {
           Navigator.of(context)
               .push(MaterialPageRoute(builder: (context) => BuyerScreen()));
+
         } else if (widget.whichUser == 'Seller') {
-          Navigator.of(context)
-              .push(MaterialPageRoute(builder: (context) => SellerScreen()));
+          if (currentSellerStatusInFirestore == 'Approved') {
+            Navigator.of(context)
+                .push(MaterialPageRoute(builder: (context) => SellerScreen()));
+          } else {
+
+            print(
+                'After successful login i am waiting to be approved as seller');
+            Navigator.of(context).push(MaterialPageRoute(
+                builder: (context) => RegistrationStatusScreen(
+                      whichUser: whichUser,
+                    )));
+          }
         } else {
-          Navigator.of(context)
-              .push(MaterialPageRoute(builder: (context) => InspectorScreen()));
+          if (currentInspectorStatusInFirestore == 'Approved') {
+            Navigator.of(context).push(
+                MaterialPageRoute(builder: (context) => InspectorScreen()));
+          } else {
+            print(
+                'After successful login i am waiting to be approved as seller');
+            Navigator.of(context).push(MaterialPageRoute(
+                builder: (context) => RegistrationStatusScreen(
+                      whichUser: whichUser,
+                    )));
+          }
         }
       }).onError((FirebaseAuthException error, stackTrace) {
         if (error.code == "wrong-password") {

@@ -6,8 +6,17 @@ import 'package:lottie/lottie.dart';
 import 'package:milk_zilla/Utils/utils.dart';
 import 'package:milk_zilla/View/Auth%20UI/login.dart';
 import 'package:milk_zilla/View/Auth%20UI/registration_screen.dart';
+import 'package:milk_zilla/View/Auth%20UI/registration_status.dart';
 import 'package:milk_zilla/View/Buyer_UI/buyer_screen.dart';
+import 'package:milk_zilla/View/Inspector_UI/insector_screen.dart';
+import 'package:milk_zilla/View/Seller_UI/seller_screen.dart';
+import 'package:milk_zilla/main.dart';
+import 'package:milk_zilla/res/Components/firebase_helper.dart';
+import 'package:milk_zilla/res/Components/my_shared_prefrences.dart';
 import 'package:milk_zilla/res/my_colors.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+import '../res/Components/error_screen.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key});
@@ -17,6 +26,18 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  var whichUserLoggedIn;
+
+  @override
+  void initState() {
+  
+
+    FirestoreHelper.initializeToCheckStatus();
+    FirestoreHelper.initializeToCheckStatusForBuyers();
+    // TODO: implement initState
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -73,7 +94,13 @@ class _MyHomePageState extends State<MyHomePage> {
                                     ),
                                     //register as customer
                                     InkWell(
-                                      onTap: () {
+                                      onTap: () async {
+                                        //to get current user type
+                                        final prefs = await SharedPreferences
+                                            .getInstance();
+                                        whichUserLoggedIn = prefs
+                                            .getString('whichUserLoggedIn');
+
                                         Navigator.of(context).push(
                                             MaterialPageRoute(
                                                 builder: (context) {
@@ -82,11 +109,22 @@ class _MyHomePageState extends State<MyHomePage> {
                                             return Lottie.asset(
                                                 'assets/animations/loading.json');
                                           } else if (snapshot.hasError) {
+                                            print(snapshot);
                                             return Utils.flushBarErrorMessage(
                                                 'Some thing went wrong',
                                                 context);
                                           } else if (snapshot.hasData) {
-                                            return BuyerScreen();
+                                            if (whichUserLoggedIn == 'Buyer') {
+                                              return BuyerScreen();
+                                            } else {
+                                              return ErrorScreen(
+                                                  Message:
+                                                      'Please Logout as ${whichUserLoggedIn} first',
+                                                  onpress: () async {
+                                                    // SignOut();
+                                                  },
+                                                  butontitle: 'Log Out');
+                                            }
                                           } else {
                                             return LoginScreen(
                                               whichUser: 'Buyer',
@@ -145,20 +183,56 @@ class _MyHomePageState extends State<MyHomePage> {
                                           ),
                                         ),
                                       ),
-                                    ), // container for chating Doctor will move to next screen
+                                    ),
                                     SizedBox(
                                       width: 15,
                                     ),
 
-                                    // View Hospitals Container and Button
+                                    // seller
                                     InkWell(
-                                      onTap: () {
+                                      onTap: () async {
+                                        //to get current user type
+                                        final prefs = await SharedPreferences
+                                            .getInstance();
+                                        whichUserLoggedIn = prefs
+                                            .getString('whichUserLoggedIn');
+
                                         Navigator.of(context).push(
                                             MaterialPageRoute(
                                                 builder: (context) {
-                                          return LoginScreen(
-                                            whichUser: 'Seller',
-                                          );
+                                          if (snapshot.connectionState ==
+                                              ConnectionState.waiting) {
+                                            return Lottie.asset(
+                                                'assets/animations/loading.json');
+                                          } else if (snapshot.hasError) {
+                                            return Utils.flushBarErrorMessage(
+                                                'Some thing went wrong',
+                                                context);
+                                          } else if (snapshot.hasData) {
+                                            if (whichUserLoggedIn == 'Seller') {
+                                              if (FirestoreHelper
+                                                      .currentSellerStatusInFirestore ==
+                                                  'Approved') {
+                                                return InspectorScreen();
+                                              } else {
+                                                return RegistrationStatusScreen(
+                                                  whichUser: 'Seller',
+                                                );
+                                              }
+                                            } else {
+                                              return ErrorScreen(
+                                                  Message:
+                                                      'Please Logout as ${whichUserLoggedIn} first',
+                                                  onpress: () async {
+                                                  //  SignOut();
+                                                  },
+                                                  butontitle: 'Log Out');
+                                            }
+                                          } else {
+                                            return LoginScreen(
+                                              whichUser: 'Seller',
+                                            );
+                                          }
                                         }));
                                       },
                                       child: Container(
@@ -227,7 +301,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       height: 15,
                     ),
 
-                    // Pets Market and Share App Buttons
+                    // Inpector
                     Center(
                       child: Container(
                         child: Column(
@@ -235,22 +309,57 @@ class _MyHomePageState extends State<MyHomePage> {
                             Container(
                               child: SingleChildScrollView(
                                 scrollDirection: Axis.horizontal,
-                                // Row containing Pets Market and Share App Buttons
                                 child: Row(
                                   children: [
                                     SizedBox(
                                       width: 10,
                                     ),
 
-                                    // Pets Market Button
                                     InkWell(
-                                      onTap: () {
+                                      onTap: () async {
+                                        //to get current user type
+                                        final prefs = await SharedPreferences
+                                            .getInstance();
+                                        whichUserLoggedIn = prefs
+                                            .getString('whichUserLoggedIn');
+
                                         Navigator.of(context).push(
                                             MaterialPageRoute(
                                                 builder: (context) {
-                                          return LoginScreen(
-                                            whichUser: 'Inspector',
-                                          );
+                                          if (snapshot.connectionState ==
+                                              ConnectionState.waiting) {
+                                            return Lottie.asset(
+                                                'assets/animations/loading.json');
+                                          } else if (snapshot.hasError) {
+                                            return Utils.flushBarErrorMessage(
+                                                'Some thing went wrong',
+                                                context);
+                                          } else if (snapshot.hasData) {
+                                            if (whichUserLoggedIn ==
+                                                'Inspector') {
+                                              if (FirestoreHelper
+                                                      .currentInspectorStatusInFirestore ==
+                                                  'Approved') {
+                                                return InspectorScreen();
+                                              } else {
+                                                return RegistrationStatusScreen(
+                                                  whichUser: 'Inspector',
+                                                );
+                                              }
+                                            } else {
+                                              return ErrorScreen(
+                                                  Message:
+                                                      'Please Logout as ${whichUserLoggedIn} first',
+                                                  onpress: () async {
+                                                    // SignOut();
+                                                  },
+                                                  butontitle: 'Log Out');
+                                            }
+                                          } else {
+                                            return LoginScreen(
+                                              whichUser: 'Inspector',
+                                            );
+                                          }
                                         }));
                                       },
                                       child: Container(
@@ -323,4 +432,13 @@ class _MyHomePageState extends State<MyHomePage> {
           }),
     );
   }
+
+  // Future<void> SignOut() async {
+  //   await FirebaseAuth.instance.signOut();
+  //   await MySharedPrefencesSessionHandling
+  //       .removeWhichUserLoggedInFromSharedPreferences();
+  //   // final prefs = await SharedPreferences.getInstance();
+  //   // await prefs.remove('whichUserLoggedIn');
+  //   navigatorKey.currentState!.popUntil((route) => route.isFirst);
+  // }
 }

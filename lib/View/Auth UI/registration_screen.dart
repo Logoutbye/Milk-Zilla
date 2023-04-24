@@ -2,9 +2,13 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
+import 'package:milk_zilla/View/Auth%20UI/registration_status.dart';
+import 'package:milk_zilla/res/Components/error_screen.dart';
+import 'package:milk_zilla/res/Components/my_shared_prefrences.dart';
 
 import '../../Utils/utils.dart';
 import '../../main.dart';
+import '../../res/Components/firebase_helper.dart';
 import '../../res/Components/round_button.dart';
 import '../../res/my_colors.dart';
 import '../Buyer_UI/buyer_screen.dart';
@@ -26,7 +30,8 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   TextEditingController emailTextController = TextEditingController();
   TextEditingController cityTextControl = TextEditingController();
   TextEditingController shopNameTextControl = TextEditingController();
-  TextEditingController shopAdressTextControl = TextEditingController();
+  TextEditingController buyerOrinspectorOrShopAdressTextControl =
+      TextEditingController();
   bool _showSpinner = false;
 
   var whichUser;
@@ -286,47 +291,51 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                                           ),
                                         )
                                       : SizedBox(),
-                                  widget.whichUser == 'Seller'
-                                      ? Container(
-                                          // color: Colors.red,
-                                          child: TextField(
-                                            controller: shopAdressTextControl,
-                                            maxLength: 60,
-                                            onTap: () {},
-                                            keyboardType: TextInputType.name,
-                                            // inputFormatters: [
-                                            //   FilteringTextInputFormatter.digitsOnly,
-                                            // ],
-                                            style: TextStyle(
-                                              color: MyColors.kBlack,
-                                              // fontSize: 18,
-                                            ),
-                                            decoration: InputDecoration(
-                                              // hintText: 'User',
-                                              labelText: 'Shop Adress',
-                                              labelStyle: TextStyle(
-                                                  color: MyColors.kPrimary),
-                                              hintStyle: TextStyle(
-                                                  color: MyColors.kPrimary),
-                                              enabledBorder:
-                                                  new OutlineInputBorder(
-                                                borderRadius:
-                                                    BorderRadius.circular(10),
-                                                borderSide: BorderSide(
-                                                    color: Color.fromARGB(
-                                                        255, 180, 180, 180)),
-                                              ),
-                                              focusedBorder: OutlineInputBorder(
-                                                borderSide: BorderSide(
-                                                    color: MyColors.kPrimary),
-                                                borderRadius:
-                                                    BorderRadius.circular(10),
-                                              ),
-                                              prefixIcon: Icon(Icons.flag),
-                                            ),
-                                          ),
-                                        )
-                                      : SizedBox(),
+                                  Container(
+                                    // color: Colors.red,
+                                    child: TextField(
+                                      controller:
+                                          buyerOrinspectorOrShopAdressTextControl,
+                                      maxLength: 60,
+                                      onTap: () {},
+                                      keyboardType: TextInputType.name,
+                                      // inputFormatters: [
+                                      //   FilteringTextInputFormatter.digitsOnly,
+                                      // ],
+                                      style: TextStyle(
+                                        color: MyColors.kBlack,
+                                        // fontSize: 18,
+                                      ),
+                                      decoration: InputDecoration(
+                                        // hintText: 'User',
+                                        labelText:
+                                            widget.whichUser == 'Inspector'
+                                                ? 'Inspector Adress'
+                                                : widget.whichUser == 'Buyer'
+                                                    ? 'Your Adress'
+                                                    : 'Shop Adress',
+                                        labelStyle:
+                                            TextStyle(color: MyColors.kPrimary),
+                                        hintStyle:
+                                            TextStyle(color: MyColors.kPrimary),
+                                        enabledBorder: new OutlineInputBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(10),
+                                          borderSide: BorderSide(
+                                              color: Color.fromARGB(
+                                                  255, 180, 180, 180)),
+                                        ),
+                                        focusedBorder: OutlineInputBorder(
+                                          borderSide: BorderSide(
+                                              color: MyColors.kPrimary),
+                                          borderRadius:
+                                              BorderRadius.circular(10),
+                                        ),
+                                        prefixIcon: Icon(Icons.flag),
+                                      ),
+                                    ),
+                                  ),
+
                                   // Email  Textfield
                                   Container(
                                     // color: Colors.red,
@@ -414,12 +423,11 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                                     height: 30,
                                   ),
                                   // sig up
-                                  RoundButton(
+                                  MyElevatedButton(
                                     title: 'Sign Up',
                                     onpress: () {
                                       FirebaseRegistration(context);
                                     },
-                                    width: 140,
                                   ),
                                   SizedBox(
                                     height: MediaQuery.of(context).size.height /
@@ -447,36 +455,40 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
     //Refrence to document
     final buyer = FirebaseFirestore.instance
         .collection('Buyers')
-        .doc('${nameTextControl.text}');
+        .doc('${emailTextController.text}');
     final seller = FirebaseFirestore.instance
         .collection('Sellers')
-        .doc('${nameTextControl.text}');
+        .doc('${emailTextController.text}');
     final inpector = FirebaseFirestore.instance
         .collection('Inpectors')
-        .doc('${nameTextControl.text}');
+        .doc('${emailTextController.text}');
 
     final jsonForBuyer = {
       'name': nameTextControl.text,
-      'mobile-no': mobileNumberTextController.text,
+      'mobile_no': mobileNumberTextController.text,
       'city': cityTextControl.text,
       'email': emailTextController.text,
       'password': PasswordTextController.text,
+      'inspector_adress': buyerOrinspectorOrShopAdressTextControl.text,
     };
     final jsonForSeller = {
       'name': nameTextControl.text,
-      'mobile-no': mobileNumberTextController.text,
+      'mobile_no': mobileNumberTextController.text,
       'city': cityTextControl.text,
-      'shop-name': shopNameTextControl.text,
-      'shop-adress': shopAdressTextControl.text,
+      'shop_name': shopNameTextControl.text,
+      'shop_adress': buyerOrinspectorOrShopAdressTextControl.text,
       'email': emailTextController.text,
-      'password': PasswordTextController.text
+      'password': PasswordTextController.text,
+      'status': 'Pending'
     };
     final jsonForInspector = {
       'name': nameTextControl.text,
-      'mobile-no': mobileNumberTextController.text,
+      'mobile_no': mobileNumberTextController.text,
       'city': cityTextControl.text,
       'email': emailTextController.text,
       'password': PasswordTextController.text,
+      'inspector_adress': buyerOrinspectorOrShopAdressTextControl.text,
+      'status': 'Pending'
     };
     //create document and write data to firebase
     if (widget.whichUser == 'Buyer') {
@@ -500,10 +512,13 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
           .createUserWithEmailAndPassword(
               email: emailTextController.text.trim(),
               password: PasswordTextController.text.trim())
-          .then((UserCredential user_credentials) {
+          .then((UserCredential user_credentials) async {
         Navigator.of(parentContext).pop();
         createUserInFirebase();
         if (widget.whichUser == 'Buyer') {
+          MySharedPrefencesSessionHandling
+              .setOrupdateWhichUserLoggedInSharedPreferences(
+                  '${widget.whichUser}');
           Navigator.of(context)
               .push(MaterialPageRoute(builder: (context) => BuyerScreen()));
           emailTextController.clear();
@@ -512,29 +527,66 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
           cityTextControl.clear();
           emailTextController.clear();
           nameTextControl.clear();
-          shopAdressTextControl.clear();
+          buyerOrinspectorOrShopAdressTextControl.clear();
           shopNameTextControl.clear();
         } else if (widget.whichUser == 'Seller') {
-          Navigator.of(context)
-              .push(MaterialPageRoute(builder: (context) => SellerScreen()));
+          MySharedPrefencesSessionHandling
+              .setOrupdateWhichUserLoggedInSharedPreferences(
+                  '${widget.whichUser}');
+
+          //get the approval status as soon as the user is created and navigate to relavent screen
+          await FirestoreHelper.initializeToCheckStatus();
+          await FirestoreHelper.initializeToCheckStatusForBuyers();
+         
+          var currentInspectorStatusInFirestore =
+              await FirestoreHelper.currentInspectorStatusInFirestore;
+
+          if (currentInspectorStatusInFirestore == 'Approved') {
+            Navigator.of(context).push(
+                MaterialPageRoute(builder: (context) => InspectorScreen()));
+          } else {
+            Navigator.of(context).push(MaterialPageRoute(
+                builder: (context) => RegistrationStatusScreen(
+                      whichUser: whichUser,
+                    )));
+          }
           emailTextController.clear();
           PasswordTextController.clear();
           mobileNumberTextController.clear();
           cityTextControl.clear();
           emailTextController.clear();
           nameTextControl.clear();
-          shopAdressTextControl.clear();
+          buyerOrinspectorOrShopAdressTextControl.clear();
           shopNameTextControl.clear();
         } else {
-          Navigator.of(context)
-              .push(MaterialPageRoute(builder: (context) => InspectorScreen()));
+          //update the value in shared prefrences so that next time it may navigate to relavent screen
+          MySharedPrefencesSessionHandling
+              .setOrupdateWhichUserLoggedInSharedPreferences(
+                  '${widget.whichUser}');
+
+          //get the approval status as soon as the user is created and navigate to relavent screen
+          await FirestoreHelper.initializeToCheckStatus();
+          await FirestoreHelper.initializeToCheckStatusForBuyers();
+          var currentSellerStatusInFirestore =
+              await FirestoreHelper.currentSellerStatusInFirestore;
+
+          if (currentSellerStatusInFirestore == 'Approved') {
+            Navigator.of(context)
+                .push(MaterialPageRoute(builder: (context) => SellerScreen()));
+          } else {
+            Navigator.of(context).push(MaterialPageRoute(
+                builder: (context) => RegistrationStatusScreen(
+                      whichUser: whichUser,
+                    )));
+          }
+
           emailTextController.clear();
           PasswordTextController.clear();
           mobileNumberTextController.clear();
           cityTextControl.clear();
           emailTextController.clear();
           nameTextControl.clear();
-          shopAdressTextControl.clear();
+          buyerOrinspectorOrShopAdressTextControl.clear();
           shopNameTextControl.clear();
         }
       }).onError((FirebaseAuthException error, stackTrace) {
@@ -558,7 +610,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
       cityTextControl.clear();
       emailTextController.clear();
       nameTextControl.clear();
-      shopAdressTextControl.clear();
+      buyerOrinspectorOrShopAdressTextControl.clear();
       shopNameTextControl.clear();
     }
   }

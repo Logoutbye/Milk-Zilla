@@ -1,4 +1,4 @@
-class PriceList {
+class PriceListModel {
   var cow_milk;
   var buffalo_milk;
   var mix_milk;
@@ -7,7 +7,7 @@ class PriceList {
   var desi_ghee;
   var delivery_charges;
 
-  PriceList({
+  PriceListModel({
     required this.cow_milk,
     required this.buffalo_milk,
     required this.mix_milk,
@@ -17,7 +17,7 @@ class PriceList {
     required this.butter,
   });
 
-  PriceList.fromJson(Map<String, dynamic> json) {
+  PriceListModel.fromJson(Map<String, dynamic> json) {
     cow_milk = json['cow_milk'];
     buffalo_milk = json['buffalo_milk'];
     mix_milk = json['mix_milk'];

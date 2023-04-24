@@ -39,3 +39,36 @@ class RoundButton extends StatelessWidget {
     );
   }
 }
+
+
+class MyElevatedButton extends StatelessWidget {
+    final String title;
+  final VoidCallback onpress;
+  MyElevatedButton(
+      {super.key,
+      required this.title,
+      required this.onpress,
+      });
+
+  @override
+  Widget build(BuildContext context) {
+    return  ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          padding: const EdgeInsets.all(16.0),
+                          elevation: 0,
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(15.0)),
+                          backgroundColor: MyColors.kPrimary,
+                        ),
+                        child: Text(
+                         title,
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 18.0,
+                          ),
+                        ),
+                        onPressed:onpress,
+                      );
+  }
+
+}

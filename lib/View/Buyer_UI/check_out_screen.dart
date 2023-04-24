@@ -402,13 +402,13 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
     }
   }
 
-  Future<PriceList?> getRealTimePricesFromDatabase() async {
+  Future<PriceListModel?> getRealTimePricesFromDatabase() async {
     final docPrices =
         FirebaseFirestore.instance.collection('Price List').doc('items');
     final snapshot = await docPrices.get();
 
     if (snapshot.exists) {
-      return PriceList.fromJson(snapshot.data()!);
+      return PriceListModel.fromJson(snapshot.data()!);
     }
 
     // FirebaseFirestore firestore = FirebaseFirestore.instance;

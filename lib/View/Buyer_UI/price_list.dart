@@ -198,21 +198,17 @@ class _priceListState extends State<priceList> {
               return Center(child: Text('Something went wrong!'));
             }
           }
-
-// Future that needs to be resolved
-// inorder to display something on the Canvas
           ),
     );
   }
 
-  Future<PriceList?> readPriceListFromDatabase() async {
-// get Price by id
+  Future<PriceListModel?> readPriceListFromDatabase() async {
     final docPrices =
         FirebaseFirestore.instance.collection('Price List').doc('items');
     final snapshot = await docPrices.get();
 
     if (snapshot.exists) {
-      return PriceList.fromJson(snapshot.data()!);
+      return PriceListModel.fromJson(snapshot.data()!);
     }
   }
 
