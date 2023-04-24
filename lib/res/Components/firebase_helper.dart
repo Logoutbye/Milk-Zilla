@@ -35,7 +35,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 
 class FirestoreHelper {
   static String currentSellerStatusInFirestore = '';
-  static String currentInspectorStatusInFirestore = '';
 
   static Future<void> initializeToCheckStatus() async {
     //to get Current user email to access the application status
@@ -53,23 +52,24 @@ class FirestoreHelper {
     }
   }
 
-    static Future<void> initializeToCheckStatusForBuyers() async {
+  
+  static String currentInspectorStatusInFirestore = '';
+  static Future<void> initializeToCheckStatusForBuyers() async {
     //to get Current user email to access the application status
     final user = FirebaseAuth.instance.currentUser;
     // to access the document
     FirebaseFirestore firestore = FirebaseFirestore.instance;
 
     DocumentReference documentReference =
-        firestore.collection('Buyers').doc('${user?.email}');
+        firestore.collection('Inspectors').doc('${user?.email}');
     DocumentSnapshot documentSnapshot = await documentReference.get();
     if (documentSnapshot.exists) {
       Map<String, dynamic>? data =
           documentSnapshot.data() as Map<String, dynamic>?;
-      currentSellerStatusInFirestore = data!['status'];
+      currentInspectorStatusInFirestore = data!['status'];
     }
   }
 }
-
 
 // void main() async {
 //   await MyClass.initialize();

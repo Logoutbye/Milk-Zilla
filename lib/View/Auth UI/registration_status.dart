@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:lottie/lottie.dart';
+import 'package:milk_zilla/View/Inspector_UI/insector_screen.dart';
 import 'package:milk_zilla/View/Seller_UI/seller_screen.dart';
 import 'package:milk_zilla/View/my_home_page.dart';
 import 'package:milk_zilla/res/Components/firebase_helper.dart';
@@ -31,8 +32,7 @@ class _RegistrationStatusScreenState extends State<RegistrationStatusScreen> {
   void initState() {
     whichUser = widget.whichUser;
 
-    print(
-        'email of the current user and it will be used as doc id to access fileds::${user!.email}');
+    print('email::${user!.email}');
     // TODO: implement initState
     super.initState();
   }
@@ -51,7 +51,7 @@ class _RegistrationStatusScreenState extends State<RegistrationStatusScreen> {
         // extendBody: true,
         // extendBodyBehindAppBar: true,
         body: FutureBuilder(
-            future: readSellerOrInspectorDataFromDatabase(),
+            future: readSellerDataFromDatabase(),
             builder: (ctx, snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
                 return Center(
@@ -210,21 +210,36 @@ class _RegistrationStatusScreenState extends State<RegistrationStatusScreen> {
                                       const SizedBox(height: 10.0),
                                       Row(
                                         children: [
-                                          Text('Shop Name'),
+                                          whichUser == 'Seller'
+                                              ? Text('Shop Name')
+                                              : Text('Your Adress'),
                                           Spacer(),
-                                          // Text('${snapshot.data!.shop_name}'),
+                                          whichUser == 'Seller'
+                                              ? Text(
+                                                  '${snapshot.data!.shop_name}')
+                                              : Text(
+                                                  '${snapshot.data!.inspector_adress}'),
                                         ],
                                       ),
-                                      const SizedBox(height: 10.0),
-                                      _buildDivider(),
-                                      const SizedBox(height: 10.0),
-                                      Row(
-                                        children: [
-                                          Text('Shop Adress'),
-                                          Spacer(),
-                                          // Text('${snapshot.data!.shop_adress}'),
-                                        ],
-                                      ),
+                                      whichUser == 'Seller'
+                                          ? const SizedBox(height: 10.0)
+                                          : SizedBox(),
+                                      whichUser == 'Seller'
+                                          ? _buildDivider()
+                                          : SizedBox(),
+                                      whichUser == 'Seller'
+                                          ? const SizedBox(height: 10.0)
+                                          : SizedBox(),
+                                      whichUser == 'Seller'
+                                          ? Row(
+                                              children: [
+                                                Text('Shop Adress'),
+                                                Spacer(),
+                                                Text(
+                                                    '${snapshot.data!.shop_adress}'),
+                                              ],
+                                            )
+                                          : SizedBox(),
                                     ],
                                   ))),
                       SizedBox(height: 30.0),
@@ -235,9 +250,17 @@ class _RegistrationStatusScreenState extends State<RegistrationStatusScreen> {
                                 MySharedPrefencesSessionHandling
                                     .setOrupdateWhichUserLoggedInSharedPreferences(
                                         '${whichUser}');
-                                Navigator.of(context).pushReplacement(
-                                    MaterialPageRoute(
-                                        builder: (context) => SellerScreen()));
+                                if (whichUser == 'Seller') {
+                                  Navigator.of(context).pushReplacement(
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              SellerScreen()));
+                                } else {
+                                  Navigator.of(context).pushReplacement(
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              InspectorScreen()));
+                                }
                               })
                           : MyElevatedButton(
                               title: 'Home',
@@ -252,11 +275,7 @@ class _RegistrationStatusScreenState extends State<RegistrationStatusScreen> {
                 );
               } else {
                 return Center(
-                    child: Padding(
-                  padding: const EdgeInsets.all(18.0),
-                  child: Text(
-                      'Something went wrong! But we are Processing Your application. Try again later.'),
-                ));
+                    child: Text('Something went wrong! Try again later.'));
               }
             }));
   }
@@ -272,36 +291,25 @@ class _RegistrationStatusScreenState extends State<RegistrationStatusScreen> {
     );
   }
 
-  Future<SellerOrInspectorModel?> readSellerOrInspectorDataFromDatabase() async {
+  Future<SellerOrInspectorModel?> readSellerDataFromDatabase() async {
     if (whichUser == 'Sellers') {
-      final docData = FirebaseFirestore.instance
+      final docPrices = FirebaseFirestore.instance
           .collection('Sellers')
           .doc('${user!.email}');
-      final snapshot = await docData.get();
+      final snapshot = await docPrices.get();
 
       if (snapshot.exists) {
         return SellerOrInspectorModel.fromJson(snapshot.data()!);
       }
     } else {
-      final docData = FirebaseFirestore.instance
-        .collection('Inspectors')
-        .doc('${user!.email}');
-    final snapshot = await docData.get();
+      final docPrices = FirebaseFirestore.instance
+          .collection('Inspectors')
+          .doc('${user!.email}');
+      final snapshot = await docPrices.get();
 
-    if (snapshot.exists) {
-      return SellerOrInspectorModel.fromJson(snapshot.data()!);
-    }
+      if (snapshot.exists) {
+        return SellerOrInspectorModel.fromJson(snapshot.data()!);
+      }
     }
   }
-
-  // Future<InspectorModel?> readInspectorDataFromDatabase() async {
-  //   final docData = FirebaseFirestore.instance
-  //       .collection('Inspectors')
-  //       .doc('${user!.email}');
-  //   final snapshot = await docData.get();
-
-  //   if (snapshot.exists) {
-  //     return InspectorModel.fromJson(snapshot.data()!);
-  //   }
-  // }
 }

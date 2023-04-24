@@ -25,8 +25,8 @@ Future<void> main() async {
 
   await FirestoreHelper.currentSellerStatusInFirestore;
   await FirestoreHelper.currentInspectorStatusInFirestore;
-  print('before navigation currentSellerStatusInFirestore :${FirestoreHelper.currentSellerStatusInFirestore}');
-  print('before navigation currentInspectorStatusInFirestore :${FirestoreHelper.currentInspectorStatusInFirestore}');
+  print('in main currentSellerStatusInFirestore :${FirestoreHelper.currentSellerStatusInFirestore}');
+  print('in maincurrentInspectorStatusInFirestore :${FirestoreHelper.currentInspectorStatusInFirestore}');
 
   runApp(MyApp(
     whichUserLoggedIn: whichUserLoggedIn,

@@ -460,7 +460,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
         .collection('Sellers')
         .doc('${emailTextController.text}');
     final inpector = FirebaseFirestore.instance
-        .collection('Inpectors')
+        .collection('Inspectors')
         .doc('${emailTextController.text}');
 
     final jsonForBuyer = {
