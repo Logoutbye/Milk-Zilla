@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:milk_zilla/Utils/utils.dart';
+import 'package:milk_zilla/View/Buyer_UI/purchased_screen.dart';
 import 'package:milk_zilla/main.dart';
 import 'package:milk_zilla/res/Components/error_screen.dart';
 import 'package:milk_zilla/res/constanst.dart';
@@ -29,10 +30,12 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
   var totalItems;
   var generateOrderNumber = MyStaticComponents.generateOrderNumber();
   final user = FirebaseAuth.instance.currentUser;
+  TextEditingController deliveryAddressController =
+      TextEditingController(text: '');
   @override
   void initState() {
     print('init total price is $totalPrice && total items are $totalItems');
-    calculatetotalPrices();
+    calculatetotalPricesandTotalItems();
     getRealTimePricesFromDatabase();
 
     print('unique order number for order:: $generateOrderNumber');
@@ -229,7 +232,53 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
                             ],
                           )
                         : SizedBox(),
-                    const SizedBox(height: 10.0),
+
+                    SizedBox(
+                      height: 15,
+                    ),
+                    // Password TextField
+                    totalPrice > snapshot.data.delivery_charges
+                        ? Container(
+                            // color: Colors.red,
+                            child: TextField(
+                              controller: deliveryAddressController,
+                              obscureText: false,
+                              onTap: () {},
+                              style: TextStyle(
+                                color: MyColors.kBlack,
+                                // fontSize: 18,
+                              ),
+                              decoration: InputDecoration(
+                                hintText: 'Street/Muhllah/city',
+                                labelText: 'Enter Delivery Location',
+                                labelStyle: TextStyle(color: MyColors.kPrimary),
+                                hintStyle: TextStyle(color: MyColors.kPrimary),
+                                enabledBorder: new OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(10),
+                                  borderSide: BorderSide(
+                                    color: Color.fromARGB(255, 193, 198, 198),
+                                    //Color.fromARGB(255, 115, 38, 38),
+                                  ),
+                                ),
+                                focusedBorder: OutlineInputBorder(
+                                  borderSide:
+                                      BorderSide(color: MyColors.kPrimary),
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                                prefixIcon: Icon(
+                                  Icons.location_pin,
+                                  // color:
+                                  //     MyColors.kPrimary,
+                                  // size: 25,
+                                ),
+                              ),
+                            ),
+                          )
+                        : SizedBox(),
+
+                    totalPrice > snapshot.data.delivery_charges
+                        ? SizedBox(height: 10.0)
+                        : SizedBox(),
                     Padding(
                       padding: const EdgeInsets.symmetric(
                           horizontal: 32.0, vertical: 8.0),
@@ -258,40 +307,46 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
                                   'item_name': 'Buffalo Milk',
                                   'item_quantity':
                                       provider.getCount('Buffalo Milk'),
-                                  'item_price': 10,
+                                  'item_price': snapshot.data.buffalo_milk *
+                                      provider.getCount('Buffalo Milk'),
                                 },
                               if (provider.getCount('Cow Milk') > 0)
                                 {
                                   'item_name': 'Cow Milk',
                                   'item_quantity':
                                       provider.getCount('Cow Milk'),
-                                  'item_price': 5.0,
+                                  'item_price': snapshot.data.cow_milk *
+                                      provider.getCount('Cow Milk'),
                                 },
                               if (provider.getCount('Mix Milk') > 0)
                                 {
                                   'item_name': 'Mix Milk',
                                   'item_quantity':
                                       provider.getCount('Mix Milk'),
-                                  'item_price': 10,
+                                  'item_price': snapshot.data.mix_milk *
+                                      provider.getCount('Mix Milk'),
                                 },
                               if (provider.getCount('Mix Milk') > 0)
                                 {
                                   'item_name': 'Yogurt',
                                   'item_quantity': provider.getCount('Yogurt'),
-                                  'item_price': 10,
+                                  'item_price': snapshot.data.yougurt *
+                                      provider.getCount('Yogurt'),
                                 },
                               if (provider.getCount('Mix Milk') > 0)
                                 {
                                   'item_name': 'Butter',
-                                  'item_quantity': provider.getCount('Butter'),
-                                  'item_price': 10,
+                                  'item_quantity': provider.getCount('Butter') *
+                                      provider.getCount('Butter'),
+                                  'item_price': snapshot.data.butter,
                                 },
                               if (provider.getCount('Mix Milk') > 0)
                                 {
                                   'item_name': 'Desi Ghee',
                                   'item_quantity':
                                       provider.getCount('Desi Ghee'),
-                                  'item_price': 10,
+                                  'item_price': snapshot.data.desi_ghee *
+                                      provider.getCount('Desi Ghee'),
                                 },
                             ];
 
@@ -304,18 +359,41 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
                             //     orderDetails);
 
                             ///////////////////////////////
-                            //                               List<Map<String, dynamic>> items = [
-                            // {'item_name': 'Item 1', 'item_price': 10.0, 'item_quantity': 2},
-                            // {'item_name': 'Item 2', 'item_price': 5.0, 'item_quantity': 3},
-// ];
+                            // List<Map<String, dynamic>> items = [
+                            //   {
+                            //     'item_name': 'Item 1',
+                            //     'item_price': 10.0,
+                            //     'item_quantity': 2
+                            //   },
+                            //   {
+                            //     'item_name': 'Item 2',
+                            //     'item_price': 5.0,
+                            //     'item_quantity': 3
+                            //   },
+                            // ];
 
-                            CreateAnOrderInFireBase(
+                            // CreateAnOrderInFireBase(
+                            //     context,
+                            //     totalItems,
+                            //     totalPrice,
+                            //     generateOrderNumber,
+                            //     '${user!.email}',
+                            //     orderDetails);
+
+/////////////////////////////////////////////////////////////////////////////////////////////
+                            createOrder(
                                 context,
+                                '${user!.email}',
+                                'when we create shop will get the the id',
+                                'Preparing',
+                                generateOrderNumber,
                                 totalItems,
                                 totalPrice,
-                                generateOrderNumber,
-                                '${user!.email}',
+                                deliveryAddressController.text,
+                                snapshot.data.delivery_charges,
                                 orderDetails);
+/////////////////////////////////////////////////////////////////////////////////////////////
+
                           } else {
                             Navigator.pop(context);
                           }
@@ -334,6 +412,7 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
     );
   }
 
+  // jsut a divider
   Container _buildDivider() {
     return Container(
       height: 2.0,
@@ -345,9 +424,9 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
     );
   }
 
-  calculatetotalPrices() async {
+  calculatetotalPricesandTotalItems() async {
     final provider = Provider.of<ShoppingItemProvider>(context, listen: false);
-
+    //store prices from database
     var buffalo_milk_price;
     var cow_milk_price;
     var mix_milk_price;
@@ -356,6 +435,7 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
     var desi_ghee_price;
     var delivery_charges;
 
+    // calculate new prices by multiplying prices from database and quantity
     var newbuffalo_milk_price;
     var newcow_milk_price;
     var newmix_milk_price;
@@ -363,6 +443,7 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
     var newbutter_price;
     var newdesi_ghee_price;
 
+    // store quantity in it
     var buffalo_milk_quantity;
     var cow_milk_quantity;
     var mix_milk_quantity;
@@ -370,6 +451,7 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
     var butter_quantity;
     var desi_ghee_quantity;
 
+    // access database
     FirebaseFirestore firestore = FirebaseFirestore.instance;
     // get document reference
     DocumentReference documentReference =
@@ -399,6 +481,7 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
       print('desi_ghee_price::${desi_ghee_price}');
       print('delivery_charges::${delivery_charges}');
 
+      //calculate prices as well as get total items
       if (provider.getCount('Buffalo Milk') > 0) {
         newbuffalo_milk_price =
             provider.getCount('Buffalo Milk') * buffalo_milk_price;
@@ -476,6 +559,86 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
     }
   }
 
+  //store order id to order maker data
+
+/////////////////////////////////////////////////////////////////////////////////////////////
+// do the testing work here
+
+// This function creates a new order document in Firestore.
+  Future<void> createOrder(
+      BuildContext parentContext,
+      var giveme_customer_id,
+      var giveme_shop_id,
+      var giveme_status,
+      var giveme_order_id,
+      var giveme_total_items,
+      var giveme_total_price,
+      var giveme_delivery_charges,
+      var giveme_delivery_adress,
+      List<Map<dynamic, dynamic>> giveme_order_details) async {
+    //start animation
+    showDialog(
+        context: parentContext,
+        barrierDismissible: false,
+        builder: (context) => Center(
+              child: Lottie.asset('assets/animations/loading.json'),
+            ));
+    try {
+      CollectionReference orders =
+          FirebaseFirestore.instance.collection('Orders');
+      DocumentReference orderRef = await orders.add({
+        'customer_id': giveme_customer_id,
+        'shop_id': giveme_shop_id,
+        'status': 'pending',
+        'order_id': giveme_order_id,
+        'total_items': giveme_total_items,
+        'total_price': giveme_total_price,
+        'items': giveme_order_details,
+        'timestamp': FieldValue.serverTimestamp(),
+        'delivery_address':giveme_delivery_adress,
+        'delivery_charges' :giveme_delivery_charges
+      });
+
+      // once data of an order is sent to firebase the provider then would be reset to zero so that
+      // user can make a new order easily.
+      Provider.of<ShoppingItemProvider>(context, listen: false)
+          .reset('Buffalo Milk');
+      Provider.of<ShoppingItemProvider>(context, listen: false)
+          .reset('Cow Milk');
+      Provider.of<ShoppingItemProvider>(context, listen: false)
+          .reset('Mix Milk');
+      Provider.of<ShoppingItemProvider>(context, listen: false).reset('Yogurt');
+      Provider.of<ShoppingItemProvider>(context, listen: false).reset('Butter');
+      Provider.of<ShoppingItemProvider>(context, listen: false)
+          .reset('Desi Ghee');
+      totalItems = 0;
+      totalPrice = 0;
+      deliveryAddressController.clear();
+
+      //show message to user
+      Utils.toastMessage('Order Created SuccessFully');
+      // go back
+      Navigator.of(parentContext).pop();
+      Navigator.of(context).push(MaterialPageRoute(
+          builder: (context) => PurchasedScreen(
+                result: 'successful', order_no:  '${orderRef.id}',
+              )));
+
+      print('Order created with ID: ${orderRef.id}');
+    } catch (e) {
+      print('Error creating order: $e');
+      Utils.toastMessage('$e');
+      Navigator.of(parentContext).pop();
+      Navigator.of(context).push(MaterialPageRoute(
+          builder: (context) => PurchasedScreen(
+                result: 'un-successful',order_no: null,
+              )));
+    }
+    // Navigator.of(context).pop();
+  }
+
+/////////////////////////////////////////////////////////////////////////////////////////////
+
   Future<void> CreateAnOrderInFireBase(
       BuildContext parentContext,
       var totalItemsPassed,
@@ -483,6 +646,7 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
       var orderIdPassed,
       String emailPassed,
       List<Map<dynamic, dynamic>> orderDetails) async {
+    //start animation
     showDialog(
         context: parentContext,
         barrierDismissible: false,
@@ -498,6 +662,10 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
       //   'totalItems': totalItemsPassed,
       //   'totalPrice': totalPricePassed,
 
+      //create orders filed
+      //then unique order id
+      // against that send some oder details e.g ammount, price and qunatity
+      // then send item detials in order details
       await FirebaseFirestore.instance
           .collection('Orders')
           .doc('$orderIdPassed')
@@ -526,6 +694,8 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
           //     'itemPrice': item['item_price'],
           //   })
           .then((value) {
+        // once data of an order is sent to firebase the provider then would be reset to zero so that
+        // user can make a new order easily.
         Provider.of<ShoppingItemProvider>(context, listen: false)
             .reset('Buffalo Milk');
         Provider.of<ShoppingItemProvider>(context, listen: false)
@@ -538,8 +708,9 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
             .reset('Butter');
         Provider.of<ShoppingItemProvider>(context, listen: false)
             .reset('Desi Ghee');
-
+        //show message to user
         Utils.toastMessage('Order Created SuccessFully');
+        // go back
         Navigator.of(parentContext).pop();
       });
       // }
@@ -552,6 +723,8 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
     Navigator.of(context).pop();
   }
 
+  // this function will help to get real time prices from data base and help to generate order with right price beacuse of this
+  // we use future builder.
   Future<PriceListModel?> getRealTimePricesFromDatabase() async {
     final docPrices =
         FirebaseFirestore.instance.collection('Price List').doc('items');
@@ -562,20 +735,16 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
     }
 
     // FirebaseFirestore firestore = FirebaseFirestore.instance;
-
     // // get document reference
     // DocumentReference documentReference =
     //     firestore.collection('Price List').doc('items');
-
     // // get document snapshot
     // DocumentSnapshot documentSnapshot = await documentReference.get();
-
     // // check if document exists
     // if (documentSnapshot.exists) {
     //   // get document data
     //   Map<String, dynamic>? data =
     //       documentSnapshot.data() as Map<String, dynamic>?;
-
     //   // access specific fields
     //   String buffalo_milk = data!['buffalo_milk'];
     //   print('prices::${buffalo_milk}');
