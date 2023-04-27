@@ -30,6 +30,7 @@ class _RegistrationStatusScreenState extends State<RegistrationStatusScreen> {
 
   @override
   void initState() {
+    readSellerDataFromDatabase();
     whichUser = widget.whichUser;
 
     print('email::${user!.email}');
@@ -292,7 +293,7 @@ class _RegistrationStatusScreenState extends State<RegistrationStatusScreen> {
   }
 
   Future<SellerOrInspectorModel?> readSellerDataFromDatabase() async {
-    if (whichUser == 'Sellers') {
+    if (whichUser == 'Seller') {
       final docPrices = FirebaseFirestore.instance
           .collection('Sellers')
           .doc('${user!.email}');

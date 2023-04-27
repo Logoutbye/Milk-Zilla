@@ -36,7 +36,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 class FirestoreHelper {
   static String currentSellerStatusInFirestore = '';
 
-  static Future<void> initializeToCheckStatus() async {
+  static Future<void> initializeToCheckStatusForSellers() async {
     //to get Current user email to access the application status
     final user = FirebaseAuth.instance.currentUser;
     // to access the document
@@ -54,7 +54,7 @@ class FirestoreHelper {
 
   
   static String currentInspectorStatusInFirestore = '';
-  static Future<void> initializeToCheckStatusForBuyers() async {
+  static Future<void> initializeToCheckStatusForInspector() async {
     //to get Current user email to access the application status
     final user = FirebaseAuth.instance.currentUser;
     // to access the document

@@ -30,8 +30,8 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   void initState() {
-    FirestoreHelper.initializeToCheckStatus();
-    FirestoreHelper.initializeToCheckStatusForBuyers();
+    FirestoreHelper.initializeToCheckStatusForSellers();
+    FirestoreHelper.initializeToCheckStatusForInspector();
     // TODO: implement initState
     super.initState();
   }
