@@ -3,9 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:milk_zilla/Utils/utils.dart';
 import 'package:milk_zilla/View/Auth%20UI/registration_screen.dart';
-import 'package:milk_zilla/View/User_UI/buyer_screen.dart';
-import 'package:milk_zilla/View/User_UI/insector_screen.dart';
-import 'package:milk_zilla/View/User_UI/seller_screen.dart';
+import 'package:milk_zilla/View/Buyer_UI/buyer_screen.dart';
+import 'package:milk_zilla/View/Inspector_UI/insector_screen.dart';
+import 'package:milk_zilla/View/Seller_UI/seller_screen.dart';
+
 import 'package:milk_zilla/main.dart';
 
 import '../../res/Components/round_button.dart';
@@ -312,8 +313,8 @@ class _LoginScreenState extends State<LoginScreen> {
         // print("object ${user_credentials.user.toString()}");
         // print("object ${user_credentials.credential!.signInMethod}");
         // print("object ${user_credentials.credential!.token}");
-          emailTextController.clear();
-          PasswordTextController.clear();
+        emailTextController.clear();
+        PasswordTextController.clear();
         Navigator.of(parentContext).pop();
         if (widget.whichUser == 'Buyer') {
           Navigator.of(context)
@@ -324,7 +325,6 @@ class _LoginScreenState extends State<LoginScreen> {
         } else {
           Navigator.of(context)
               .push(MaterialPageRoute(builder: (context) => InspectorScreen()));
-
         }
       }).onError((FirebaseAuthException error, stackTrace) {
         if (error.code == "wrong-password") {

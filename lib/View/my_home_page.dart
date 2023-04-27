@@ -6,7 +6,8 @@ import 'package:lottie/lottie.dart';
 import 'package:milk_zilla/Utils/utils.dart';
 import 'package:milk_zilla/View/Auth%20UI/login.dart';
 import 'package:milk_zilla/View/Auth%20UI/registration_screen.dart';
-import 'package:milk_zilla/View/User_UI/buyer_screen.dart';
+import 'package:milk_zilla/View/Buyer_UI/buyer_screen.dart';
+
 import 'package:milk_zilla/res/my_colors.dart';
 
 class MyHomePage extends StatefulWidget {
