@@ -535,8 +535,8 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                   '${widget.whichUser}');
 
           //get the approval status as soon as the user is created and navigate to relavent screen
-          await FirestoreHelper.initializeToCheckStatus();
-          await FirestoreHelper.initializeToCheckStatusForBuyers();
+          await FirestoreHelper.initializeToCheckStatusForSellers();
+          await FirestoreHelper.initializeToCheckStatusForInspector();
 
           var currentInspectorStatusInFirestore =
               await FirestoreHelper.currentInspectorStatusInFirestore;
@@ -565,8 +565,8 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                   '${widget.whichUser}');
 
           //get the approval status as soon as the user is created and navigate to relavent screen
-          await FirestoreHelper.initializeToCheckStatus();
-          await FirestoreHelper.initializeToCheckStatusForBuyers();
+          await FirestoreHelper.initializeToCheckStatusForSellers();
+          await FirestoreHelper.initializeToCheckStatusForInspector();
           var currentSellerStatusInFirestore =
               await FirestoreHelper.currentSellerStatusInFirestore;
 

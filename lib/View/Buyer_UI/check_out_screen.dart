@@ -384,7 +384,7 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
                             createOrder(
                                 context,
                                 '${user!.email}',
-                                'when we create shop will get the the id',
+                                'shop id',
                                 'Preparing',
                                 generateOrderNumber,
                                 totalItems,

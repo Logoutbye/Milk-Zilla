@@ -20,8 +20,8 @@ Future<void> main() async {
   print('whichUserLoggedIn in sharedPrefrences:: $whichUserLoggedIn');
 
   // and if user was seller or inspector it will check if the status is approved so he may navigate to their relative dashbord else they see application status
-  await FirestoreHelper.initializeToCheckStatus();
-  await FirestoreHelper.initializeToCheckStatusForBuyers();
+  await FirestoreHelper.initializeToCheckStatusForSellers();
+  await FirestoreHelper.initializeToCheckStatusForInspector();
 
   await FirestoreHelper.currentSellerStatusInFirestore;
   await FirestoreHelper.currentInspectorStatusInFirestore;

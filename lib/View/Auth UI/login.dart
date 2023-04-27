@@ -32,13 +32,21 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   void initState() {
+
+    getiingSatus();
     whichUser = widget.whichUser;
     var whichi = MySharedPrefencesSessionHandling.whichUserLoggedIn;
     print('$whichi');
     // TODO: implement initState
     super.initState();
   }
+getiingSatus()async{
+    await FirestoreHelper.initializeToCheckStatusForSellers();
+  await FirestoreHelper.initializeToCheckStatusForInspector();
 
+  await FirestoreHelper.currentSellerStatusInFirestore;
+  await FirestoreHelper.currentInspectorStatusInFirestore;
+}
   @override
   void dispose() {
     emailTextController.dispose();
@@ -49,6 +57,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
+    
     return Scaffold(
       //  backgroundColor: MyColors.KWhite,
       appBar: AppBar(
@@ -333,8 +342,8 @@ class _LoginScreenState extends State<LoginScreen> {
             .setOrupdateWhichUserLoggedInSharedPreferences('${whichUser}');
         print('trying to store in shared prefrences ${whichUser}');
 
-        FirestoreHelper.initializeToCheckStatus();
-        FirestoreHelper.initializeToCheckStatusForBuyers();
+        FirestoreHelper.initializeToCheckStatusForSellers();
+        FirestoreHelper.initializeToCheckStatusForInspector();
         var currentSellerStatusInFirestore =
             FirestoreHelper.currentSellerStatusInFirestore;
         print('currentUserStatusInFirestore::$currentSellerStatusInFirestore');
