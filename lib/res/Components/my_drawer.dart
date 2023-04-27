@@ -1,6 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:milk_zilla/View/my_home_page.dart';
+import 'package:milk_zilla/main.dart';
+import 'package:milk_zilla/res/Components/my_shared_prefrences.dart';
 
 class MyAppDrawer extends StatefulWidget {
   MyAppDrawer({super.key});
@@ -13,6 +15,7 @@ class _MyAppDrawerState extends State<MyAppDrawer> {
   @override
   Widget build(BuildContext context) {
     final user = FirebaseAuth.instance.currentUser!;
+
     return Drawer(
       child: ListView(
         padding: const EdgeInsets.all(0),
@@ -27,9 +30,14 @@ class _MyAppDrawerState extends State<MyAppDrawer> {
             leading: const Icon(Icons.logout),
             title: const Text('Logout'),
             onTap: () {
-              FirebaseAuth.instance.signOut();
-                  Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=>MyHomePage()));
+              MySharedPrefencesSessionHandling
+                  .removeWhichUserLoggedInFromSharedPreferences();
 
+              FirebaseAuth.instance.signOut();
+              Navigator.pop(context);
+              Navigator.of(context).pushReplacement(
+                  MaterialPageRoute(builder: (context) => MyHomePage()));
+              // navigatorKey.currentState!.popUntil((route) => route.isFirst);
             },
           ),
         ],
