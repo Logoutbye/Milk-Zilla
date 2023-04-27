@@ -595,8 +595,8 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
         'total_price': giveme_total_price,
         'items': giveme_order_details,
         'timestamp': FieldValue.serverTimestamp(),
-        'delivery_address':giveme_delivery_adress,
-        'delivery_charges' :giveme_delivery_charges
+        'delivery_address': giveme_delivery_adress,
+        'delivery_charges': giveme_delivery_charges
       });
 
       // once data of an order is sent to firebase the provider then would be reset to zero so that
@@ -621,7 +621,8 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
       Navigator.of(parentContext).pop();
       Navigator.of(context).push(MaterialPageRoute(
           builder: (context) => PurchasedScreen(
-                result: 'successful', order_no:  '${orderRef.id}',
+                result: 'successful',
+                order_no: '${orderRef.id}',
               )));
 
       print('Order created with ID: ${orderRef.id}');
@@ -631,7 +632,8 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
       Navigator.of(parentContext).pop();
       Navigator.of(context).push(MaterialPageRoute(
           builder: (context) => PurchasedScreen(
-                result: 'un-successful',order_no: null,
+                result: 'un-successful',
+                order_no: null,
               )));
     }
     // Navigator.of(context).pop();
