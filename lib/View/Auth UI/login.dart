@@ -32,7 +32,6 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   void initState() {
-
     getiingSatus();
     whichUser = widget.whichUser;
     var whichi = MySharedPrefencesSessionHandling.whichUserLoggedIn;
@@ -40,13 +39,15 @@ class _LoginScreenState extends State<LoginScreen> {
     // TODO: implement initState
     super.initState();
   }
-getiingSatus()async{
-    await FirestoreHelper.initializeToCheckStatusForSellers();
-  await FirestoreHelper.initializeToCheckStatusForInspector();
 
-  await FirestoreHelper.currentSellerStatusInFirestore;
-  await FirestoreHelper.currentInspectorStatusInFirestore;
-}
+  getiingSatus() async {
+    await FirestoreHelper.initializeToCheckStatusForSellers();
+    await FirestoreHelper.initializeToCheckStatusForInspector();
+
+    await FirestoreHelper.currentSellerStatusInFirestore;
+    await FirestoreHelper.currentInspectorStatusInFirestore;
+  }
+
   @override
   void dispose() {
     emailTextController.dispose();
@@ -57,7 +58,6 @@ getiingSatus()async{
 
   @override
   Widget build(BuildContext context) {
-    
     return Scaffold(
       //  backgroundColor: MyColors.KWhite,
       appBar: AppBar(
@@ -322,14 +322,15 @@ getiingSatus()async{
         context: parentContext,
         barrierDismissible: true,
         builder: (context) => Center(
-              child: Lottie.asset('assets/animations/loading.json'),
+              child: Lottie.asset('assets/animations/loading.json',
+                  height: MediaQuery.of(context).size.height / 5),
             ));
     try {
       await FirebaseAuth.instance
           .signInWithEmailAndPassword(
               email: emailTextController.text.trim(),
               password: PasswordTextController.text.trim())
-          .then((UserCredential user_credentials) {
+          .then((UserCredential user_credentials) async {
         // print("object ${user_credentials.user.toString()}");
         // print("object ${user_credentials.credential!.signInMethod}");
         // print("object ${user_credentials.credential!.token}");
@@ -342,14 +343,14 @@ getiingSatus()async{
             .setOrupdateWhichUserLoggedInSharedPreferences('${whichUser}');
         print('trying to store in shared prefrences ${whichUser}');
 
-        FirestoreHelper.initializeToCheckStatusForSellers();
-        FirestoreHelper.initializeToCheckStatusForInspector();
+     await   FirestoreHelper.initializeToCheckStatusForSellers();
+     await   FirestoreHelper.initializeToCheckStatusForInspector();
         var currentSellerStatusInFirestore =
-            FirestoreHelper.currentSellerStatusInFirestore;
-        print('currentUserStatusInFirestore::$currentSellerStatusInFirestore');
+          await  FirestoreHelper.currentSellerStatusInFirestore;
+        print('checking currentUserStatusInFirestore at login success::$currentSellerStatusInFirestore');
         var currentInspectorStatusInFirestore =
-            FirestoreHelper.currentInspectorStatusInFirestore;
-        print('currentUserStatusInFirestore::$currentSellerStatusInFirestore');
+          await  FirestoreHelper.currentInspectorStatusInFirestore;
+        print('checking currentUserStatusInFirestore at login success::$currentSellerStatusInFirestore');
 
         if (widget.whichUser == 'Buyer') {
           Navigator.of(context)
@@ -408,7 +409,8 @@ getiingSatus()async{
         context: parentContext,
         barrierDismissible: true,
         builder: (context) => Center(
-              child: Lottie.asset('assets/animations/loading.json'),
+              child: Lottie.asset('assets/animations/loading.json',
+                  height: MediaQuery.of(context).size.height / 5),
             ));
     try {
       await FirebaseAuth.instance

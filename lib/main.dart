@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:milk_zilla/View/Auth%20UI/registration_status.dart';
@@ -19,16 +20,23 @@ Future<void> main() async {
   var whichUserLoggedIn = prefs.getString('whichUserLoggedIn');
   print('whichUserLoggedIn in sharedPrefrences:: $whichUserLoggedIn');
 
-  // and if user was seller or inspector it will check if the status is approved so he may navigate to their relative dashbord else they see application status
-  await FirestoreHelper.initializeToCheckStatusForSellers();
-  await FirestoreHelper.initializeToCheckStatusForInspector();
+  //getting current login user if if there is no one it will not check
+  // it so the delay beacuse of initilization  will be minimum
+  final user = FirebaseAuth.instance.currentUser;
+  if (user != null) {
+    final email = user.email;
+    print('email::${email}');
+    // and if user was seller or inspector it will check if the status is approved so he may navigate to their relative dashbord else they see application status
+    await FirestoreHelper.initializeToCheckStatusForSellers();
+    await FirestoreHelper.initializeToCheckStatusForInspector();
 
-  await FirestoreHelper.currentSellerStatusInFirestore;
-  await FirestoreHelper.currentInspectorStatusInFirestore;
-  print(
-      'in main currentSellerStatusInFirestore :${FirestoreHelper.currentSellerStatusInFirestore}');
-  print(
-      'in maincurrentInspectorStatusInFirestore :${FirestoreHelper.currentInspectorStatusInFirestore}');
+    await FirestoreHelper.currentSellerStatusInFirestore;
+    await FirestoreHelper.currentInspectorStatusInFirestore;
+    print(
+        'in main currentSellerStatusInFirestore :${FirestoreHelper.currentSellerStatusInFirestore}');
+    print(
+        'in maincurrentInspectorStatusInFirestore :${FirestoreHelper.currentInspectorStatusInFirestore}');
+  }
 
   runApp(MyApp(
     whichUserLoggedIn: whichUserLoggedIn,

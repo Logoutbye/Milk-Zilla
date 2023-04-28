@@ -46,7 +46,7 @@ class _PurchasedScreenState extends State<PurchasedScreen> {
                     widget.result == 'successful'
                         ? 'Your Order has been \nConfrimed & Placed'
                         : 'Oops! Some thing went\nterribly wrong here',
-                    style: priceTextStyle,
+                    style: kTextStyleBlack,
                   ),
                   SizedBox(
                     height: 20,
@@ -59,7 +59,7 @@ class _PurchasedScreenState extends State<PurchasedScreen> {
                     widget.result == 'successful'
                         ? '${widget.order_no}'
                         : 'Please Try Again.',
-                    style: priceTextStyle,
+                    style: kTextStyleBlack,
                   ),
                 ],
               ),

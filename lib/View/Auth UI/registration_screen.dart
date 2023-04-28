@@ -505,7 +505,8 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
         context: parentContext,
         barrierDismissible: false,
         builder: (context) => Center(
-              child: Lottie.asset('assets/animations/loading.json'),
+              child: Lottie.asset('assets/animations/loading.json',
+                  height: MediaQuery.of(context).size.height / 5),
             ));
     try {
       await FirebaseAuth.instance

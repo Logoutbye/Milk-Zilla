@@ -31,7 +31,8 @@ class _priceListState extends State<priceList> {
           builder: (ctx, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return Center(
-                  child: Lottie.asset('assets/animations/loading.json'));
+                  child: Lottie.asset('assets/animations/loading.json',
+                      height: MediaQuery.of(context).size.height / 5));
             } else if (snapshot.connectionState == ConnectionState.done &&
                 snapshot.hasData) {
               return ListView(
@@ -58,12 +59,12 @@ class _priceListState extends State<priceList> {
                       const SizedBox(width: 40.0),
                       Text(
                         "Buffalo Milk(1 Litre)",
-                        style: priceTextStyle,
+                        style: kTextStyleBlack,
                       ),
                       const Spacer(),
                       Text(
                         "Rs ${snapshot.data!.buffalo_milk}",
-                        style: priceTextStyle,
+                        style: kTextStyleBlack,
                       ),
                       const SizedBox(width: 20.0),
                     ],
@@ -78,12 +79,12 @@ class _priceListState extends State<priceList> {
                       const SizedBox(width: 40.0),
                       Text(
                         "Cow Milk(1 litre)",
-                        style: priceTextStyle,
+                        style: kTextStyleBlack,
                       ),
                       const Spacer(),
                       Text(
                         "Rs ${snapshot.data!.cow_milk}",
-                        style: priceTextStyle,
+                        style: kTextStyleBlack,
                       ),
                       const SizedBox(width: 20.0),
                     ],
@@ -98,12 +99,12 @@ class _priceListState extends State<priceList> {
                       const SizedBox(width: 40.0),
                       Text(
                         "Mix Milk(1 Litre)",
-                        style: priceTextStyle,
+                        style: kTextStyleBlack,
                       ),
                       const Spacer(),
                       Text(
                         "Rs ${snapshot.data!.mix_milk}",
-                        style: priceTextStyle,
+                        style: kTextStyleBlack,
                       ),
                       const SizedBox(width: 20.0),
                     ],
@@ -118,12 +119,12 @@ class _priceListState extends State<priceList> {
                       const SizedBox(width: 40.0),
                       Text(
                         "Yogurt(1 Kg) ",
-                        style: priceTextStyle,
+                        style: kTextStyleBlack,
                       ),
                       const Spacer(),
                       Text(
                         "Rs ${snapshot.data!.yougurt}",
-                        style: priceTextStyle,
+                        style: kTextStyleBlack,
                       ),
                       const SizedBox(width: 20.0),
                     ],
@@ -138,12 +139,12 @@ class _priceListState extends State<priceList> {
                       const SizedBox(width: 40.0),
                       Text(
                         "Butter",
-                        style: priceTextStyle,
+                        style: kTextStyleBlack,
                       ),
                       const Spacer(),
                       Text(
                         "Rs ${snapshot.data!.butter}",
-                        style: priceTextStyle,
+                        style: kTextStyleBlack,
                       ),
                       const SizedBox(width: 20.0),
                     ],
@@ -158,12 +159,12 @@ class _priceListState extends State<priceList> {
                       const SizedBox(width: 40.0),
                       Text(
                         "Desi Ghee",
-                        style: priceTextStyle,
+                        style: kTextStyleBlack,
                       ),
                       const Spacer(),
                       Text(
                         "Rs ${snapshot.data!.desi_ghee}",
-                        style: priceTextStyle,
+                        style: kTextStyleBlack,
                       ),
                       const SizedBox(width: 20.0),
                     ],
@@ -180,12 +181,12 @@ class _priceListState extends State<priceList> {
                       const SizedBox(width: 40.0),
                       Text(
                         "Delivery Charges",
-                        style: priceTextStyle,
+                        style: kTextStyleBlack,
                       ),
                       const Spacer(),
                       Text(
                         "Rs ${snapshot.data!.delivery_charges}",
-                        style: priceTextStyle,
+                        style: kTextStyleBlack,
                       ),
                       const SizedBox(width: 20.0),
                     ],
@@ -197,8 +198,7 @@ class _priceListState extends State<priceList> {
             } else {
               return Center(child: Text('Something went wrong!'));
             }
-          }
-          ),
+          }),
     );
   }
 

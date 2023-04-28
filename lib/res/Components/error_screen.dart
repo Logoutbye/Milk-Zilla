@@ -42,7 +42,7 @@ class ErrorScreen extends StatelessWidget {
           children: [
             Text(
               Message,
-              style: priceTextStyle.copyWith(color: Colors.black),
+              style: kTextStyleBlack.copyWith(color: Colors.black),
             ),
             SizedBox(
               height: 20,
