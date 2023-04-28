@@ -5,16 +5,12 @@ import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:lottie/lottie.dart';
 import 'package:milk_zilla/res/Components/my_drawer.dart';
-<<<<<<< HEAD
-import 'package:milk_zilla/res/Components/my_drawers/seller_drawer.dart';
-=======
 import 'package:milk_zilla/res/constanst.dart';
 
 import '../../res/my_colors.dart';
->>>>>>> ef3acaf8f201a5412f6caea488b7b49686aa56e8
 
 class SellerScreen extends StatefulWidget {
-  const SellerScreen({super.key});
+   SellerScreen({super.key});
 
   @override
   State<SellerScreen> createState() => _BuyerScreenState();
@@ -37,10 +33,6 @@ class _BuyerScreenState extends State<SellerScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-<<<<<<< HEAD
-        appBar: AppBar(title: Text('Seller screeen')),
-        drawer: SellerDrawer(),
-=======
         backgroundColor: MyColors.kWhite,
         appBar: AppBar(
           automaticallyImplyLeading: false,
@@ -97,7 +89,6 @@ class _BuyerScreenState extends State<SellerScreen> {
         endDrawer: MyAppDrawer(),
         //   appBar: AppBar(title: Text('Seller screeen')),
         //   drawer: MyAppDrawer(),
->>>>>>> ef3acaf8f201a5412f6caea488b7b49686aa56e8
         body: FutureBuilder<List<Order>>(
           future: getOrdersForShop(shopId),
           builder: (context, snapshot) {
@@ -224,6 +215,7 @@ class _BuyerScreenState extends State<SellerScreen> {
                   children: [
                     Container(
                         decoration: BoxDecoration(
+
                           color: Color.fromARGB(255, 255, 255, 255),
                           border: Border.all(
                             color: MyColors.kPrimary,
@@ -264,6 +256,7 @@ class _BuyerScreenState extends State<SellerScreen> {
                 SizedBox(height: heightbetweenWidgetsInOrder),
                 Text('Order Details'),
                  SizedBox(height: heightbetweenWidgetsInOrder),
+                Text('${order.id}'),
 
                 //Pickup Button
                 Center(
