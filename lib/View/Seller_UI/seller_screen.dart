@@ -3,7 +3,11 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:lottie/lottie.dart';
 import 'package:milk_zilla/res/Components/my_drawer.dart';
+import 'package:milk_zilla/res/constanst.dart';
+
+import '../../res/my_colors.dart';
 
 class SellerScreen extends StatefulWidget {
   const SellerScreen({super.key});
@@ -20,7 +24,7 @@ class _BuyerScreenState extends State<SellerScreen> {
     final user = FirebaseAuth.instance.currentUser;
     if (user != null) {
       final email = user.email;
-      print('email::${email}');
+      print('current users email::${email}');
     }
     // TODO: implement initState
     super.initState();
@@ -29,13 +33,69 @@ class _BuyerScreenState extends State<SellerScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(title: Text('Seller screeen')),
-        drawer: MyAppDrawer(),
+        backgroundColor: MyColors.kWhite,
+        appBar: AppBar(
+          automaticallyImplyLeading: false,
+          // backgroundColor: Color.fromARGB(255, 255, 255, 255),
+          // foregroundColor: MyColors.kPrimary,
+          elevation: 0,
+          backgroundColor: MyColors.kWhite,
+          foregroundColor: MyColors.kPrimary,
+          title: Row(
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(left: 8),
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    padding: const EdgeInsets.all(10.0),
+                    elevation: 0,
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(15.0)),
+                    backgroundColor: MyColors.kPrimary,
+                  ),
+                  child: Text(
+                    'My Orders',
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 18.0,
+                    ),
+                  ),
+                  onPressed: () {},
+                ),
+              ),
+            ],
+          ),
+          actions: [
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: IconButton(
+                icon: Icon(Icons.shopping_cart_checkout),
+                iconSize: 35,
+                onPressed: () {},
+              ),
+            ),
+            Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                child: Builder(
+                    builder: (context) => IconButton(
+                          icon: Icon(Icons.settings),
+                          iconSize: 40,
+                          onPressed: () {
+                            Scaffold.of(context).openEndDrawer();
+                          },
+                        )))
+          ],
+        ),
+        endDrawer: MyAppDrawer(),
+        //   appBar: AppBar(title: Text('Seller screeen')),
+        //   drawer: MyAppDrawer(),
         body: FutureBuilder<List<Order>>(
           future: getOrdersForShop(shopId),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
-              return CircularProgressIndicator();
+              return Center(
+                  child: Lottie.asset('assets/animations/loading.json',
+                      height: MediaQuery.of(context).size.height / 5));
             } else if (snapshot.hasError) {
               return Text('Error: ${snapshot.error}');
             } else if (snapshot.hasData) {
@@ -45,7 +105,7 @@ class _BuyerScreenState extends State<SellerScreen> {
                 itemBuilder: (context, index) {
                   Order order = orders[index];
                   // TODO: Build UI for each order
-                  return buildOrderUI(context, order);
+                  return buildOrderUI2(context, order);
                 },
               );
             } else {
@@ -81,13 +141,150 @@ class _BuyerScreenState extends State<SellerScreen> {
         //     );
         //   },
         // ),
-
         ////////////////////////////////////////////////////////////////////
         );
   }
 
   Widget buildOrderUI(BuildContext context, Order order) {
     return Card(
+      child: Padding(
+        padding: EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text('Order ID: ${order.id}'),
+            SizedBox(height: 8.0),
+            Text('Customer ID: ${order.customerId}'),
+            SizedBox(height: 8.0),
+            Text('Shop ID: ${order.shopId}'),
+            SizedBox(height: 8.0),
+            Text('Status: ${order.status}'),
+            SizedBox(height: 8.0),
+            Text('Timestamp: ${order.timestamp.toString()}'),
+            SizedBox(height: 8.0),
+            Text('Items:'),
+            ListView.builder(
+              shrinkWrap: true,
+              physics: NeverScrollableScrollPhysics(),
+              itemCount: order.items.length,
+              itemBuilder: (BuildContext context, int index) {
+                return Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text('Item ${index + 1}:'),
+                    Text('Name: ${order.items[index]['name']}'),
+                    Text('Price: ${order.items[index]['price']}'),
+                    Text('Quantity: ${order.items[index]['quantity']}'),
+                  ],
+                );
+              },
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget buildOrderUI2(BuildContext context, Order order) {
+    var heightbetweenWidgetsInOrder = MediaQuery.of(context).size.height / 90;
+
+    return Center(
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Container(
+          width: MediaQuery.of(context).size.width / 1.2,
+          height: MediaQuery.of(context).size.height / 2.55,
+          decoration: BoxDecoration(
+            color: MyColors.kSecondary,
+            borderRadius: BorderRadius.circular(20),
+            boxShadow: [
+              BoxShadow(
+                color: MyColors.kPrimary,
+              ),
+            ],
+          ),
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                //Status
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Container(
+                        decoration: BoxDecoration(
+                          color: Color.fromARGB(255, 255, 255, 255),
+                          border: Border.all(
+                            color: MyColors.kPrimary,
+                            width: 1.0,
+                          ),
+                          borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(15),
+                            bottomLeft: Radius.circular(15),
+                          ),
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text(
+                            'Status',
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                        )),
+                    const SizedBox(width: 10.0),
+                    Container(
+                        decoration: BoxDecoration(
+                          color: MyColors.kPrimary,
+                          border: Border.all(
+                            color: MyColors.kSecondary,
+                            width: 1.0,
+                          ),
+                          borderRadius: BorderRadius.only(
+                            topRight: Radius.circular(15),
+                            bottomRight: Radius.circular(15),
+                          ),
+                        ),
+                        child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text('Pending',
+                                style:
+                                    TextStyle(fontWeight: FontWeight.bold)))),
+                  ],
+                ),
+                SizedBox(height: heightbetweenWidgetsInOrder),
+                Text('Order Details'),
+                 SizedBox(height: heightbetweenWidgetsInOrder),
+
+                //Pickup Button
+                Center(
+                  child: Container(
+                    width: MediaQuery.of(context).size.width / 1.6,
+                    height: MediaQuery.of(context).size.height / 20,
+                    decoration: BoxDecoration(
+                      color: MyColors.kPrimary,
+                      borderRadius: BorderRadius.circular(10),
+                      boxShadow: [
+                        BoxShadow(
+                          color: MyColors.kPrimary,
+                        ),
+                      ],
+                    ),
+                    child: Center(
+                      child: Text(
+                        'Pick Up:',
+                        style: kTextStyleWhite,
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+    Card(
       child: Padding(
         padding: EdgeInsets.all(16.0),
         child: Column(

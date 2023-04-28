@@ -66,7 +66,7 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
         builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return Center(
-                child: Lottie.asset('assets/animations/loading.json'));
+                child: Lottie.asset('assets/animations/loading.json',height: MediaQuery.of(context).size.height/5));
           } else if (snapshot.connectionState == ConnectionState.done &&
               snapshot.hasData) {
             return Stack(
@@ -176,12 +176,12 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
                               const SizedBox(width: 40.0),
                               Text(
                                 totalItems == 1 ? 'Item' : "Items",
-                                style: priceTextStyle,
+                                style: kTextStyleBlack,
                               ),
                               const Spacer(),
                               Text(
                                 "${totalItems}",
-                                style: priceTextStyle,
+                                style: kTextStyleBlack,
                               ),
                               const SizedBox(width: 20.0),
                             ],
@@ -195,12 +195,12 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
                               const SizedBox(width: 40.0),
                               Text(
                                 "Delivery Charges",
-                                style: priceTextStyle,
+                                style: kTextStyleBlack,
                               ),
                               const Spacer(),
                               Text(
                                 "Rs ${snapshot.data.delivery_charges}",
-                                style: priceTextStyle,
+                                style: kTextStyleBlack,
                               ),
                               const SizedBox(width: 20.0),
                             ],
@@ -208,7 +208,7 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
                         : Center(
                             child: Text(
                             'Must Select atleast one Item',
-                            style: priceTextStyle,
+                            style: kTextStyleBlack,
                           )),
                     const SizedBox(height: 20.0),
                     _buildDivider(),
@@ -219,13 +219,13 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
                               const SizedBox(width: 40.0),
                               Text(
                                 "Total",
-                                style: priceTextStyle.copyWith(
+                                style: kTextStyleBlack.copyWith(
                                     color: Colors.black),
                               ),
                               const Spacer(),
                               Text(
                                 "Rs $totalPrice",
-                                style: priceTextStyle.copyWith(
+                                style: kTextStyleBlack.copyWith(
                                     color: MyColors.kPrimary),
                               ),
                               const SizedBox(width: 20.0),
@@ -581,7 +581,7 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
         context: parentContext,
         barrierDismissible: false,
         builder: (context) => Center(
-              child: Lottie.asset('assets/animations/loading.json'),
+              child: Lottie.asset('assets/animations/loading.json',height: MediaQuery.of(context).size.height/5),
             ));
     try {
       CollectionReference orders =
@@ -651,7 +651,7 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
         context: parentContext,
         barrierDismissible: false,
         builder: (context) => Center(
-              child: Lottie.asset('assets/animations/loading.json'),
+              child: Lottie.asset('assets/animations/loading.json',height: MediaQuery.of(context).size.height/5),
             ));
     try {
       // await FirebaseFirestore.instance

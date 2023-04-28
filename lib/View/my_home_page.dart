@@ -104,8 +104,10 @@ class _MyHomePageState extends State<MyHomePage> {
                                                 builder: (context) {
                                           if (snapshot.connectionState ==
                                               ConnectionState.waiting) {
-                                            return Lottie.asset(
-                                                'assets/animations/loading.json');
+                                            return Center(
+                                              child: Lottie.asset(
+                                                  'assets/animations/loading.json',height: MediaQuery.of(context).size.height/5),
+                                            );
                                           } else if (snapshot.hasError) {
                                             print(snapshot);
                                             return Utils.flushBarErrorMessage(
@@ -200,8 +202,10 @@ class _MyHomePageState extends State<MyHomePage> {
                                                 builder: (context) {
                                           if (snapshot.connectionState ==
                                               ConnectionState.waiting) {
-                                            return Lottie.asset(
-                                                'assets/animations/loading.json');
+                                            return Center(
+                                              child: Lottie.asset(
+                                                  'assets/animations/loading.json',height: MediaQuery.of(context).size.height/5),
+                                            );
                                           } else if (snapshot.hasError) {
                                             return Utils.flushBarErrorMessage(
                                                 'Some thing went wrong',
@@ -326,8 +330,10 @@ class _MyHomePageState extends State<MyHomePage> {
                                                 builder: (context) {
                                           if (snapshot.connectionState ==
                                               ConnectionState.waiting) {
-                                            return Lottie.asset(
-                                                'assets/animations/loading.json');
+                                            return Center(
+                                              child: Lottie.asset(
+                                                  'assets/animations/loading.json',height: MediaQuery.of(context).size.height/5),
+                                            );
                                           } else if (snapshot.hasError) {
                                             return Utils.flushBarErrorMessage(
                                                 'Some thing went wrong',

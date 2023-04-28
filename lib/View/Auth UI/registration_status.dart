@@ -56,7 +56,8 @@ class _RegistrationStatusScreenState extends State<RegistrationStatusScreen> {
             builder: (ctx, snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
                 return Center(
-                    child: Lottie.asset('assets/animations/loading.json'));
+                    child: Lottie.asset('assets/animations/loading.json',
+                        height: MediaQuery.of(context).size.height / 5));
               } else if (snapshot.connectionState == ConnectionState.done &&
                   snapshot.hasData) {
                 return Center(
@@ -86,7 +87,9 @@ class _RegistrationStatusScreenState extends State<RegistrationStatusScreen> {
                           ? Container(
                               child: Center(
                                 child: Lottie.asset(
-                                    'assets/animations/congo.json'),
+                                    'assets/animations/congo.json',
+                                    height:
+                                        MediaQuery.of(context).size.height / 5),
                               ),
                             )
                           : Container(

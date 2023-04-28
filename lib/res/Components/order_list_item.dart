@@ -73,7 +73,7 @@ class OrderListItem extends StatelessWidget {
           const SizedBox(width: 10.0),
           Text(
             "Rs ${item!.price! * item!.quantity!}",
-            style: priceTextStyle,
+            style: kTextStyleBlack,
           ),
         ],
       ),
