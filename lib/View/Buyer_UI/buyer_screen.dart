@@ -4,6 +4,7 @@ import 'package:milk_zilla/View/Buyer_UI/check_out_screen.dart';
 import 'package:milk_zilla/View/Buyer_UI/price_list.dart';
 import 'package:milk_zilla/provider/Sopping_item_provider.dart';
 import 'package:milk_zilla/res/Components/my_drawer.dart';
+import 'package:milk_zilla/res/Components/my_drawers/buyer_drawer.dart';
 import 'package:provider/provider.dart';
 
 import '../../res/Components/create_an_order.dart';
@@ -73,7 +74,7 @@ class _BuyerScreenState extends State<BuyerScreen> {
                       )))
         ],
       ),
-      endDrawer: MyAppDrawer(),
+      endDrawer: BuyerDrawer(),
       body: SingleChildScrollView(
         child: Column(
           children: [
