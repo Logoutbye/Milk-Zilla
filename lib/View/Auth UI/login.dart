@@ -15,6 +15,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../res/Components/round_button.dart';
 import '../../res/my_colors.dart';
+import '../Seller_UI/Customer Orders/customers_orders.dart';
 
 class LoginScreen extends StatefulWidget {
   String whichUser;
@@ -361,7 +362,7 @@ class _LoginScreenState extends State<LoginScreen> {
         } else if (widget.whichUser == 'Seller') {
           if (currentSellerStatusInFirestore == 'Approved') {
             Navigator.of(context)
-                .push(MaterialPageRoute(builder: (context) => SellerScreen()));
+                .push(MaterialPageRoute(builder: (context) => MyAllCustomerOrders()));
           } else {
             print(
                 'After successful login i am waiting to be approved as seller');

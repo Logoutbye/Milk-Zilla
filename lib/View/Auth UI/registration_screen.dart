@@ -14,6 +14,7 @@ import '../../res/Components/round_button.dart';
 import '../../res/my_colors.dart';
 import '../Buyer_UI/buyer_screen.dart';
 import '../Inspector_UI/insector_screen.dart';
+import '../Seller_UI/Customer Orders/customers_orders.dart';
 import '../Seller_UI/seller_screen.dart';
 
 class RegistrationScreen extends StatefulWidget {
@@ -574,7 +575,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
 
           if (currentSellerStatusInFirestore == 'Approved') {
             Navigator.of(context)
-                .push(MaterialPageRoute(builder: (context) => SellerScreen()));
+                .push(MaterialPageRoute(builder: (context) => MyAllCustomerOrders()));
           } else {
             Navigator.of(context).push(MaterialPageRoute(
                 builder: (context) => RegistrationStatusScreen(
