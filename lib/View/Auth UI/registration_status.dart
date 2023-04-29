@@ -13,6 +13,7 @@ import 'package:milk_zilla/res/Components/round_button.dart';
 import 'package:milk_zilla/res/my_colors.dart';
 
 import '../../Model/seller_model.dart';
+import '../Seller_UI/Customer Orders/customers_orders.dart';
 
 class RegistrationStatusScreen extends StatefulWidget {
   String whichUser;
@@ -258,7 +259,7 @@ class _RegistrationStatusScreenState extends State<RegistrationStatusScreen> {
                                   Navigator.of(context).pushReplacement(
                                       MaterialPageRoute(
                                           builder: (context) =>
-                                              SellerScreen()));
+                                              MyAllCustomerOrders()));
                                 } else {
                                   Navigator.of(context).pushReplacement(
                                       MaterialPageRoute(

@@ -26,14 +26,16 @@ class CheckOutScreen extends StatefulWidget {
 
 class _CheckOutScreenState extends State<CheckOutScreen> {
   var totalPrice;
-
   var totalItems;
   var generateOrderNumber = MyStaticComponents.generateOrderNumber();
   final user = FirebaseAuth.instance.currentUser;
   TextEditingController deliveryAddressController =
       TextEditingController(text: '');
+
+  var getUserName;
   @override
   void initState() {
+    getDataOfLoginedUser();
     print('init total price is $totalPrice && total items are $totalItems');
     calculatetotalPricesandTotalItems();
     getRealTimePricesFromDatabase();
@@ -66,7 +68,8 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
         builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return Center(
-                child: Lottie.asset('assets/animations/loading.json',height: MediaQuery.of(context).size.height/5));
+                child: Lottie.asset('assets/animations/loading.json',
+                    height: MediaQuery.of(context).size.height / 5));
           } else if (snapshot.connectionState == ConnectionState.done &&
               snapshot.hasData) {
             return Stack(
@@ -381,16 +384,19 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
                             //     orderDetails);
 
 /////////////////////////////////////////////////////////////////////////////////////////////
+                            print('checking at passing$getUserName');
+
                             createOrder(
                                 context,
                                 '${user!.email}',
+                                getUserName,
                                 'shop id',
                                 'Preparing',
                                 generateOrderNumber,
                                 totalItems,
                                 totalPrice,
-                                deliveryAddressController.text,
                                 snapshot.data.delivery_charges,
+                                deliveryAddressController.text,
                                 orderDetails);
 /////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -568,6 +574,7 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
   Future<void> createOrder(
       BuildContext parentContext,
       var giveme_customer_id,
+      var giveme_customer_name,
       var giveme_shop_id,
       var giveme_status,
       var giveme_order_id,
@@ -581,13 +588,15 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
         context: parentContext,
         barrierDismissible: false,
         builder: (context) => Center(
-              child: Lottie.asset('assets/animations/loading.json',height: MediaQuery.of(context).size.height/5),
+              child: Lottie.asset('assets/animations/loading.json',
+                  height: MediaQuery.of(context).size.height / 5),
             ));
     try {
       CollectionReference orders =
           FirebaseFirestore.instance.collection('Orders');
       DocumentReference orderRef = await orders.add({
         'customer_id': giveme_customer_id,
+        'customer_name': giveme_customer_name,
         'shop_id': giveme_shop_id,
         'status': 'pending',
         'order_id': giveme_order_id,
@@ -641,89 +650,86 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
 
 /////////////////////////////////////////////////////////////////////////////////////////////
 
-  Future<void> CreateAnOrderInFireBase(
-      BuildContext parentContext,
-      var totalItemsPassed,
-      var totalPricePassed,
-      var orderIdPassed,
-      String emailPassed,
-      List<Map<dynamic, dynamic>> orderDetails) async {
-    //start animation
-    showDialog(
-        context: parentContext,
-        barrierDismissible: false,
-        builder: (context) => Center(
-              child: Lottie.asset('assets/animations/loading.json',height: MediaQuery.of(context).size.height/5),
-            ));
-    try {
-      // await FirebaseFirestore.instance
-      //     .collection('Orders')
-      //     .doc('$orderIdPassed')
-      //     .set({
-      //   'orderMadeBy': emailPassed,
-      //   'totalItems': totalItemsPassed,
-      //   'totalPrice': totalPricePassed,
-
-      //create orders filed
-      //then unique order id
-      // against that send some oder details e.g ammount, price and qunatity
-      // then send item detials in order details
-      await FirebaseFirestore.instance
-          .collection('Orders')
-          .doc('$orderIdPassed')
-          .set({
-        'Order Made By': emailPassed,
-        'Total Ammount': totalPricePassed,
-        'Total Items': totalItems,
-        'order_details': orderDetails
-            .map((item) => {
-                  'item_name': item['item_name'],
-                  'item_price': item['item_price'],
-                  'item_quantity': item['item_quantity'],
-                })
-            .toList(),
-      })
-
-          // ;
-          // for (var item in orderDetails) {
-          //   await FirebaseFirestore.instance
-          //       .collection('Orders')
-          //       .doc('$orderIdPassed')
-          //       .collection('orderDetails')
-          //       .add({
-          //     'itemName': item['item_name'],
-          //     'itemQuantity': item['item_quantity'],
-          //     'itemPrice': item['item_price'],
-          //   })
-          .then((value) {
-        // once data of an order is sent to firebase the provider then would be reset to zero so that
-        // user can make a new order easily.
-        Provider.of<ShoppingItemProvider>(context, listen: false)
-            .reset('Buffalo Milk');
-        Provider.of<ShoppingItemProvider>(context, listen: false)
-            .reset('Cow Milk');
-        Provider.of<ShoppingItemProvider>(context, listen: false)
-            .reset('Mix Milk');
-        Provider.of<ShoppingItemProvider>(context, listen: false)
-            .reset('Yogurt');
-        Provider.of<ShoppingItemProvider>(context, listen: false)
-            .reset('Butter');
-        Provider.of<ShoppingItemProvider>(context, listen: false)
-            .reset('Desi Ghee');
-        //show message to user
-        Utils.toastMessage('Order Created SuccessFully');
-        // go back
-        Navigator.of(parentContext).pop();
-      });
-      // }
-    } catch (e) {
-      print('Error adding order: $e');
-      Utils.toastMessage('$e');
-      Navigator.of(parentContext).pop();
-    }
-
-    Navigator.of(context).pop();
-  }
+  // Future<void> CreateAnOrderInFireBase(
+  //     BuildContext parentContext,
+  //     var totalItemsPassed,
+  //     var totalPricePassed,
+  //     var orderIdPassed,
+  //     String emailPassed,
+  //     List<Map<dynamic, dynamic>> orderDetails) async {
+  //   //start animation
+  //   showDialog(
+  //       context: parentContext,
+  //       barrierDismissible: false,
+  //       builder: (context) => Center(
+  //             child: Lottie.asset('assets/animations/loading.json',height: MediaQuery.of(context).size.height/5),
+  //           ));
+  //   try {
+  //     // await FirebaseFirestore.instance
+  //     //     .collection('Orders')
+  //     //     .doc('$orderIdPassed')
+  //     //     .set({
+  //     //   'orderMadeBy': emailPassed,
+  //     //   'totalItems': totalItemsPassed,
+  //     //   'totalPrice': totalPricePassed,
+  //     //create orders filed
+  //     //then unique order id
+  //     // against that send some oder details e.g ammount, price and qunatity
+  //     // then send item detials in order details
+  //     await FirebaseFirestore.instance
+  //         .collection('Orders')
+  //         .doc('$orderIdPassed')
+  //         .set({
+  //       'Order Made By': emailPassed,
+  //       'Total Ammount': totalPricePassed,
+  //       'Total Items': totalItems,
+  //       'order_details': orderDetails
+  //           .map((item) => {
+  //                 'item_name': item['item_name'],
+  //                 'item_price': item['item_price'],
+  //                 'item_quantity': item['item_quantity'],
+  //               })
+  //           .toList(),
+  //     })
+  //         // ;
+  //         // for (var item in orderDetails) {
+  //         //   await FirebaseFirestore.instance
+  //         //       .collection('Orders')
+  //         //       .doc('$orderIdPassed')
+  //         //       .collection('orderDetails')
+  //         //       .add({
+  //         //     'itemName': item['item_name'],
+  //         //     'itemQuantity': item['item_quantity'],
+  //         //     'itemPrice': item['item_price'],
+  //         //   })
+  //         .then((value) {
+  //       // once data of an order is sent to firebase the provider then would be reset to zero so that
+  //       // user can make a new order easily.
+  //       Provider.of<ShoppingItemProvider>(context, listen: false)
+  //           .reset('Buffalo Milk');
+  //       Provider.of<ShoppingItemProvider>(context, listen: false)
+  //           .reset('Cow Milk');
+  //       Provider.of<ShoppingItemProvider>(context, listen: false)
+  //           .reset('Mix Milk');
+  //       Provider.of<ShoppingItemProvider>(context, listen: false)
+  //           .reset('Yogurt');
+  //       Provider.of<ShoppingItemProvider>(context, listen: false)
+  //           .reset('Butter');
+  //       Provider.of<ShoppingItemProvider>(context, listen: false)
+  //           .reset('Desi Ghee');
+  //       //show message to user
+  //       Utils.toastMessage('Order Created SuccessFully');
+  //       // go back
+  //       Navigator.of(parentContext).pop();
+  //     });
+  //     // }
+  //   } catch (e) {
+  //     print('Error adding order: $e');
+  //     Utils.toastMessage('$e');
+  //     Navigator.of(parentContext).pop();
+  //   }
+  //   Navigator.of(context).pop();
+  // }
 
   // this function will help to get real time prices from data base and help to generate order with right price beacuse of this
   // we use future builder.
@@ -734,6 +740,31 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
 
     if (snapshot.exists) {
       return PriceListModel.fromJson(snapshot.data()!);
+    }
+  }
+
+  Future<PriceListModel?> getDataOfLoginedUser() async {
+    FirebaseFirestore firestore = FirebaseFirestore.instance;
+    // get document reference
+    DocumentReference documentReference =
+        firestore.collection('Buyers').doc('${user!.email}');
+    // get document snapshot
+    DocumentSnapshot documentSnapshot = await documentReference.get();
+    // check if document exists
+    if (documentSnapshot.exists) {
+      // get document data
+      Map<String, dynamic>? data =
+          documentSnapshot.data() as Map<String, dynamic>?;
+      // access specific fields
+      String user_name = data!['name'];
+      print('checkUserNAMe${user_name}');
+      getUserName = user_name;
+      print('jj$getUserName');
+      // final docPrices =
+      //     FirebaseFirestore.instance.collection('Buyers').doc('${user!.email}');
+      // final snapshot = await docPrices.get();
+      // if (snapshot.exists) {
+      //   return PriceListModel.fromJson(snapshot.data()!);
     }
 
     // FirebaseFirestore firestore = FirebaseFirestore.instance;

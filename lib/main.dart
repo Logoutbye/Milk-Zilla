@@ -9,6 +9,7 @@ import 'package:milk_zilla/provider/Sopping_item_provider.dart';
 import 'package:milk_zilla/res/Components/firebase_helper.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'View/Seller_UI/Customer Orders/customers_orders.dart';
 import 'View/my_home_page.dart';
 
 Future<void> main() async {
@@ -75,7 +76,7 @@ class MyApp extends StatelessWidget {
                 : whichUserLoggedIn == 'Seller' &&
                         FirestoreHelper.currentSellerStatusInFirestore ==
                             'Approved'
-                    ? SellerScreen()
+                    ? MyAllCustomerOrders()
                     //if user is Seller and is not approved
                     : whichUserLoggedIn == 'Seller' &&
                             FirestoreHelper.currentSellerStatusInFirestore ==
