@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:milk_zilla/View/Auth%20UI/registration_status.dart';
+import 'package:milk_zilla/View/Buyer_UI/all_shops_to_order_from.dart';
 import 'package:milk_zilla/res/Components/error_screen.dart';
 import 'package:milk_zilla/res/Components/my_shared_prefrences.dart';
 
@@ -520,8 +521,8 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
           MySharedPrefencesSessionHandling
               .setOrupdateWhichUserLoggedInSharedPreferences(
                   '${widget.whichUser}');
-          Navigator.of(context)
-              .push(MaterialPageRoute(builder: (context) => BuyerScreen()));
+          Navigator.of(context).push(
+              MaterialPageRoute(builder: (context) => AllShopesToOrderFrom()));
           emailTextController.clear();
           PasswordTextController.clear();
           mobileNumberTextController.clear();

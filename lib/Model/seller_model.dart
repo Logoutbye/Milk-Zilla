@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 class SellerOrInspectorModel {
   var name;
   var mobile_no;
@@ -20,6 +22,28 @@ class SellerOrInspectorModel {
     required this.password,
     required this.status,
   });
+
+  factory SellerOrInspectorModel.fromSnapshot(DocumentSnapshot doc) {
+    Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
+    return SellerOrInspectorModel(
+        name: data['name'],
+        mobile_no: data['mobile_no'],
+        city: data['city'],
+        shop_name: data['shop_name'],
+        shop_adress: data['shop_adress'],
+        inspector_adress: data['inspector_adress'],
+        email: data['email'],
+        password: data['password'],
+        status: data['status']);
+    // Order(
+    //   id: doc.id,
+    //   customerId: data['customer_id'],
+    //   shopId: data['shop_id'],
+    //   status: data['status'],
+    //   items: List<Map<String, dynamic>>.from(data['items']),
+    //   timestamp: (data['timestamp'] as Timestamp).toDate(),
+    // );
+  }
 
   SellerOrInspectorModel.fromJson(Map<String, dynamic> json) {
     name = json['name'];

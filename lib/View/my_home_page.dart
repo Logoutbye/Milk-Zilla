@@ -7,6 +7,7 @@ import 'package:milk_zilla/Utils/utils.dart';
 import 'package:milk_zilla/View/Auth%20UI/login.dart';
 import 'package:milk_zilla/View/Auth%20UI/registration_screen.dart';
 import 'package:milk_zilla/View/Auth%20UI/registration_status.dart';
+import 'package:milk_zilla/View/Buyer_UI/all_shops_to_order_from.dart';
 import 'package:milk_zilla/View/Buyer_UI/buyer_screen.dart';
 import 'package:milk_zilla/View/Inspector_UI/insector_screen.dart';
 import 'package:milk_zilla/View/Seller_UI/seller_screen.dart';
@@ -106,7 +107,11 @@ class _MyHomePageState extends State<MyHomePage> {
                                               ConnectionState.waiting) {
                                             return Center(
                                               child: Lottie.asset(
-                                                  'assets/animations/loading.json',height: MediaQuery.of(context).size.height/5),
+                                                  'assets/animations/loading.json',
+                                                  height: MediaQuery.of(context)
+                                                          .size
+                                                          .height /
+                                                      5),
                                             );
                                           } else if (snapshot.hasError) {
                                             print(snapshot);
@@ -115,7 +120,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                                 context);
                                           } else if (snapshot.hasData) {
                                             if (whichUserLoggedIn == 'Buyer') {
-                                              return BuyerScreen();
+                                              return AllShopesToOrderFrom();
                                             } else {
                                               return ErrorScreen(
                                                   Message:
@@ -204,7 +209,11 @@ class _MyHomePageState extends State<MyHomePage> {
                                               ConnectionState.waiting) {
                                             return Center(
                                               child: Lottie.asset(
-                                                  'assets/animations/loading.json',height: MediaQuery.of(context).size.height/5),
+                                                  'assets/animations/loading.json',
+                                                  height: MediaQuery.of(context)
+                                                          .size
+                                                          .height /
+                                                      5),
                                             );
                                           } else if (snapshot.hasError) {
                                             return Utils.flushBarErrorMessage(
@@ -332,7 +341,11 @@ class _MyHomePageState extends State<MyHomePage> {
                                               ConnectionState.waiting) {
                                             return Center(
                                               child: Lottie.asset(
-                                                  'assets/animations/loading.json',height: MediaQuery.of(context).size.height/5),
+                                                  'assets/animations/loading.json',
+                                                  height: MediaQuery.of(context)
+                                                          .size
+                                                          .height /
+                                                      5),
                                             );
                                           } else if (snapshot.hasError) {
                                             return Utils.flushBarErrorMessage(

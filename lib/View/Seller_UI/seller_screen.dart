@@ -5,13 +5,10 @@ import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:lottie/lottie.dart';
 import 'package:milk_zilla/res/Components/my_drawer.dart';
-<<<<<<< HEAD
 import 'package:milk_zilla/res/Components/my_drawers/seller_drawer.dart';
-=======
 import 'package:milk_zilla/res/constanst.dart';
 
 import '../../res/my_colors.dart';
->>>>>>> ef3acaf8f201a5412f6caea488b7b49686aa56e8
 
 class SellerScreen extends StatefulWidget {
   const SellerScreen({super.key});
@@ -37,67 +34,8 @@ class _BuyerScreenState extends State<SellerScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-<<<<<<< HEAD
         appBar: AppBar(title: Text('Seller screeen')),
         drawer: SellerDrawer(),
-=======
-        backgroundColor: MyColors.kWhite,
-        appBar: AppBar(
-          automaticallyImplyLeading: false,
-          // backgroundColor: Color.fromARGB(255, 255, 255, 255),
-          // foregroundColor: MyColors.kPrimary,
-          elevation: 0,
-          backgroundColor: MyColors.kWhite,
-          foregroundColor: MyColors.kPrimary,
-          title: Row(
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(left: 8),
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    padding: const EdgeInsets.all(10.0),
-                    elevation: 0,
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(15.0)),
-                    backgroundColor: MyColors.kPrimary,
-                  ),
-                  child: Text(
-                    'My Orders',
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 18.0,
-                    ),
-                  ),
-                  onPressed: () {},
-                ),
-              ),
-            ],
-          ),
-          actions: [
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: IconButton(
-                icon: Icon(Icons.shopping_cart_checkout),
-                iconSize: 35,
-                onPressed: () {},
-              ),
-            ),
-            Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: Builder(
-                    builder: (context) => IconButton(
-                          icon: Icon(Icons.settings),
-                          iconSize: 40,
-                          onPressed: () {
-                            Scaffold.of(context).openEndDrawer();
-                          },
-                        )))
-          ],
-        ),
-        endDrawer: MyAppDrawer(),
-        //   appBar: AppBar(title: Text('Seller screeen')),
-        //   drawer: MyAppDrawer(),
->>>>>>> ef3acaf8f201a5412f6caea488b7b49686aa56e8
         body: FutureBuilder<List<Order>>(
           future: getOrdersForShop(shopId),
           builder: (context, snapshot) {
@@ -263,7 +201,7 @@ class _BuyerScreenState extends State<SellerScreen> {
                 ),
                 SizedBox(height: heightbetweenWidgetsInOrder),
                 Text('Order Details'),
-                 SizedBox(height: heightbetweenWidgetsInOrder),
+                SizedBox(height: heightbetweenWidgetsInOrder),
 
                 //Pickup Button
                 Center(

@@ -4,6 +4,7 @@ import 'package:lottie/lottie.dart';
 import 'package:milk_zilla/Utils/utils.dart';
 import 'package:milk_zilla/View/Auth%20UI/registration_screen.dart';
 import 'package:milk_zilla/View/Auth%20UI/registration_status.dart';
+import 'package:milk_zilla/View/Buyer_UI/all_shops_to_order_from.dart';
 import 'package:milk_zilla/View/Buyer_UI/buyer_screen.dart';
 import 'package:milk_zilla/View/Inspector_UI/insector_screen.dart';
 import 'package:milk_zilla/View/Seller_UI/seller_screen.dart';
@@ -343,18 +344,20 @@ class _LoginScreenState extends State<LoginScreen> {
             .setOrupdateWhichUserLoggedInSharedPreferences('${whichUser}');
         print('trying to store in shared prefrences ${whichUser}');
 
-     await   FirestoreHelper.initializeToCheckStatusForSellers();
-     await   FirestoreHelper.initializeToCheckStatusForInspector();
+        await FirestoreHelper.initializeToCheckStatusForSellers();
+        await FirestoreHelper.initializeToCheckStatusForInspector();
         var currentSellerStatusInFirestore =
-          await  FirestoreHelper.currentSellerStatusInFirestore;
-        print('checking currentUserStatusInFirestore at login success::$currentSellerStatusInFirestore');
+            await FirestoreHelper.currentSellerStatusInFirestore;
+        print(
+            'checking currentUserStatusInFirestore at login success::$currentSellerStatusInFirestore');
         var currentInspectorStatusInFirestore =
-          await  FirestoreHelper.currentInspectorStatusInFirestore;
-        print('checking currentUserStatusInFirestore at login success::$currentSellerStatusInFirestore');
+            await FirestoreHelper.currentInspectorStatusInFirestore;
+        print(
+            'checking currentUserStatusInFirestore at login success::$currentSellerStatusInFirestore');
 
         if (widget.whichUser == 'Buyer') {
-          Navigator.of(context)
-              .push(MaterialPageRoute(builder: (context) => BuyerScreen()));
+          Navigator.of(context).push(
+              MaterialPageRoute(builder: (context) => AllShopesToOrderFrom()));
         } else if (widget.whichUser == 'Seller') {
           if (currentSellerStatusInFirestore == 'Approved') {
             Navigator.of(context)
