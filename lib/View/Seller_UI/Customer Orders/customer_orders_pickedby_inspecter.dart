@@ -20,7 +20,8 @@ class _CustomerOrdersPickedbyInspecterFromShopState
         child: SingleChildScrollView(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
-            children: [Text('Orders Picked by Inspector')],
+            children: [Text('Orders Picked by Inspector')
+            ],
           ),
         ),
       ),

@@ -1,13 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:lottie/lottie.dart';
 import 'package:milk_zilla/View/Inspector_UI/insector_screen.dart';
-import 'package:milk_zilla/View/Seller_UI/seller_screen.dart';
 import 'package:milk_zilla/View/my_home_page.dart';
-import 'package:milk_zilla/res/Components/firebase_helper.dart';
+import 'package:milk_zilla/controllers/registration_status_controller.dart';
 import 'package:milk_zilla/res/Components/my_shared_prefrences.dart';
 import 'package:milk_zilla/res/Components/round_button.dart';
 import 'package:milk_zilla/res/my_colors.dart';
@@ -31,14 +28,13 @@ class _RegistrationStatusScreenState extends State<RegistrationStatusScreen> {
 
   @override
   void initState() {
-    readSellerDataFromDatabase();
     whichUser = widget.whichUser;
-
     print('email::${user!.email}');
     // TODO: implement initState
     super.initState();
   }
 
+  RegistrationStatusController registrationStatusController =RegistrationStatusController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -52,8 +48,10 @@ class _RegistrationStatusScreenState extends State<RegistrationStatusScreen> {
         ),
         // extendBody: true,
         // extendBodyBehindAppBar: true,
+
+        
         body: FutureBuilder(
-            future: readSellerDataFromDatabase(),
+            future:registrationStatusController.readSellerDataFromDatabase(whichUser,user),
             builder: (ctx, snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
                 return Center(
@@ -296,25 +294,27 @@ class _RegistrationStatusScreenState extends State<RegistrationStatusScreen> {
     );
   }
 
-  Future<SellerOrInspectorModel?> readSellerDataFromDatabase() async {
-    if (whichUser == 'Seller') {
-      final docPrices = FirebaseFirestore.instance
-          .collection('Sellers')
-          .doc('${user!.email}');
-      final snapshot = await docPrices.get();
+  // Future<SellerOrInspectorModel?> readSellerDataFromDatabase() async {
+  //   if (whichUser == 'Seller') {
+  //     final docPrices = FirebaseFirestore.instance
+  //         .collection('Sellers')
+  //         .doc('${user!.email}');
+  //     final snapshot = await docPrices.get();
 
-      if (snapshot.exists) {
-        return SellerOrInspectorModel.fromJson(snapshot.data()!);
-      }
-    } else {
-      final docPrices = FirebaseFirestore.instance
-          .collection('Inspectors')
-          .doc('${user!.email}');
-      final snapshot = await docPrices.get();
+  //     if (snapshot.exists) {
+  //       return SellerOrInspectorModel.fromJson(snapshot.data()!);
+  //     }
+  //   } else {
+  //     final docPrices = FirebaseFirestore.instance
+  //         .collection('Inspectors')
+  //         .doc('${user!.email}');
+  //     final snapshot = await docPrices.get();
 
-      if (snapshot.exists) {
-        return SellerOrInspectorModel.fromJson(snapshot.data()!);
-      }
-    }
-  }
+  //     if (snapshot.exists) {
+  //       return SellerOrInspectorModel.fromJson(snapshot.data()!);
+  //     }
+  //   }
+  // }
+
+
 }

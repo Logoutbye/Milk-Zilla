@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:milk_zilla/Utils/utils.dart';
 import 'package:milk_zilla/View/Buyer_UI/purchased_screen.dart';
-import 'package:milk_zilla/main.dart';
+import 'package:milk_zilla/res/Components/custom_divider.dart';
 import 'package:milk_zilla/res/Components/error_screen.dart';
 import 'package:milk_zilla/res/constanst.dart';
 import 'package:milk_zilla/res/my_colors.dart';
@@ -35,15 +35,13 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
   var getUserName;
   @override
   void initState() {
-    getDataOfLoginedUser();
+    // getDataOfLoginedUser();
     print('init total price is $totalPrice && total items are $totalItems');
     calculatetotalPricesandTotalItems();
     getRealTimePricesFromDatabase();
 
     print('unique order number for order:: $generateOrderNumber');
     print('email of current user for order${user!.email}');
-    // 1682363470245254
-    // TODO: implement initState
     super.initState();
   }
 
@@ -170,7 +168,7 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
                         ),
                       ),
                     const SizedBox(height: 20.0),
-                    totalItems == 0 ? SizedBox() : _buildDivider(),
+                    totalItems == 0 ? SizedBox() :CustomDivider(),
                     const SizedBox(height: 20.0),
                     totalItems == 0
                         ? SizedBox()
@@ -190,7 +188,7 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
                             ],
                           ),
                     const SizedBox(height: 20.0),
-                    _buildDivider(),
+                    CustomDivider(),
                     const SizedBox(height: 20.0),
                     totalPrice > snapshot.data.delivery_charges
                         ? Row(
@@ -214,7 +212,7 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
                             style: kTextStyleBlack,
                           )),
                     const SizedBox(height: 20.0),
-                    _buildDivider(),
+                    CustomDivider(),
                     const SizedBox(height: 10.0),
                     totalPrice > snapshot.data.delivery_charges
                         ? Row(
@@ -352,54 +350,6 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
                                       provider.getCount('Desi Ghee'),
                                 },
                             ];
-
-                            // CreateAnOrderInFireBase(
-                            //     context,
-                            //     totalQuantity,
-                            //     totalPrice,
-                            //     generateOrderNumber,
-                            //     '${user!.email}',
-                            //     orderDetails);
-
-                            ///////////////////////////////
-                            // List<Map<String, dynamic>> items = [
-                            //   {
-                            //     'item_name': 'Item 1',
-                            //     'item_price': 10.0,
-                            //     'item_quantity': 2
-                            //   },
-                            //   {
-                            //     'item_name': 'Item 2',
-                            //     'item_price': 5.0,
-                            //     'item_quantity': 3
-                            //   },
-                            // ];
-
-                            // CreateAnOrderInFireBase(
-                            //     context,
-                            //     totalItems,
-                            //     totalPrice,
-                            //     generateOrderNumber,
-                            //     '${user!.email}',
-                            //     orderDetails);
-
-/////////////////////////////////////////////////////////////////////////////////////////////
-                            print('checking at passing$getUserName');
-
-                            createOrder(
-                                context,
-                                '${user!.email}',
-                                getUserName,
-                                'shop id',
-                                'Preparing',
-                                generateOrderNumber,
-                                totalItems,
-                                totalPrice,
-                                snapshot.data.delivery_charges,
-                                deliveryAddressController.text,
-                                orderDetails);
-/////////////////////////////////////////////////////////////////////////////////////////////
-
                           } else {
                             Navigator.pop(context);
                           }
@@ -419,16 +369,16 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
   }
 
   // jsut a divider
-  Container _buildDivider() {
-    return Container(
-      height: 2.0,
-      width: double.maxFinite,
-      decoration: BoxDecoration(
-        color: Colors.grey.shade300,
-        borderRadius: BorderRadius.circular(5.0),
-      ),
-    );
-  }
+  // Container _buildDivider() {
+  //   return Container(
+  //     height: 2.0,
+  //     width: double.maxFinite,
+  //     decoration: BoxDecoration(
+  //       color: Colors.grey.shade300,
+  //       borderRadius: BorderRadius.circular(5.0),
+  //     ),
+  //   );
+  // }
 
   calculatetotalPricesandTotalItems() async {
     final provider = Provider.of<ShoppingItemProvider>(context, listen: false);
@@ -645,91 +595,7 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
                 order_no: null,
               )));
     }
-    // Navigator.of(context).pop();
   }
-
-/////////////////////////////////////////////////////////////////////////////////////////////
-
-  // Future<void> CreateAnOrderInFireBase(
-  //     BuildContext parentContext,
-  //     var totalItemsPassed,
-  //     var totalPricePassed,
-  //     var orderIdPassed,
-  //     String emailPassed,
-  //     List<Map<dynamic, dynamic>> orderDetails) async {
-  //   //start animation
-  //   showDialog(
-  //       context: parentContext,
-  //       barrierDismissible: false,
-  //       builder: (context) => Center(
-  //             child: Lottie.asset('assets/animations/loading.json',height: MediaQuery.of(context).size.height/5),
-  //           ));
-  //   try {
-  //     // await FirebaseFirestore.instance
-  //     //     .collection('Orders')
-  //     //     .doc('$orderIdPassed')
-  //     //     .set({
-  //     //   'orderMadeBy': emailPassed,
-  //     //   'totalItems': totalItemsPassed,
-  //     //   'totalPrice': totalPricePassed,
-  //     //create orders filed
-  //     //then unique order id
-  //     // against that send some oder details e.g ammount, price and qunatity
-  //     // then send item detials in order details
-  //     await FirebaseFirestore.instance
-  //         .collection('Orders')
-  //         .doc('$orderIdPassed')
-  //         .set({
-  //       'Order Made By': emailPassed,
-  //       'Total Ammount': totalPricePassed,
-  //       'Total Items': totalItems,
-  //       'order_details': orderDetails
-  //           .map((item) => {
-  //                 'item_name': item['item_name'],
-  //                 'item_price': item['item_price'],
-  //                 'item_quantity': item['item_quantity'],
-  //               })
-  //           .toList(),
-  //     })
-  //         // ;
-  //         // for (var item in orderDetails) {
-  //         //   await FirebaseFirestore.instance
-  //         //       .collection('Orders')
-  //         //       .doc('$orderIdPassed')
-  //         //       .collection('orderDetails')
-  //         //       .add({
-  //         //     'itemName': item['item_name'],
-  //         //     'itemQuantity': item['item_quantity'],
-  //         //     'itemPrice': item['item_price'],
-  //         //   })
-  //         .then((value) {
-  //       // once data of an order is sent to firebase the provider then would be reset to zero so that
-  //       // user can make a new order easily.
-  //       Provider.of<ShoppingItemProvider>(context, listen: false)
-  //           .reset('Buffalo Milk');
-  //       Provider.of<ShoppingItemProvider>(context, listen: false)
-  //           .reset('Cow Milk');
-  //       Provider.of<ShoppingItemProvider>(context, listen: false)
-  //           .reset('Mix Milk');
-  //       Provider.of<ShoppingItemProvider>(context, listen: false)
-  //           .reset('Yogurt');
-  //       Provider.of<ShoppingItemProvider>(context, listen: false)
-  //           .reset('Butter');
-  //       Provider.of<ShoppingItemProvider>(context, listen: false)
-  //           .reset('Desi Ghee');
-  //       //show message to user
-  //       Utils.toastMessage('Order Created SuccessFully');
-  //       // go back
-  //       Navigator.of(parentContext).pop();
-  //     });
-  //     // }
-  //   } catch (e) {
-  //     print('Error adding order: $e');
-  //     Utils.toastMessage('$e');
-  //     Navigator.of(parentContext).pop();
-  //   }
-  //   Navigator.of(context).pop();
-  // }
 
   // this function will help to get real time prices from data base and help to generate order with right price beacuse of this
   // we use future builder.
@@ -743,44 +609,24 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
     }
   }
 
-  Future<PriceListModel?> getDataOfLoginedUser() async {
-    FirebaseFirestore firestore = FirebaseFirestore.instance;
-    // get document reference
-    DocumentReference documentReference =
-        firestore.collection('Buyers').doc('${user!.email}');
-    // get document snapshot
-    DocumentSnapshot documentSnapshot = await documentReference.get();
-    // check if document exists
-    if (documentSnapshot.exists) {
-      // get document data
-      Map<String, dynamic>? data =
-          documentSnapshot.data() as Map<String, dynamic>?;
-      // access specific fields
-      String user_name = data!['name'];
-      print('checkUserNAMe${user_name}');
-      getUserName = user_name;
-      print('jj$getUserName');
-      // final docPrices =
-      //     FirebaseFirestore.instance.collection('Buyers').doc('${user!.email}');
-      // final snapshot = await docPrices.get();
-      // if (snapshot.exists) {
-      //   return PriceListModel.fromJson(snapshot.data()!);
-    }
-
-    // FirebaseFirestore firestore = FirebaseFirestore.instance;
-    // // get document reference
-    // DocumentReference documentReference =
-    //     firestore.collection('Price List').doc('items');
-    // // get document snapshot
-    // DocumentSnapshot documentSnapshot = await documentReference.get();
-    // // check if document exists
-    // if (documentSnapshot.exists) {
-    //   // get document data
-    //   Map<String, dynamic>? data =
-    //       documentSnapshot.data() as Map<String, dynamic>?;
-    //   // access specific fields
-    //   String buffalo_milk = data!['buffalo_milk'];
-    //   print('prices::${buffalo_milk}');
-    // }
-  }
+  // will delete
+  // Future<PriceListModel?> getDataOfLoginedUser() async {
+  //   FirebaseFirestore firestore = FirebaseFirestore.instance;
+  //   // get document reference
+  //   DocumentReference documentReference =
+  //       firestore.collection('Buyers').doc('${user!.email}');
+  //   // get document snapshot
+  //   DocumentSnapshot documentSnapshot = await documentReference.get();
+  //   // check if document exists
+  //   if (documentSnapshot.exists) {
+  //     // get document data
+  //     Map<String, dynamic>? data =
+  //         documentSnapshot.data() as Map<String, dynamic>?;
+  //     // access specific fields
+  //     String user_name = data!['name'];
+  //     print('user_name${user_name}');
+  //     getUserName = user_name;
+  //     print('getUserName:$getUserName');
+  //   }
+  // }
 }

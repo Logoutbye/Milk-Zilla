@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 class PriceListModel {
   var cow_milk;
   var buffalo_milk;
@@ -56,3 +58,7 @@ class PriceListModel {
   //   return data;
   // }
 }
+
+
+
+
