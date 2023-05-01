@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:milk_zilla/View/Buyer_UI/Customer%20Orders%20With%20Shop/customer_orders_with_shop.dart';
+import 'package:milk_zilla/View/Buyer_UI/buyer_profile.dart';
 import 'package:milk_zilla/View/my_home_page.dart';
 import 'package:milk_zilla/main.dart';
 import 'package:milk_zilla/res/Components/my_shared_prefrences.dart';
@@ -36,9 +37,9 @@ class _BuyerDrawerState extends State<BuyerDrawer> {
               //     .removeWhichUserLoggedInFromSharedPreferences();
 
               // FirebaseAuth.instance.signOut();
-              // Navigator.pop(context);
-              // Navigator.of(context).pushReplacement(
-              //     MaterialPageRoute(builder: (context) => MyHomePage()));
+              Navigator.pop(context);
+              Navigator.of(context).push(
+                  MaterialPageRoute(builder: (context) => BuyerProfile()));
               // navigatorKey.currentState!.popUntil((route) => route.isFirst);
             },
           ),

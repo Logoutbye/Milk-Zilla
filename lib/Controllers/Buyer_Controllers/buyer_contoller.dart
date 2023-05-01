@@ -19,4 +19,7 @@ class BuyerContoller {
       return [];
     }
   }
+
+  //insert funciton
+
 }

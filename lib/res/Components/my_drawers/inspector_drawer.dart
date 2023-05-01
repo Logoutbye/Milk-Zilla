@@ -1,20 +1,21 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:milk_zilla/View/Seller_UI/Customer%20Orders/customers_orders.dart';
-import 'package:milk_zilla/View/Seller_UI/seller_profile.dart';
-import 'package:milk_zilla/View/Seller_UI/shop_products_for_selling.dart';
+import 'package:milk_zilla/View/Buyer_UI/Customer%20Orders%20With%20Shop/customer_orders_with_shop.dart';
+import 'package:milk_zilla/View/Inspector_UI/Inspector_profile.dart';
+import 'package:milk_zilla/View/Inspector_UI/insector_screen.dart';
 import 'package:milk_zilla/View/my_home_page.dart';
 import 'package:milk_zilla/main.dart';
+import 'package:milk_zilla/res/Components/my_drawers/buyer_drawer.dart';
 import 'package:milk_zilla/res/Components/my_shared_prefrences.dart';
 
-class SellerDrawer extends StatefulWidget {
-  SellerDrawer({super.key});
+class InspectorDrawer extends StatefulWidget {
+  InspectorDrawer({super.key});
 
   @override
-  State<SellerDrawer> createState() => _SellerDrawerState();
+  State<InspectorDrawer> createState() => _InspectorDrawerState();
 }
 
-class _SellerDrawerState extends State<SellerDrawer> {
+class _InspectorDrawerState extends State<InspectorDrawer> {
   @override
   Widget build(BuildContext context) {
     final user = FirebaseAuth.instance.currentUser!;
@@ -40,37 +41,23 @@ class _SellerDrawerState extends State<SellerDrawer> {
               // FirebaseAuth.instance.signOut();
               Navigator.pop(context);
               Navigator.of(context).push(
-                  MaterialPageRoute(builder: (context) => SellerProfile()));
-            },
-          ),
-
-          ListTile(
-            leading: const Icon(Icons.production_quantity_limits),
-            title: const Text('My Products'),
-            onTap: () {
-              // MySharedPrefencesSessionHandling
-              //     .removeWhichUserLoggedInFromSharedPreferences();
-
-              // FirebaseAuth.instance.signOut();
-              Navigator.pop(context);
-              Navigator.of(context).pushReplacement(MaterialPageRoute(
-                  builder: (context) => ShopeProductsForSelling()));
-              //navigatorKey.currentState!.popUntil((route) => route.isFirst);
+                  MaterialPageRoute(builder: (context) => InspectorProfile()));
+              // navigatorKey.currentState!.popUntil((route) => route.isFirst);
             },
           ),
           // Customer Orders
           ListTile(
             leading: const Icon(Icons.people),
-            title: const Text('Customer Orders'),
+            title: const Text('My Orders'),
             onTap: () {
               // MySharedPrefencesSessionHandling
               //     .removeWhichUserLoggedInFromSharedPreferences();
 
               // FirebaseAuth.instance.signOut();
               Navigator.pop(context);
-              Navigator.of(context).pushReplacement(MaterialPageRoute(
-                  builder: (context) => MyAllCustomerOrders()));
-              //navigatorKey.currentState!.popUntil((route) => route.isFirst);
+              Navigator.of(context).push(
+                  MaterialPageRoute(builder: (context) => InspectorScreen()));
+              // navigatorKey.currentState!.popUntil((route) => route.isFirst);
             },
           ),
 

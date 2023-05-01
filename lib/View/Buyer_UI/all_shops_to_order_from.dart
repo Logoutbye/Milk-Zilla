@@ -112,24 +112,6 @@ class _AllShopesToOrderFromState extends State<AllShopesToOrderFrom> {
   //   }
   // }
 
-  // Future<List<SellerOrInspectorModel>>
-  //     getAllApprovedShpeswithSpecifCity() async {
-  //   try {
-  //     QuerySnapshot querySnapshot = await FirebaseFirestore.instance
-  //         .collection('Sellers')
-  //         .where('city', isEqualTo: 'Abbottabad')
-  //         .where('status', isEqualTo: 'Approved')
-  //         .get();
-  //     List<SellerOrInspectorModel> shops = querySnapshot.docs
-  //         .map((doc) => SellerOrInspectorModel.fromSnapshot(doc))
-  //         .toList();
-  //     return shops;
-  //   } catch (e) {
-  //     print('Error getting orders for shop: $e');
-  //     return [];
-  //   }
-  // }
-
 // Divder between two widghets
   Container _buildDivider() {
     return Container(
