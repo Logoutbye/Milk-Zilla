@@ -6,6 +6,7 @@ import 'package:milk_zilla/View/Buyer_UI/all_shops_to_order_from.dart';
 import 'package:milk_zilla/View/Buyer_UI/buyer_screen.dart';
 import 'package:milk_zilla/View/Inspector_UI/insector_screen.dart';
 import 'package:milk_zilla/View/Seller_UI/seller_screen.dart';
+import 'package:milk_zilla/View/conver_laittude_to_address.dart';
 import 'package:milk_zilla/View/google_map_practice.dart';
 import 'package:milk_zilla/provider/Sopping_item_provider.dart';
 import 'package:milk_zilla/res/Components/firebase_helper.dart';
@@ -69,7 +70,7 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           primarySwatch: Colors.green,
         ),
-        home: GoogleMapPratices(),
+        home: ConvertLatToAddress(),
         //if user is buyer and approved
         // whichUserLoggedIn == 'Buyer'
         //     ? AllShopesToOrderFrom()

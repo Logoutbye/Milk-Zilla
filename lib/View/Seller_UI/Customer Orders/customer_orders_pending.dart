@@ -15,7 +15,7 @@ class CustomerOrdersInPedningByShop extends StatefulWidget {
 
 class _CustomerOrdersInPedningByShopState
     extends State<CustomerOrdersInPedningByShop> {
-  String shopId = 'shop id';
+  String shopId = 'seller1@gmail.com';
   SellerContoller buyerContoller = SellerContoller();
   @override
   void initState() {

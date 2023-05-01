@@ -53,15 +53,36 @@ class _GoogleMapPraticesState extends State<GoogleMapPratices> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: GoogleMap(
-        initialCameraPosition: _kGooglePlex,
-        mapType: MapType.normal,
-        myLocationButtonEnabled: true,
-        compassEnabled: true,
-        myLocationEnabled: true,
-        markers: Set<Marker>.of(_marker),
-        onMapCreated: (GoogleMapController controller) {
-          _controller.complete(controller);
+      body: SafeArea(
+        child: GoogleMap(
+          // initial position on map
+          initialCameraPosition: _kGooglePlex,
+          mapType: MapType.normal,
+          myLocationButtonEnabled: true,
+          compassEnabled: true,
+          myLocationEnabled: true,
+          // setting multiple markers on map
+          markers: Set<Marker>.of(_marker),
+          // controller of the map
+          onMapCreated: (GoogleMapController controller) {
+            _controller.complete(controller);
+          },
+        ),
+      ),
+
+      // move camera to a specific location
+      floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.location_disabled_outlined),
+        onPressed: () async {
+          GoogleMapController controller = await _controller.future;
+          controller.animateCamera(
+            CameraUpdate.newCameraPosition(
+              CameraPosition(
+                target: LatLng(34.0151, 71.5250),
+                zoom: 14,
+              ),
+            ),
+          );
         },
       ),
     );

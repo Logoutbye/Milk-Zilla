@@ -38,6 +38,10 @@ dependencies:
   cupertino_icons: ^1.0.2
 
   google_maps_flutter: ^2.2.5
+  #this package not working in new android OS
+  #flutter_geocoder: ^0.2.2-nullsafety
+  #alternative package
+  geocoding: ^2.1.0
 
   # firebase database
   cloud_firestore: ^4.5.1
