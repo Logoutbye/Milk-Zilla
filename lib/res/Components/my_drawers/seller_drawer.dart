@@ -6,6 +6,7 @@ import 'package:milk_zilla/View/Seller_UI/shop_products_for_selling.dart';
 import 'package:milk_zilla/View/my_home_page.dart';
 import 'package:milk_zilla/main.dart';
 import 'package:milk_zilla/res/Components/my_shared_prefrences.dart';
+import 'package:milk_zilla/res/my_colors.dart';
 
 class SellerDrawer extends StatefulWidget {
   SellerDrawer({super.key});
@@ -30,38 +31,52 @@ class _SellerDrawerState extends State<SellerDrawer> {
             child: Image(image: AssetImage('assets/images/icon.png')),
           ), //DrawerHeader
 
+          // ListTile(
+          //   leading: const Icon(Icons.production_quantity_limits),
+          //   title: const Text('My Profile'),
+          //   onTap: () {
+          //     // MySharedPrefencesSessionHandling
+          //     //     .removeWhichUserLoggedInFromSharedPreferences();
+
+          //     // FirebaseAuth.instance.signOut();
+          //     Navigator.pop(context);
+          //     Navigator.of(context).push(
+          //         MaterialPageRoute(builder: (context) => SellerProfile()));
+          //   },
+          // ),
+
           ListTile(
-            leading: const Icon(Icons.production_quantity_limits),
-            title: const Text('My Profile'),
+            leading: Image.asset(
+              'assets/images/my_products.png',
+              height: 40,
+              color: MyColors.kPrimary,
+            ),
+            title: const Text(
+              'My Products',
+              style: TextStyle(color: MyColors.kPrimary),
+            ),
             onTap: () {
               // MySharedPrefencesSessionHandling
               //     .removeWhichUserLoggedInFromSharedPreferences();
 
               // FirebaseAuth.instance.signOut();
               Navigator.pop(context);
-              Navigator.of(context).push(
-                  MaterialPageRoute(builder: (context) => SellerProfile()));
-            },
-          ),
-
-          ListTile(
-            leading: const Icon(Icons.production_quantity_limits),
-            title: const Text('My Products'),
-            onTap: () {
-              // MySharedPrefencesSessionHandling
-              //     .removeWhichUserLoggedInFromSharedPreferences();
-
-              // FirebaseAuth.instance.signOut();
-              Navigator.pop(context);
-              Navigator.of(context).pushReplacement(MaterialPageRoute(
+              Navigator.of(context).push(MaterialPageRoute(
                   builder: (context) => ShopeProductsForSelling()));
               //navigatorKey.currentState!.popUntil((route) => route.isFirst);
             },
           ),
+          Divider(
+            color: MyColors.kPrimary,
+          ),
           // Customer Orders
           ListTile(
-            leading: const Icon(Icons.people),
-            title: const Text('Customer Orders'),
+            leading: const Icon(
+              Icons.people,
+              color: MyColors.kPrimary,
+            ),
+            title: const Text('Customer Orders',
+                style: TextStyle(color: MyColors.kPrimary)),
             onTap: () {
               // MySharedPrefencesSessionHandling
               //     .removeWhichUserLoggedInFromSharedPreferences();
@@ -73,12 +88,19 @@ class _SellerDrawerState extends State<SellerDrawer> {
               //navigatorKey.currentState!.popUntil((route) => route.isFirst);
             },
           ),
+          Divider(
+            color: MyColors.kPrimary,
+          ),
 
           // Customer
 
           ListTile(
-            leading: const Icon(Icons.logout),
-            title: const Text('Logout'),
+            leading: const Icon(
+              Icons.logout,
+              color: MyColors.kPrimary,
+            ),
+            title: const Text('Logout',
+                style: TextStyle(color: MyColors.kPrimary)),
             onTap: () {
               MySharedPrefencesSessionHandling
                   .removeWhichUserLoggedInFromSharedPreferences();

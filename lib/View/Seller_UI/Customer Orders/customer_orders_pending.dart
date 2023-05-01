@@ -15,8 +15,8 @@ class CustomerOrdersInPedningByShop extends StatefulWidget {
 
 class _CustomerOrdersInPedningByShopState
     extends State<CustomerOrdersInPedningByShop> {
-  String shopId = 'shop id';
   SellerContoller buyerContoller = SellerContoller();
+ var shopId;
   @override
   void initState() {
     // this will get us orders placed against shop id
@@ -24,16 +24,18 @@ class _CustomerOrdersInPedningByShopState
     if (user != null) {
       final email = user.email;
       print('current users email::${email}');
+      shopId = email;
+      print('shop id::${shopId}');
     }
     // TODO: implement initState
     super.initState();
-  }
+    }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         body: FutureBuilder<List<OrderModel>>(
-      future: buyerContoller.getOrdersForShop(shopId),
+      future: buyerContoller.getOrdersForShop(shopId,'Pending'),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return Center(
@@ -47,7 +49,7 @@ class _CustomerOrdersInPedningByShopState
             itemCount: orders.length,
             itemBuilder: (context, index) {
               OrderModel order = orders[index];
-              return MyStaticUIWidgets.buildOrderUI2(context, order);
+              return MyStaticUIWidgets.buildOrderUI2(context,order,'Pending');
             },
           );
         } else {

@@ -6,6 +6,7 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:lottie/lottie.dart';
 import 'package:milk_zilla/Controllers/Buyer_Controllers/buyer_contoller.dart';
 import 'package:milk_zilla/Model/seller_model.dart';
+import 'package:milk_zilla/View/Buyer_UI/buyer_screen.dart';
 import 'package:milk_zilla/res/Components/my_drawers/buyer_drawer.dart';
 import 'package:milk_zilla/res/constanst.dart';
 import 'package:milk_zilla/res/my_colors.dart';
@@ -112,17 +113,6 @@ class _AllShopesToOrderFromState extends State<AllShopesToOrderFrom> {
   //   }
   // }
 
-// Divder between two widghets
-  Container _buildDivider() {
-    return Container(
-      height: 2.0,
-      width: double.maxFinite,
-      decoration: BoxDecoration(
-        color: Colors.grey.shade300,
-        borderRadius: BorderRadius.circular(5.0),
-      ),
-    );
-  }
 
 //
   Widget buildOrderUI2(BuildContext context, SellerOrInspectorModel shops) {
@@ -223,18 +213,22 @@ class _AllShopesToOrderFromState extends State<AllShopesToOrderFrom> {
                   ),
 
                   //Pickup Button
-                  Center(
-                    child: Container(
-                      width: MediaQuery.of(context).size.width / 1.6,
-                      height: MediaQuery.of(context).size.height / 20,
-                      decoration: BoxDecoration(
-                        color: MyColors.kPrimary,
-                        borderRadius: BorderRadius.circular(10),
-                        boxShadow: [
-                          BoxShadow(
-                            color: MyColors.kPrimary,
-                          ),
-                        ],
+                  InkWell(
+                    onTap: ()=>Navigator.of(context).push(MaterialPageRoute(builder: (context)=>BuyerScreen(getShopId: shops.email,))),
+                    child: Center(
+                      child: Container(
+                        width: MediaQuery.of(context).size.width / 1.6,
+                        height: MediaQuery.of(context).size.height / 20,
+                        decoration: BoxDecoration(
+                          color: MyColors.kPrimary,
+                          borderRadius: BorderRadius.circular(10),
+                          boxShadow: [
+                            BoxShadow(
+                              color: MyColors.kPrimary,
+                            ),
+                          ],
+                        ),
+                        child: Center(child: Text("Place An Order",style: kTextStyleWhite,)),
                       ),
                     ),
                   ),

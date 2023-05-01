@@ -69,40 +69,41 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           primarySwatch: Colors.green,
         ),
-        home: GoogleMapPratices(),
-        //if user is buyer and approved
-        // whichUserLoggedIn == 'Buyer'
-        //     ? AllShopesToOrderFrom()
+        home: 
+        // GoogleMapPratices(),
+        // if user is buyer and approved
+        whichUserLoggedIn == 'Buyer'
+            ? AllShopesToOrderFrom()
 
-        //     //if user is seller and approved
-        //     : whichUserLoggedIn == 'Seller' &&
-        //             FirestoreHelper.currentSellerStatusInFirestore ==
-        //                 'Approved'
-        //         ? MyAllCustomerOrders()
-        //         //if user is Seller and is not approved
-        //         : whichUserLoggedIn == 'Seller' &&
-        //                 FirestoreHelper.currentSellerStatusInFirestore ==
-        //                     'Pending'
-        //             ? RegistrationStatusScreen(
-        //                 whichUser: 'Seller',
-        //               )
+            //if user is seller and approved
+            : whichUserLoggedIn == 'Seller' &&
+                    FirestoreHelper.currentSellerStatusInFirestore ==
+                        'Approved'
+                ? MyAllCustomerOrders()
+                //if user is Seller and is not approved
+                : whichUserLoggedIn == 'Seller' &&
+                        FirestoreHelper.currentSellerStatusInFirestore ==
+                            'Pending'
+                    ? RegistrationStatusScreen(
+                        whichUser: 'Seller',
+                      )
 
-        //             //if user is Inspector and approved
-        //             : whichUserLoggedIn == 'Inspector' &&
-        //                     FirestoreHelper
-        //                             .currentInspectorStatusInFirestore ==
-        //                         'Approved'
-        //                 ? InspectorScreen()
+                    //if user is Inspector and approved
+                    : whichUserLoggedIn == 'Inspector' &&
+                            FirestoreHelper
+                                    .currentInspectorStatusInFirestore ==
+                                'Approved'
+                        ? InspectorScreen()
 
-        //                 //if user is Seller and is not approved
-        //                 : whichUserLoggedIn == 'Inspector' &&
-        //                         FirestoreHelper
-        //                                 .currentInspectorStatusInFirestore ==
-        //                             'Pending'
-        //                     ? RegistrationStatusScreen(
-        //                         whichUser: 'Inspector',
-        //                       )
-        //                     : MyHomePage(),
+                        //if user is Seller and is not approved
+                        : whichUserLoggedIn == 'Inspector' &&
+                                FirestoreHelper
+                                        .currentInspectorStatusInFirestore ==
+                                    'Pending'
+                            ? RegistrationStatusScreen(
+                                whichUser: 'Inspector',
+                              )
+                            : MyHomePage(),
       ),
     );
   }

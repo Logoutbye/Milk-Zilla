@@ -5,11 +5,11 @@ class OrderModel {
   String customerId;
   String customerName;
   String delivery_address;
-  String delivery_charges;
+  int delivery_charges;
   String shopId;
-  String status;
-  var total_items;
-  var total_price;
+  var status;
+  int total_items;
+  int total_price;
   List<Map<String, dynamic>> items;
   DateTime timestamp;
 
