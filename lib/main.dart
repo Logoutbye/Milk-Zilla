@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:milk_zilla/View/Auth%20UI/registration_status.dart';
+import 'package:milk_zilla/View/Auth%20UI/registration_status_screen.dart';
 import 'package:milk_zilla/View/Buyer_UI/all_shops_to_order_from.dart';
 import 'package:milk_zilla/View/Buyer_UI/buyer_screen.dart';
 import 'package:milk_zilla/View/Inspector_UI/insector_screen.dart';

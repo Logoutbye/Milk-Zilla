@@ -1,21 +1,13 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:lottie/lottie.dart';
 import 'package:milk_zilla/Utils/utils.dart';
 import 'package:milk_zilla/View/Auth%20UI/registration_screen.dart';
-import 'package:milk_zilla/View/Auth%20UI/registration_status.dart';
-import 'package:milk_zilla/View/Buyer_UI/all_shops_to_order_from.dart';
-import 'package:milk_zilla/View/Buyer_UI/buyer_screen.dart';
-import 'package:milk_zilla/View/Inspector_UI/insector_screen.dart';
-import 'package:milk_zilla/View/Seller_UI/seller_screen.dart';
-import 'package:milk_zilla/main.dart';
+import 'package:milk_zilla/controllers/Auth_Controllers/forget_password_controller.dart';
+import 'package:milk_zilla/controllers/Auth_Controllers/login_controller.dart';
 import 'package:milk_zilla/res/Components/firebase_helper.dart';
 import 'package:milk_zilla/res/Components/my_shared_prefrences.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../res/Components/round_button.dart';
 import '../../res/my_colors.dart';
-import '../Seller_UI/Customer Orders/customers_orders.dart';
 
 class LoginScreen extends StatefulWidget {
   String whichUser;
@@ -30,6 +22,9 @@ class _LoginScreenState extends State<LoginScreen> {
   TextEditingController PasswordTextController = TextEditingController();
   bool islogedInbuttonPressed = false;
 
+
+  LoginController loginController =LoginController();
+  ForgetPasswordController forgetPasswordController =ForgetPasswordController();
   var whichUser;
 
   @override
@@ -244,7 +239,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                                   .text.isNotEmpty &&
                                               PasswordTextController
                                                   .text.isEmpty) {
-                                            firebaseForgetPassword(context);
+                                          forgetPasswordController.firebaseForgetPassword(context,emailTextController);
                                           } else {
                                             Utils.flushBarErrorMessage(
                                                 'Please enter only email',
@@ -261,7 +256,12 @@ class _LoginScreenState extends State<LoginScreen> {
                                   MyElevatedButton(
                                     title: 'Login',
                                     onpress: () {
-                                      FirebaseLogin(context);
+                                      loginController.FirebaseLogin(
+                                        context,
+                                        emailTextController,
+                                        PasswordTextController,
+                                        whichUser);
+                                      // FirebaseLogin(context);
                                     },
                                   ),
                                   GestureDetector(
@@ -317,123 +317,5 @@ class _LoginScreenState extends State<LoginScreen> {
         ),
       ),
     );
-  }
-
-  Future FirebaseLogin(BuildContext parentContext) async {
-    showDialog(
-        context: parentContext,
-        barrierDismissible: true,
-        builder: (context) => Center(
-              child: Lottie.asset('assets/animations/loading.json',
-                  height: MediaQuery.of(context).size.height / 5),
-            ));
-    try {
-      await FirebaseAuth.instance
-          .signInWithEmailAndPassword(
-              email: emailTextController.text.trim(),
-              password: PasswordTextController.text.trim())
-          .then((UserCredential user_credentials) async {
-        // print("object ${user_credentials.user.toString()}");
-        // print("object ${user_credentials.credential!.signInMethod}");
-        // print("object ${user_credentials.credential!.token}");
-        emailTextController.clear();
-        PasswordTextController.clear();
-        Navigator.of(parentContext).pop();
-
-        //if login is successfull then store the user type for next time user opens app and navigation to relvant screen
-        MySharedPrefencesSessionHandling
-            .setOrupdateWhichUserLoggedInSharedPreferences('${whichUser}');
-        print('trying to store in shared prefrences ${whichUser}');
-
-        await FirestoreHelper.initializeToCheckStatusForSellers();
-        await FirestoreHelper.initializeToCheckStatusForInspector();
-        var currentSellerStatusInFirestore =
-            await FirestoreHelper.currentSellerStatusInFirestore;
-        print(
-            'checking currentUserStatusInFirestore at login success::$currentSellerStatusInFirestore');
-        var currentInspectorStatusInFirestore =
-            await FirestoreHelper.currentInspectorStatusInFirestore;
-        print(
-            'checking currentUserStatusInFirestore at login success::$currentSellerStatusInFirestore');
-
-        if (widget.whichUser == 'Buyer') {
-          Navigator.of(context).push(
-              MaterialPageRoute(builder: (context) => AllShopesToOrderFrom()));
-        } else if (widget.whichUser == 'Seller') {
-          if (currentSellerStatusInFirestore == 'Approved') {
-            Navigator.of(context)
-                .push(MaterialPageRoute(builder: (context) => MyAllCustomerOrders()));
-          } else {
-            print(
-                'After successful login i am waiting to be approved as seller');
-            Navigator.of(context).push(MaterialPageRoute(
-                builder: (context) => RegistrationStatusScreen(
-                      whichUser: whichUser,
-                    )));
-          }
-        } else {
-          if (currentInspectorStatusInFirestore == 'Approved') {
-            Navigator.of(context).push(
-                MaterialPageRoute(builder: (context) => InspectorScreen()));
-          } else {
-            print(
-                'After successful login i am waiting to be approved as seller');
-            Navigator.of(context).push(MaterialPageRoute(
-                builder: (context) => RegistrationStatusScreen(
-                      whichUser: whichUser,
-                    )));
-          }
-        }
-      }).onError((FirebaseAuthException error, stackTrace) {
-        if (error.code == "wrong-password") {
-          print("The password is invalid");
-          Utils.toastMessage("The password is invalid");
-          Navigator.of(parentContext).pop();
-          emailTextController.clear();
-          PasswordTextController.clear();
-        } else {
-          Utils.toastMessage(error.toString());
-          Navigator.of(parentContext).pop();
-          emailTextController.clear();
-          PasswordTextController.clear();
-        }
-      });
-    } on FirebaseAuthException catch (e) {
-      print('Khan${e.toString()}');
-      Utils.toastMessage(e.toString());
-      Navigator.of(parentContext).pop();
-      emailTextController.clear();
-      PasswordTextController.clear();
-    }
-  }
-
-  //to forget password we call this function
-  firebaseForgetPassword(BuildContext parentContext) async {
-    showDialog(
-        context: parentContext,
-        barrierDismissible: true,
-        builder: (context) => Center(
-              child: Lottie.asset('assets/animations/loading.json',
-                  height: MediaQuery.of(context).size.height / 5),
-            ));
-    try {
-      await FirebaseAuth.instance
-          .sendPasswordResetEmail(
-        email: emailTextController.text.trim(),
-      )
-          .then((g) {
-        Utils.toastMessage('Please Check Email to Reset Password');
-
-        Navigator.of(parentContext).pop();
-      }).onError((FirebaseAuthException error, stackTrace) {
-        Utils.toastMessage(error.toString());
-
-        Navigator.of(parentContext).pop();
-      });
-    } on FirebaseAuthException catch (e) {
-      Utils.toastMessage(e.toString());
-
-      Navigator.of(parentContext).pop();
-    }
   }
 }
