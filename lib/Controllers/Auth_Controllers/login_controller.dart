@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:milk_zilla/Model/seller_model.dart';
+import 'package:milk_zilla/main.dart';
 
 import '../../Utils/utils.dart';
 import '../../View/Auth UI/registration_status_screen.dart';
@@ -25,8 +26,7 @@ class LoginController {
     try {
       await FirebaseAuth.instance
           .signInWithEmailAndPassword(
-              email: email.text.trim(),
-              password: password.text.trim()
+              email: email.text.trim(), password: password.text.trim()
               //  emailTextController.text.trim(),
               //  PasswordTextController.text.trim()
               )
@@ -56,9 +56,11 @@ class LoginController {
             'checking currentUserStatusInFirestore at login success::$currentSellerStatusInFirestore');
 
         if (whichUser == 'Buyer') {
-          Navigator.of(parentContext).push(
+          navigatorKey.currentState!.popUntil((route) => route.isFirst);
+          Navigator.of(parentContext).pushReplacement(
               MaterialPageRoute(builder: (context) => AllShopesToOrderFrom()));
         } else if (whichUser == 'Seller') {
+          navigatorKey.currentState!.popUntil((route) => route.isFirst);
           if (currentSellerStatusInFirestore == 'Approved') {
             Navigator.of(parentContext).push(
                 MaterialPageRoute(builder: (context) => MyAllCustomerOrders()));
@@ -72,6 +74,7 @@ class LoginController {
           }
         } else {
           if (currentInspectorStatusInFirestore == 'Approved') {
+            navigatorKey.currentState!.popUntil((route) => route.isFirst);
             Navigator.of(parentContext).push(
                 MaterialPageRoute(builder: (context) => InspectorScreen()));
           } else {

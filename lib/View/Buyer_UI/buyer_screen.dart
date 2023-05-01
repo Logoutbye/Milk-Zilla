@@ -11,13 +11,24 @@ import '../../res/Components/create_an_order.dart';
 import '../../res/my_colors.dart';
 
 class BuyerScreen extends StatefulWidget {
-  const BuyerScreen({super.key});
+  var getShopId;
+
+   BuyerScreen({required this.getShopId, super.key});
 
   @override
   State<BuyerScreen> createState() => _BuyerScreenState();
 }
 
 class _BuyerScreenState extends State<BuyerScreen> {
+  var getShopId;
+  
+  @override
+  void initState() {
+    getShopId =widget.getShopId;
+    // TODO: implement initState
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     final milkProvider = Provider.of<ShoppingItemProvider>(context);
@@ -304,7 +315,7 @@ class _BuyerScreenState extends State<BuyerScreen> {
                 ),
                 onPressed: () {
                   Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => CheckOutScreen()));
+                      builder: (context) => CheckOutScreen(getShopId: getShopId,)));
                 },
               ),
             ),

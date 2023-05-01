@@ -23,8 +23,21 @@ class _ShopeProductsForSellingState extends State<ShopeProductsForSelling> {
       appBar: AppBar(
         title: Text('My Products'),
         centerTitle: true,
+        leading: IconButton(onPressed: (){
+          Navigator.pop(context);
+        }, icon: Icon(Icons.arrow_back)),
+        actions: [
+          Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: Builder(
+                  builder: (context) => IconButton(
+                        icon: Icon(Icons.settings),
+                        iconSize: 40,
+                        onPressed: () => Scaffold.of(context).openEndDrawer(),
+                      )))
+        ],
       ),
-      drawer: SellerDrawer(),
+      endDrawer: SellerDrawer(),
       body: SingleChildScrollView(
         child: Column(
           children: [

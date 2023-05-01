@@ -23,6 +23,17 @@ class _MyAllCustomerOrdersState extends State<MyAllCustomerOrders> {
         appBar: AppBar(
           title: const Text('Customer Orders'),
           centerTitle: true,
+         
+          actions: [
+            Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                child: Builder(
+                    builder: (context) => IconButton(
+                          icon: Icon(Icons.settings),
+                          // iconSize: 40,
+                          onPressed: () => Scaffold.of(context).openEndDrawer(),
+                        )))
+          ],
           bottom: TabBar(
             tabs: [
               Tab(
@@ -37,7 +48,7 @@ class _MyAllCustomerOrdersState extends State<MyAllCustomerOrders> {
             ],
           ),
         ),
-        drawer: SellerDrawer(),
+        endDrawer: SellerDrawer(),
         body: TabBarView(
           children: [
             CustomerOrdersInPedningByShop(),

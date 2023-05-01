@@ -1,13 +1,11 @@
-
 import 'package:flutter/material.dart';
 import 'package:milk_zilla/Model/order_model.dart';
 import 'package:milk_zilla/res/constanst.dart';
-
-import '../../View/Seller_UI/Customer Orders/customer_orders_pending.dart';
 import '../my_colors.dart';
 
 class MyStaticUIWidgets {
-  static Widget buildOrderUI2(BuildContext context, OrderModel order) {
+  static Widget buildOrderUI2(
+      BuildContext context, OrderModel order, var status) {
     var heightbetweenWidgetsInOrder = MediaQuery.of(context).size.height / 95;
 
     return Center(
@@ -15,7 +13,9 @@ class MyStaticUIWidgets {
         padding: const EdgeInsets.all(8.0),
         child: Container(
           width: MediaQuery.of(context).size.width / 1.2,
-          height: MediaQuery.of(context).size.height /1.9,
+          height: status == 'Pending'
+              ? MediaQuery.of(context).size.height / 1.9
+              : MediaQuery.of(context).size.height / 2,
           decoration: BoxDecoration(
             color: MyColors.kSecondary,
             borderRadius: BorderRadius.circular(20),
@@ -30,8 +30,7 @@ class MyStaticUIWidgets {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-
-                      Row(
+                Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -122,8 +121,9 @@ class MyStaticUIWidgets {
                   height: heightbetweenWidgetsInOrder,
                 ),
                 //Status
-          
+
                 ExpansionTile(
+                  initiallyExpanded: true,
                   title: Text('View Order Details(${order.total_items})'),
                   children: <Widget>[
                     SizedBox(
@@ -153,74 +153,40 @@ class MyStaticUIWidgets {
                     ),
                   ],
                 ),
-                SizedBox(
-                  height: heightbetweenWidgetsInOrder,
-                ),
+                status == 'Pending'
+                    ? SizedBox(
+                        height: heightbetweenWidgetsInOrder,
+                      )
+                    : SizedBox(),
                 //Pickup Button
-                Center(
-                  child: Container(
-                    width: MediaQuery.of(context).size.width / 1.6,
-                    height: MediaQuery.of(context).size.height / 30,
-                    decoration: BoxDecoration(
-                      color: MyColors.kPrimary,
-                      borderRadius: BorderRadius.circular(10),
-                      boxShadow: [
-                        BoxShadow(
-                          color: MyColors.kPrimary,
+                status == 'Pending'
+                    ? Center(
+                        child: Container(
+                          width: MediaQuery.of(context).size.width / 1.6,
+                          height: MediaQuery.of(context).size.height / 30,
+                          decoration: BoxDecoration(
+                            color: MyColors.kPrimary,
+                            borderRadius: BorderRadius.circular(10),
+                            boxShadow: [
+                              BoxShadow(
+                                color: MyColors.kPrimary,
+                              ),
+                            ],
+                          ),
+                          child: Center(
+                            child: Text(
+                              'Pick UP ${order.status}',
+                              style: kTextStyleWhite,
+                            ),
+                          ),
                         ),
-                      ],
-                    ),
-                    child: Center(
-                      child: Text(
-                        'Pick Up:',
-                        style: kTextStyleWhite,
-                      ),
-                    ),
-                  ),
-                ),
+                      )
+                    : SizedBox(),
               ],
             ),
           ),
         ),
       ),
     );
-    //   Card(
-    //     child: Padding(
-    //       padding: EdgeInsets.all(16.0),
-    //       child: Column(
-    //         crossAxisAlignment: CrossAxisAlignment.start,
-    //         children: [
-    //           Text('Order ID: ${order.id}'),
-    //           SizedBox(height: 8.0),
-    //           Text('Customer ID: ${order.customerId}'),
-    //           SizedBox(height: 8.0),
-    //           Text('Shop ID: ${order.shopId}'),
-    //           SizedBox(height: 8.0),
-    //           Text('Status: ${order.status}'),
-    //           SizedBox(height: 8.0),
-    //           Text('Timestamp: ${order.timestamp.toString()}'),
-    //           SizedBox(height: 8.0),
-    //           Text('Items:'),
-    //           ListView.builder(
-    //             shrinkWrap: true,
-    //             physics: NeverScrollableScrollPhysics(),
-    //             itemCount: order.items.length,
-    //             itemBuilder: (BuildContext context, int index) {
-    //               return Column(
-    //                 crossAxisAlignment: CrossAxisAlignment.start,
-    //                 children: [
-    //                   Text('Item ${index + 1}:'),
-    //                   Text('Name: ${order.items[index]['name']}'),
-    //                   Text('Price: ${order.items[index]['price']}'),
-    //                   Text('Quantity: ${order.items[index]['quantity']}'),
-    //                 ],
-    //               );
-    //             },
-    //           ),
-    //         ],
-    //       ),
-    //     ),
-    //   );
   }
-   
 }

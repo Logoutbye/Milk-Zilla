@@ -16,9 +16,11 @@ import '../../provider/Sopping_item_provider.dart';
 import '../../res/Components/order_list_item.dart';
 
 class CheckOutScreen extends StatefulWidget {
+  var getShopId;
+
   // static const String path = "lib/src/pages/food/food_checkout.dart";
 
-  const CheckOutScreen({super.key});
+  CheckOutScreen({required this.getShopId, super.key});
 
   @override
   State<CheckOutScreen> createState() => _CheckOutScreenState();
@@ -33,9 +35,12 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
       TextEditingController(text: '');
 
   var getUserName;
+
+  var getShopId;
   @override
   void initState() {
-    // getDataOfLoginedUser();
+    getShopId = widget.getShopId;
+    getDataOfLoginedUser();
     print('init total price is $totalPrice && total items are $totalItems');
     calculatetotalPricesandTotalItems();
     getRealTimePricesFromDatabase();
@@ -168,7 +173,7 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
                         ),
                       ),
                     const SizedBox(height: 20.0),
-                    totalItems == 0 ? SizedBox() :CustomDivider(),
+                    totalItems == 0 ? SizedBox() : CustomDivider(),
                     const SizedBox(height: 20.0),
                     totalItems == 0
                         ? SizedBox()
@@ -327,21 +332,21 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
                                   'item_price': snapshot.data.mix_milk *
                                       provider.getCount('Mix Milk'),
                                 },
-                              if (provider.getCount('Mix Milk') > 0)
+                              if (provider.getCount('Yogurt') > 0)
                                 {
                                   'item_name': 'Yogurt',
                                   'item_quantity': provider.getCount('Yogurt'),
                                   'item_price': snapshot.data.yougurt *
                                       provider.getCount('Yogurt'),
                                 },
-                              if (provider.getCount('Mix Milk') > 0)
+                              if (provider.getCount('Butter') > 0)
                                 {
                                   'item_name': 'Butter',
-                                  'item_quantity': provider.getCount('Butter') *
+                                  'item_quantity': provider.getCount('Butter'),
+                                  'item_price': snapshot.data.butter *
                                       provider.getCount('Butter'),
-                                  'item_price': snapshot.data.butter,
                                 },
-                              if (provider.getCount('Mix Milk') > 0)
+                              if (provider.getCount('Desi Ghee') > 0)
                                 {
                                   'item_name': 'Desi Ghee',
                                   'item_quantity':
@@ -350,6 +355,31 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
                                       provider.getCount('Desi Ghee'),
                                 },
                             ];
+                            createOrder(
+                              context,
+                              user!.email,
+                              getUserName,
+                              deliveryAddressController.text,
+                              snapshot.data.delivery_charges,
+                              orderDetails,
+                              generateOrderNumber,
+                              'seller1@gmail.com',
+                              'Pending',
+                              totalItems,
+                              totalPrice,
+                            );
+                            // createOrder(
+                            //     context,
+                            //     '${user!.email}',
+                            //     getUserName,
+                            //     getShopId,
+                            //     'Preparing',
+                            //     generateOrderNumber,
+                            //     totalItems,
+                            //     totalPrice,
+                            //     snapshot.data.delivery_charges,
+                            //     deliveryAddressController.text,
+                            //     orderDetails);
                           } else {
                             Navigator.pop(context);
                           }
@@ -522,17 +552,18 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
 
 // This function creates a new order document in Firestore.
   Future<void> createOrder(
-      BuildContext parentContext,
-      var giveme_customer_id,
-      var giveme_customer_name,
-      var giveme_shop_id,
-      var giveme_status,
-      var giveme_order_id,
-      var giveme_total_items,
-      var giveme_total_price,
-      var giveme_delivery_charges,
-      var giveme_delivery_adress,
-      List<Map<dynamic, dynamic>> giveme_order_details) async {
+    BuildContext parentContext,
+    var giveme_customer_id,
+    var giveme_customer_name,
+    var giveme_delivery_adress,
+    var giveme_delivery_charges,
+    List<Map<dynamic, dynamic>> giveme_order_details,
+    var giveme_order_id,
+    var giveme_shop_id,
+    var giveme_status,
+    var giveme_total_items,
+    var giveme_total_price,
+  ) async {
     //start animation
     showDialog(
         context: parentContext,
@@ -547,15 +578,15 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
       DocumentReference orderRef = await orders.add({
         'customer_id': giveme_customer_id,
         'customer_name': giveme_customer_name,
-        'shop_id': giveme_shop_id,
-        'status': 'pending',
+        'delivery_address': giveme_delivery_adress,
+        'delivery_charges': giveme_delivery_charges,
+        'items': giveme_order_details,
         'order_id': giveme_order_id,
+        'shop_id': giveme_shop_id,
+        'status': 'Pending',
+        'timestamp': FieldValue.serverTimestamp(),
         'total_items': giveme_total_items,
         'total_price': giveme_total_price,
-        'items': giveme_order_details,
-        'timestamp': FieldValue.serverTimestamp(),
-        'delivery_address': giveme_delivery_adress,
-        'delivery_charges': giveme_delivery_charges
       });
 
       // once data of an order is sent to firebase the provider then would be reset to zero so that
@@ -609,24 +640,24 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
     }
   }
 
-  // will delete
-  // Future<PriceListModel?> getDataOfLoginedUser() async {
-  //   FirebaseFirestore firestore = FirebaseFirestore.instance;
-  //   // get document reference
-  //   DocumentReference documentReference =
-  //       firestore.collection('Buyers').doc('${user!.email}');
-  //   // get document snapshot
-  //   DocumentSnapshot documentSnapshot = await documentReference.get();
-  //   // check if document exists
-  //   if (documentSnapshot.exists) {
-  //     // get document data
-  //     Map<String, dynamic>? data =
-  //         documentSnapshot.data() as Map<String, dynamic>?;
-  //     // access specific fields
-  //     String user_name = data!['name'];
-  //     print('user_name${user_name}');
-  //     getUserName = user_name;
-  //     print('getUserName:$getUserName');
-  //   }
-  // }
+  // to get current user name customer id
+  Future<PriceListModel?> getDataOfLoginedUser() async {
+    FirebaseFirestore firestore = FirebaseFirestore.instance;
+    // get document reference
+    DocumentReference documentReference =
+        firestore.collection('Buyers').doc('${user!.email}');
+    // get document snapshot
+    DocumentSnapshot documentSnapshot = await documentReference.get();
+    // check if document exists
+    if (documentSnapshot.exists) {
+      // get document data
+      Map<String, dynamic>? data =
+          documentSnapshot.data() as Map<String, dynamic>?;
+      // access specific fields
+      String user_name = data!['name'];
+      print('user_name${user_name}');
+      getUserName = user_name;
+      print('getUserName:$getUserName');
+    }
+  }
 }

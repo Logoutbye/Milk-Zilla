@@ -1,8 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
+import 'package:milk_zilla/Controllers/Seller_Controllers/seller_controller.dart';
 import 'package:milk_zilla/Model/order_model.dart';
-import 'package:milk_zilla/controllers/Seller_Controllers/seller_controller.dart';
 import 'package:milk_zilla/res/widgets/my_static_ui_widgets.dart';
 
 class CustomerOrdersInPedningByShop extends StatefulWidget {
@@ -15,8 +15,8 @@ class CustomerOrdersInPedningByShop extends StatefulWidget {
 
 class _CustomerOrdersInPedningByShopState
     extends State<CustomerOrdersInPedningByShop> {
-  String shopId = 'seller1@gmail.com';
   SellerContoller buyerContoller = SellerContoller();
+  var shopId;
   @override
   void initState() {
     // this will get us orders placed against shop id
@@ -24,6 +24,8 @@ class _CustomerOrdersInPedningByShopState
     if (user != null) {
       final email = user.email;
       print('current users email::${email}');
+      shopId = email;
+      print('shop id::${shopId}');
     }
     // TODO: implement initState
     super.initState();
@@ -33,7 +35,7 @@ class _CustomerOrdersInPedningByShopState
   Widget build(BuildContext context) {
     return Scaffold(
         body: FutureBuilder<List<OrderModel>>(
-      future: buyerContoller.getOrdersForShop(shopId),
+      future: buyerContoller.getOrdersForShop(shopId, 'Pending'),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return Center(
@@ -47,7 +49,7 @@ class _CustomerOrdersInPedningByShopState
             itemCount: orders.length,
             itemBuilder: (context, index) {
               OrderModel order = orders[index];
-              return MyStaticUIWidgets.buildOrderUI2(context, order);
+              return MyStaticUIWidgets.buildOrderUI2(context, order, 'Pending');
             },
           );
         } else {
