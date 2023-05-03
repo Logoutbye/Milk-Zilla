@@ -1,5 +1,7 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:milk_zilla/Model/order_model.dart';
+import 'package:milk_zilla/controllers/Global_Controllers/update_status_global_controller.dart';
 import 'package:milk_zilla/res/constanst.dart';
 import '../my_colors.dart';
 
@@ -160,23 +162,41 @@ class MyStaticUIWidgets {
                     : SizedBox(),
                 //Pickup Button
                 status == 'Pending'
-                    ? Center(
-                        child: Container(
-                          width: MediaQuery.of(context).size.width / 1.6,
-                          height: MediaQuery.of(context).size.height / 30,
-                          decoration: BoxDecoration(
-                            color: MyColors.kPrimary,
-                            borderRadius: BorderRadius.circular(10),
-                            boxShadow: [
-                              BoxShadow(
-                                color: MyColors.kPrimary,
+                    ? InkWell(
+                        onTap: () {
+                          print('hittig the button pickup');
+                          UpdateStatusGlobalController().updateStatus(context, order, 'Picked');
+                          // // Get a reference to the document you want to update
+                          // final documentReference = FirebaseFirestore.instance
+                          //     .collection('Orders')
+                          //     .doc(order.order_id);
+                          // // Update a field in the document
+                          // documentReference.update({
+                          //   'status': 'Picked',
+                          // }).then((value) {
+                          //   print('Field updated successfully');
+                          // }).catchError((error) {
+                          //   print('Failed to update field: $error');
+                          // });
+                        },
+                        child: Center(
+                          child: Container(
+                            width: MediaQuery.of(context).size.width / 1.6,
+                            height: MediaQuery.of(context).size.height / 30,
+                            decoration: BoxDecoration(
+                              color: MyColors.kPrimary,
+                              borderRadius: BorderRadius.circular(10),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: MyColors.kPrimary,
+                                ),
+                              ],
+                            ),
+                            child: Center(
+                              child: Text(
+                                'Pick UP ${order.status}',
+                                style: kTextStyleWhite,
                               ),
-                            ],
-                          ),
-                          child: Center(
-                            child: Text(
-                              'Pick UP ${order.status}',
-                              style: kTextStyleWhite,
                             ),
                           ),
                         ),
@@ -189,4 +209,13 @@ class MyStaticUIWidgets {
       ),
     );
   }
+
+  // Future<void> updateField(
+  //     String docId, String fieldName, dynamic value) async {
+  //   await FirebaseFirestore.instance
+  //       .collection('Orders')
+  //       .doc()
+  //       .update({fieldName: value}).catchError(
+  //           (error) => print('Failed to update field: $error'));
+  // }
 }

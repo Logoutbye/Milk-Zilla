@@ -3,28 +3,27 @@ import 'package:lottie/lottie.dart';
 import 'package:milk_zilla/View/Buyer_UI/check_out_screen.dart';
 import 'package:milk_zilla/View/Buyer_UI/price_list.dart';
 import 'package:milk_zilla/provider/Sopping_item_provider.dart';
-import 'package:milk_zilla/res/Components/my_drawer.dart';
 import 'package:milk_zilla/res/Components/my_drawers/buyer_drawer.dart';
 import 'package:provider/provider.dart';
 
 import '../../res/Components/create_an_order.dart';
 import '../../res/my_colors.dart';
 
-class BuyerScreen extends StatefulWidget {
+class ReviewCart extends StatefulWidget {
   var getShopId;
 
-   BuyerScreen({required this.getShopId, super.key});
+  ReviewCart({required this.getShopId, super.key});
 
   @override
-  State<BuyerScreen> createState() => _BuyerScreenState();
+  State<ReviewCart> createState() => _ReviewCartState();
 }
 
-class _BuyerScreenState extends State<BuyerScreen> {
+class _ReviewCartState extends State<ReviewCart> {
   var getShopId;
-  
+
   @override
   void initState() {
-    getShopId =widget.getShopId;
+    getShopId = widget.getShopId;
     // TODO: implement initState
     super.initState();
   }
@@ -315,7 +314,9 @@ class _BuyerScreenState extends State<BuyerScreen> {
                 ),
                 onPressed: () {
                   Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => CheckOutScreen(getShopId: getShopId,)));
+                      builder: (context) => CheckOutScreen(
+                            getShopId: getShopId,
+                          )));
                 },
               ),
             ),
@@ -362,9 +363,24 @@ class MilkCounter extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Text(
-      '$productType : ${Provider.of<ShoppingItemProvider>(context).getCount(productType)} $unit',
-      style: TextStyle(fontSize: 20),
+    return Row(
+      children: [
+        Text(
+          '$productType : ',
+          style: TextStyle(
+            color: Colors.black,
+            fontSize: 20.0,
+            fontWeight: FontWeight.bold,
+          ),
+        ),Text(
+          '${Provider.of<ShoppingItemProvider>(context).getCount(productType)} $unit',
+          style: TextStyle(
+            color: Colors.black,
+            fontSize: 20.0,
+            // fontWeight: FontWeight.bold,
+          ),
+        ),
+      ],
     );
   }
 }

@@ -1,18 +1,8 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:lottie/lottie.dart';
-import 'package:milk_zilla/View/Auth%20UI/registration_status_screen.dart';
-import 'package:milk_zilla/View/Buyer_UI/all_shops_to_order_from.dart';
-import 'package:milk_zilla/res/Components/my_shared_prefrences.dart';
 
-import '../../Utils/utils.dart';
 import '../../controllers/Auth_Controllers/users_registration_controller.dart';
-import '../../res/Components/firebase_helper.dart';
 import '../../res/Components/round_button.dart';
 import '../../res/my_colors.dart';
-import '../Inspector_UI/insector_screen.dart';
-import '../Seller_UI/Customer Orders/customers_orders.dart';
 
 class RegistrationScreen extends StatefulWidget {
   String whichUser;
@@ -476,7 +466,6 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   //   final inpector = FirebaseFirestore.instance
   //       .collection('Inspectors')
   //       .doc('${emailTextController.text}');
-
   //   final jsonForBuyer = {
   //     'name': nameTextControl.text,
   //     'mobile_no': mobileNumberTextController.text,
@@ -513,7 +502,6 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   //     await inpector.set(jsonForInspector);
   //   }
   // }
-
   // Future FirebaseRegistration(BuildContext parentContext) async {
   //   showDialog(
   //       context: parentContext,
@@ -548,14 +536,11 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   //         MySharedPrefencesSessionHandling
   //             .setOrupdateWhichUserLoggedInSharedPreferences(
   //                 '${widget.whichUser}');
-
   //         //get the approval status as soon as the user is created and navigate to relavent screen
   //         await FirestoreHelper.initializeToCheckStatusForSellers();
   //         await FirestoreHelper.initializeToCheckStatusForInspector();
-
   //         var currentInspectorStatusInFirestore =
   //             await FirestoreHelper.currentInspectorStatusInFirestore;
-
   //         if (currentInspectorStatusInFirestore == 'Approved') {
   //           Navigator.of(context).push(
   //               MaterialPageRoute(builder: (context) => InspectorScreen()));
@@ -578,13 +563,11 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   //         MySharedPrefencesSessionHandling
   //             .setOrupdateWhichUserLoggedInSharedPreferences(
   //                 '${widget.whichUser}');
-
   //         //get the approval status as soon as the user is created and navigate to relavent screen
   //         await FirestoreHelper.initializeToCheckStatusForSellers();
   //         await FirestoreHelper.initializeToCheckStatusForInspector();
   //         var currentSellerStatusInFirestore =
   //             await FirestoreHelper.currentSellerStatusInFirestore;
-
   //         if (currentSellerStatusInFirestore == 'Approved') {
   //           Navigator.of(context)
   //               .push(MaterialPageRoute(builder: (context) => MyAllCustomerOrders()));
@@ -594,7 +577,6 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   //                     whichUser: whichUser,
   //                   )));
   //         }
-
   //         emailTextController.clear();
   //         PasswordTextController.clear();
   //         mobileNumberTextController.clear();

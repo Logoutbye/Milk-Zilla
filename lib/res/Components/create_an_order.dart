@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:milk_zilla/res/my_colors.dart';
 
-import '../../View/Buyer_UI/buyer_screen.dart';
+import '../../View/Buyer_UI/review_cart.dart';
 
 class CreateAnOrder extends StatelessWidget {
   var itemname;
@@ -28,38 +29,59 @@ class CreateAnOrder extends StatelessWidget {
           width: MediaQuery.of(context).size.width / 1.1,
           child: Padding(
             padding: const EdgeInsets.all(8.0),
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                MilkCounter(
-                  productType: '$itemname',
-                  unit: itemname == 'Buffalo Milk'
-                      ? 'Litre'
-                      : itemname == 'Cow Milk'
-                          ? 'Litre'
-                          : itemname == 'Mix Milk'
-                              ? 'Litre'
-                              : itemname == 'Yogurt'
-                                  ? 'KG'
-                                  : itemname == 'Butter'
-                                      ? 'KG'
-                                      : itemname == 'Desi Ghee'
-                                          ? 'KG'
-                                          : '',
-                ),
-                Spacer(),
-                IconButton(
-                    iconSize: 18.0,
-                    padding: const EdgeInsets.all(2.0),
-                    icon: const Icon(Icons.remove),
-                    onPressed: onPressedDecrement),
-                Spacer(),
-                IconButton(
-                    iconSize: 18.0,
-                    padding: const EdgeInsets.all(2.0),
-                    icon: const Icon(Icons.add),
-                    onPressed: onPressedIncrement),
-              ],
+            child: Center(
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Center(
+                    child: IconButton(
+                        iconSize: 18.0,
+                        padding: const EdgeInsets.all(2.0),
+                        icon: const Icon(
+                          Icons.remove_circle,
+                          size: 25,
+                          color: MyColors.kPrimary,
+                        ),
+                        onPressed: onPressedDecrement),
+                  ),
+                  Spacer(),
+                  MilkCounter(
+                    productType: '$itemname',
+                    unit: itemname == 'Buffalo Milk'
+                        ? 'L'
+                        : itemname == 'Cow Milk'
+                            ? 'L'
+                            : itemname == 'Mix Milk'
+                                ? 'L'
+                                : itemname == 'Yogurt'
+                                    ? 'KG'
+                                    : itemname == 'Butter'
+                                        ? 'KG'
+                                        : itemname == 'Desi Ghee'
+                                            ? 'KG'
+                                            : '',
+                  ),
+                  // Spacer(),
+                  // IconButton(
+                  //     iconSize: 18.0,
+                  //     padding: const EdgeInsets.all(2.0),
+                  //     icon: const Icon(Icons.remove),
+                  //     onPressed: onPressedDecrement),
+                  Spacer(),
+                  IconButton(
+                      iconSize: 18.0,
+                      padding: const EdgeInsets.all(2.0),
+                      // icon: const Icon(Icons.add),
+                      icon: const Icon(
+                        Icons.add_circle,
+                        size: 25,
+                        color: MyColors.kPrimary,
+                      ),
+                      onPressed: onPressedIncrement),
+                ],
+              ),
             ),
           ),
         ),

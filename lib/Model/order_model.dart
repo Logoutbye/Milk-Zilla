@@ -43,6 +43,13 @@ class OrderModel {
       timestamp: (data['timestamp'] as Timestamp).toDate(),
     );
   }
+
+
+   Map<String, dynamic> toMap() {
+    return {
+      'status': this.status,
+    };
+  }
   // OrderModel.fromJson(Map<String, dynamic> json) {
 
   //   order_id =json['order_id'];
