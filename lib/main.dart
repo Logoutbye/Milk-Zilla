@@ -4,14 +4,16 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:milk_zilla/View/Auth%20UI/registration_status_screen.dart';
 import 'package:milk_zilla/View/Buyer_UI/all_shops_to_order_from.dart';
 import 'package:milk_zilla/View/Buyer_UI/buyer_screen.dart';
+import 'package:milk_zilla/View/Googl%20Map%20Practice/custom_window_marker_info.dart';
+import 'package:milk_zilla/View/Googl%20Map%20Practice/user_current_location.dart';
 import 'package:milk_zilla/View/Inspector_UI/insector_screen.dart';
 import 'package:milk_zilla/View/Seller_UI/seller_screen.dart';
-import 'package:milk_zilla/View/conver_laittude_to_address.dart';
-import 'package:milk_zilla/View/google_map_practice.dart';
+
 import 'package:milk_zilla/provider/Sopping_item_provider.dart';
 import 'package:milk_zilla/res/Components/firebase_helper.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'View/Googl Map Practice/conver_laittude_to_address.dart';
 import 'View/Seller_UI/Customer Orders/customers_orders.dart';
 import 'View/my_home_page.dart';
 
@@ -70,7 +72,7 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           primarySwatch: Colors.green,
         ),
-        home: ConvertLatToAddress(),
+        home: CustomWindowMarkerInfo(),
         //if user is buyer and approved
         // whichUserLoggedIn == 'Buyer'
         //     ? AllShopesToOrderFrom()
