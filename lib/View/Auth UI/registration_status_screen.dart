@@ -1,15 +1,14 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:milk_zilla/View/Inspector_UI/insector_screen.dart';
 import 'package:milk_zilla/View/my_home_page.dart';
-import 'package:milk_zilla/controllers/registration_status_controller.dart';
+import 'package:milk_zilla/controllers/Auth_Controllers/registration_status_controller.dart';
 import 'package:milk_zilla/res/Components/my_shared_prefrences.dart';
 import 'package:milk_zilla/res/Components/round_button.dart';
 import 'package:milk_zilla/res/my_colors.dart';
 
-import '../../Model/seller_model.dart';
+import '../../res/Components/custom_divider.dart';
 import '../Seller_UI/Customer Orders/customers_orders.dart';
 
 class RegistrationStatusScreen extends StatefulWidget {
@@ -34,7 +33,8 @@ class _RegistrationStatusScreenState extends State<RegistrationStatusScreen> {
     super.initState();
   }
 
-  RegistrationStatusController registrationStatusController =RegistrationStatusController();
+  RegistrationStatusController registrationStatusController =
+      RegistrationStatusController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -49,9 +49,9 @@ class _RegistrationStatusScreenState extends State<RegistrationStatusScreen> {
         // extendBody: true,
         // extendBodyBehindAppBar: true,
 
-        
         body: FutureBuilder(
-            future:registrationStatusController.readSellerDataFromDatabase(whichUser,user),
+            future: registrationStatusController.readSellerDataFromDatabase(
+                whichUser, user),
             builder: (ctx, snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
                 return Center(
@@ -161,15 +161,15 @@ class _RegistrationStatusScreenState extends State<RegistrationStatusScreen> {
                                         ],
                                       ),
                                       const SizedBox(height: 10.0),
-                                      _buildDivider(),
-                                      _buildDivider(),
+                                      CustomDivider(),
+                                      CustomDivider(),
                                       const SizedBox(height: 10.0),
                                       Text('Details',
                                           style: TextStyle(
                                               fontWeight: FontWeight.bold)),
                                       const SizedBox(height: 10.0),
-                                      _buildDivider(),
-                                      _buildDivider(),
+                                      CustomDivider(),
+                                      CustomDivider(),
                                       const SizedBox(height: 10.0),
                                       Row(
                                         children: [
@@ -179,7 +179,7 @@ class _RegistrationStatusScreenState extends State<RegistrationStatusScreen> {
                                         ],
                                       ),
                                       const SizedBox(height: 10.0),
-                                      _buildDivider(),
+                                      CustomDivider(),
                                       const SizedBox(height: 10.0),
                                       Row(
                                         children: [
@@ -189,7 +189,7 @@ class _RegistrationStatusScreenState extends State<RegistrationStatusScreen> {
                                         ],
                                       ),
                                       const SizedBox(height: 10.0),
-                                      _buildDivider(),
+                                      CustomDivider(),
                                       const SizedBox(height: 10.0),
                                       Row(
                                         children: [
@@ -199,7 +199,7 @@ class _RegistrationStatusScreenState extends State<RegistrationStatusScreen> {
                                         ],
                                       ),
                                       const SizedBox(height: 10.0),
-                                      _buildDivider(),
+                                      CustomDivider(),
                                       const SizedBox(height: 10.0),
                                       Row(
                                         children: [
@@ -209,7 +209,7 @@ class _RegistrationStatusScreenState extends State<RegistrationStatusScreen> {
                                         ],
                                       ),
                                       const SizedBox(height: 10.0),
-                                      _buildDivider(),
+                                      CustomDivider(),
                                       const SizedBox(height: 10.0),
                                       Row(
                                         children: [
@@ -228,7 +228,8 @@ class _RegistrationStatusScreenState extends State<RegistrationStatusScreen> {
                                           ? const SizedBox(height: 10.0)
                                           : SizedBox(),
                                       whichUser == 'Seller'
-                                          ? _buildDivider()
+                                          ? CustomDivider()
+                                          //  _buildDivider()
                                           : SizedBox(),
                                       whichUser == 'Seller'
                                           ? const SizedBox(height: 10.0)
@@ -283,16 +284,6 @@ class _RegistrationStatusScreenState extends State<RegistrationStatusScreen> {
             }));
   }
 
-  Container _buildDivider() {
-    return Container(
-      height: 2.0,
-      width: MediaQuery.of(context).size.width / 1,
-      decoration: BoxDecoration(
-        color: Colors.grey.shade300,
-        borderRadius: BorderRadius.circular(5.0),
-      ),
-    );
-  }
 
   // Future<SellerOrInspectorModel?> readSellerDataFromDatabase() async {
   //   if (whichUser == 'Seller') {
@@ -300,7 +291,6 @@ class _RegistrationStatusScreenState extends State<RegistrationStatusScreen> {
   //         .collection('Sellers')
   //         .doc('${user!.email}');
   //     final snapshot = await docPrices.get();
-
   //     if (snapshot.exists) {
   //       return SellerOrInspectorModel.fromJson(snapshot.data()!);
   //     }
@@ -309,12 +299,10 @@ class _RegistrationStatusScreenState extends State<RegistrationStatusScreen> {
   //         .collection('Inspectors')
   //         .doc('${user!.email}');
   //     final snapshot = await docPrices.get();
-
   //     if (snapshot.exists) {
   //       return SellerOrInspectorModel.fromJson(snapshot.data()!);
   //     }
   //   }
   // }
-
 
 }

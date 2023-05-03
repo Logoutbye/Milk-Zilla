@@ -1,9 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:milk_zilla/Model/seller_model.dart';
 
-class BuyerContoller {
+class GetAllApprovedShopeswithSpecifCityController {
   Future<List<SellerOrInspectorModel>>
-      getAllApprovedShpeswithSpecifCity() async {
+      getAllApprovedShopeswithSpecifCity() async {
     try {
       QuerySnapshot querySnapshot = await FirebaseFirestore.instance
           .collection('Sellers')

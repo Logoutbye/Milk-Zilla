@@ -8,7 +8,7 @@ import 'package:milk_zilla/View/Auth%20UI/login_screen.dart';
 import 'package:milk_zilla/View/Auth%20UI/registration_screen.dart';
 import 'package:milk_zilla/View/Auth%20UI/registration_status_screen.dart';
 import 'package:milk_zilla/View/Buyer_UI/all_shops_to_order_from.dart';
-import 'package:milk_zilla/View/Buyer_UI/buyer_screen.dart';
+import 'package:milk_zilla/View/Buyer_UI/review_cart.dart';
 import 'package:milk_zilla/View/Inspector_UI/insector_screen.dart';
 import 'package:milk_zilla/View/Seller_UI/seller_screen.dart';
 import 'package:milk_zilla/main.dart';
@@ -99,6 +99,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                             .getInstance();
                                         whichUserLoggedIn = prefs
                                             .getString('whichUserLoggedIn');
+
 
                                         Navigator.of(context).push(
                                             MaterialPageRoute(

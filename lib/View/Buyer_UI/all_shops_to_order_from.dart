@@ -1,12 +1,8 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:lottie/lottie.dart';
-import 'package:milk_zilla/Controllers/Buyer_Controllers/buyer_contoller.dart';
 import 'package:milk_zilla/Model/seller_model.dart';
-import 'package:milk_zilla/View/Buyer_UI/buyer_screen.dart';
+import 'package:milk_zilla/View/Buyer_UI/review_cart.dart';
+import 'package:milk_zilla/controllers/Buyer_Controllers/get_all_approved_shopes_with_specif_city_controller.dart';
 import 'package:milk_zilla/res/Components/my_drawers/buyer_drawer.dart';
 import 'package:milk_zilla/res/constanst.dart';
 import 'package:milk_zilla/res/my_colors.dart';
@@ -20,7 +16,6 @@ class AllShopesToOrderFrom extends StatefulWidget {
 
 class _AllShopesToOrderFromState extends State<AllShopesToOrderFrom> {
   // creating object of buyerContolerr here to acces all the data fetched
-  BuyerContoller buyerContoller = new BuyerContoller();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -77,7 +72,8 @@ class _AllShopesToOrderFromState extends State<AllShopesToOrderFrom> {
         ),
         endDrawer: BuyerDrawer(),
         body: FutureBuilder<List<SellerOrInspectorModel>>(
-          future: buyerContoller.getAllApprovedShpeswithSpecifCity(),
+          future: GetAllApprovedShopeswithSpecifCityController()
+              .getAllApprovedShopeswithSpecifCity(),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return Center(
@@ -93,7 +89,7 @@ class _AllShopesToOrderFromState extends State<AllShopesToOrderFrom> {
                   print("Shopes Length: ${shops.length}");
                   SellerOrInspectorModel shopes = shops[index];
                   // TODO: Build UI for each order
-                  return buildOrderUI2(context, shopes);
+                  return buildShopsUI(context, shopes);
                 },
               );
             } else {
@@ -103,19 +99,7 @@ class _AllShopesToOrderFromState extends State<AllShopesToOrderFrom> {
         ));
   }
 
-  // Future<SellerOrInspectorModel?> readPriceListFromDatabase() async {
-  //   final docPrices =
-  //       FirebaseFirestore.instance.collection('Sellers').doc('items');
-  //   final snapshot = await docPrices.get();
-
-  //   if (snapshot.exists) {
-  //     return SellerOrInspectorModel.fromJson(snapshot.data()!);
-  //   }
-  // }
-
-
-//
-  Widget buildOrderUI2(BuildContext context, SellerOrInspectorModel shops) {
+  Widget buildShopsUI(BuildContext context, SellerOrInspectorModel shops) {
     var heightbetweenWidgetsInOrder = MediaQuery.of(context).size.height / 90;
 
     return Center(
@@ -214,7 +198,10 @@ class _AllShopesToOrderFromState extends State<AllShopesToOrderFrom> {
 
                   //Pickup Button
                   InkWell(
-                    onTap: ()=>Navigator.of(context).push(MaterialPageRoute(builder: (context)=>BuyerScreen(getShopId: shops.email,))),
+                    onTap: () => Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => ReviewCart(
+                              getShopId: shops.email,
+                            ))),
                     child: Center(
                       child: Container(
                         width: MediaQuery.of(context).size.width / 1.6,
@@ -228,7 +215,11 @@ class _AllShopesToOrderFromState extends State<AllShopesToOrderFrom> {
                             ),
                           ],
                         ),
-                        child: Center(child: Text("Place An Order",style: kTextStyleWhite,)),
+                        child: Center(
+                            child: Text(
+                          "Place An Order",
+                          style: kTextStyleWhite,
+                        )),
                       ),
                     ),
                   ),

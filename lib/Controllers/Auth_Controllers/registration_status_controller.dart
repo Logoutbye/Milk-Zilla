@@ -2,7 +2,7 @@
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-import '../Model/seller_model.dart';
+import '../../Model/seller_model.dart';
 
 class RegistrationStatusController{
 

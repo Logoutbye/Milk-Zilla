@@ -29,21 +29,21 @@ class _BuyerDrawerState extends State<BuyerDrawer> {
             child: Image(image: AssetImage('assets/images/icon.png')),
           ), //DrawerHeader
 
-          ListTile(
-            leading: const Icon(Icons.production_quantity_limits),
-            title: const Text('My Profile'),
-            onTap: () {
-              // MySharedPrefencesSessionHandling
-              //     .removeWhichUserLoggedInFromSharedPreferences();
+          // ListTile(
+          //   leading: const Icon(Icons.production_quantity_limits),
+          //   title: const Text('My Profile'),
+          //   onTap: () {
+          //     // MySharedPrefencesSessionHandling
+          //     //     .removeWhichUserLoggedInFromSharedPreferences();
 
-              // FirebaseAuth.instance.signOut();
-              Navigator.pop(context);
-              Navigator.of(context).push(
-                  MaterialPageRoute(builder: (context) => BuyerProfile()));
-              // navigatorKey.currentState!.popUntil((route) => route.isFirst);
-            },
-          ),
-          // Customer Orders
+          //     // FirebaseAuth.instance.signOut();
+          //     Navigator.pop(context);
+          //     Navigator.of(context).push(
+          //         MaterialPageRoute(builder: (context) => BuyerProfile()));
+          //     // navigatorKey.currentState!.popUntil((route) => route.isFirst);
+          //   },
+          // ),
+          // // Customer Orders
           ListTile(
             leading: const Icon(Icons.people),
             title: const Text('My Orders'),
