@@ -3,11 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:milk_zilla/Model/order_model.dart';
 import 'package:milk_zilla/controllers/Global_Controllers/update_status_global_controller.dart';
 import 'package:milk_zilla/res/constanst.dart';
+import '../../View/Buyer_UI/Customer Orders With Shop/customer_orders_with_shop.dart';
+import '../../View/Inspector_UI/insector_screen.dart';
+import '../../View/Seller_UI/Customer Orders/customers_orders.dart';
 import '../my_colors.dart';
 
 class MyStaticUIWidgets {
   static Widget buildOrderUI2(
-      BuildContext context, OrderModel order, var status) {
+      BuildContext context, OrderModel order, var status, var role) {
     var heightbetweenWidgetsInOrder = MediaQuery.of(context).size.height / 95;
 
     return Center(
@@ -15,9 +18,10 @@ class MyStaticUIWidgets {
         padding: const EdgeInsets.all(8.0),
         child: Container(
           width: MediaQuery.of(context).size.width / 1.2,
-          height: status == 'Pending'
-              ? MediaQuery.of(context).size.height / 1.9
-              : MediaQuery.of(context).size.height / 2,
+          height:
+              status == 'Pending' || status == 'Prepared' || status == 'Shipped'
+                  ? MediaQuery.of(context).size.height / 1.9
+                  : MediaQuery.of(context).size.height / 2,
           decoration: BoxDecoration(
             color: MyColors.kSecondary,
             borderRadius: BorderRadius.circular(20),
@@ -129,7 +133,7 @@ class MyStaticUIWidgets {
                   title: Text('View Order Details(${order.total_items})'),
                   children: <Widget>[
                     SizedBox(
-                      height: MediaQuery.of(context).size.height / 7,
+                      height: MediaQuery.of(context).size.height / 8,
                       child: ListView.builder(
                         shrinkWrap: true,
                         // scrollDirection: Axis.vertical,
@@ -155,53 +159,200 @@ class MyStaticUIWidgets {
                     ),
                   ],
                 ),
-                status == 'Pending'
+                status == 'Pending' ||
+                        status == 'Prepared' ||
+                        status == 'Shipped'
                     ? SizedBox(
                         height: heightbetweenWidgetsInOrder,
                       )
                     : SizedBox(),
                 //Pickup Button
-                status == 'Pending'
-                    ? InkWell(
-                        onTap: () {
-                          print('hittig the button pickup');
-                          UpdateStatusGlobalController().updateStatus(context, order, 'Picked');
-                          // // Get a reference to the document you want to update
-                          // final documentReference = FirebaseFirestore.instance
-                          //     .collection('Orders')
-                          //     .doc(order.order_id);
-                          // // Update a field in the document
-                          // documentReference.update({
-                          //   'status': 'Picked',
-                          // }).then((value) {
-                          //   print('Field updated successfully');
-                          // }).catchError((error) {
-                          //   print('Failed to update field: $error');
-                          // });
-                        },
-                        child: Center(
-                          child: Container(
-                            width: MediaQuery.of(context).size.width / 1.6,
-                            height: MediaQuery.of(context).size.height / 30,
-                            decoration: BoxDecoration(
-                              color: MyColors.kPrimary,
-                              borderRadius: BorderRadius.circular(10),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: MyColors.kPrimary,
-                                ),
-                              ],
-                            ),
-                            child: Center(
-                              child: Text(
-                                'Pick UP ${order.status}',
-                                style: kTextStyleWhite,
-                              ),
+                // if user is Customer he can cancel the order when its status is still pending
+                role == 'Buyer' && status == 'Pending'
+                    ? Center(
+                        child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            padding: const EdgeInsets.all(10.0),
+                            elevation: 0,
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(15.0)),
+                            backgroundColor: MyColors.kPrimary,
+                          ),
+                          child: Text(
+                            'Cancel',
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 18.0,
                             ),
                           ),
+                          onPressed: () {
+                            UpdateStatusGlobalController()
+                                .updateStatus(context, order, 'Canceled');
+                            Navigator.pop(context);
+                            Navigator.of(context).push(MaterialPageRoute(
+                                builder: (context) =>
+                                    CustomerOrdersWithShop()));
+                          },
                         ),
                       )
-                    : SizedBox(),
+                    //  if the user us Seller and the status is pending he can prepare the order
+                    //so that inspector can pick it up from shop and deliver to customer
+                    : role == 'Seller' && status == 'Pending'
+                        ? Center(
+                            child: ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                padding: const EdgeInsets.all(10.0),
+                                elevation: 0,
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(15.0)),
+                                backgroundColor: MyColors.kPrimary,
+                              ),
+                              child: Text(
+                                'Pick Up',
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 18.0,
+                                ),
+                              ),
+                              onPressed: () {
+                                UpdateStatusGlobalController()
+                                    .updateStatus(context, order, 'Prepared');
+                                Navigator.pop(context);
+                                Navigator.of(context).push(MaterialPageRoute(
+                                    builder: (context) =>
+                                        MyAllCustomerOrders()));
+                              },
+                            ),
+                          )
+                        : role == 'Inspector' && status == 'Prepared'
+                            ? Center(
+                                child: ElevatedButton(
+                                  style: ElevatedButton.styleFrom(
+                                    padding: const EdgeInsets.all(10.0),
+                                    elevation: 0,
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(15.0)),
+                                    backgroundColor: MyColors.kPrimary,
+                                  ),
+                                  child: Text(
+                                    'Pick Up',
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 18.0,
+                                    ),
+                                  ),
+                                  onPressed: () {
+                                    UpdateStatusGlobalController().updateStatus(
+                                        context, order, 'Shipped');
+                                    Navigator.pop(context);
+                                    Navigator.of(context).push(
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                InspectorScreen()));
+                                  },
+                                ),
+                              )
+                            : role == 'Inspector' && status == 'Shipped'
+                                ? Row(
+                                    children: [
+                                      Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 10),
+                                        child: Center(
+                                          child: ElevatedButton(
+                                            style: ElevatedButton.styleFrom(
+                                              padding:
+                                                  const EdgeInsets.all(10.0),
+                                              elevation: 0,
+                                              shape: RoundedRectangleBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          15.0)),
+                                              backgroundColor:
+                                                  MyColors.kPrimary,
+                                            ),
+                                            child: Text(
+                                              'Delivery Location',
+                                              style: TextStyle(
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 18.0,
+                                              ),
+                                            ),
+                                            onPressed: () {
+                                             
+                                            },
+                                          ),
+                                        ),
+                                      ),
+                                      Spacer(),
+                                      Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 10),
+                                        child: Center(
+                                          child: ElevatedButton(
+                                            style: ElevatedButton.styleFrom(
+                                              padding:
+                                                  const EdgeInsets.all(10.0),
+                                              elevation: 0,
+                                              shape: RoundedRectangleBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          15.0)),
+                                              backgroundColor:
+                                                  MyColors.kPrimary,
+                                            ),
+                                            child: Text(
+                                              'Deliver',
+                                              style: TextStyle(
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 18.0,
+                                              ),
+                                            ),
+                                            onPressed: () {
+                                              UpdateStatusGlobalController()
+                                                  .updateStatus(context, order,
+                                                      'Delivered');
+                                              Navigator.pop(context);
+                                              Navigator.of(context).push(
+                                                  MaterialPageRoute(
+                                                      builder: (context) =>
+                                                          InspectorScreen()));
+                                            },
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  )
+                                : SizedBox(),
+
+                // InkWell(
+                //     onTap: () {
+                //       print('hittig the button pickup');
+                //
+                //     },
+                //     child: Center(
+                //       child: Container(
+                //         width: MediaQuery.of(context).size.width / 1.6,
+                //         height: MediaQuery.of(context).size.height / 30,
+                //         decoration: BoxDecoration(
+                //           color: MyColors.kPrimary,
+                //           borderRadius: BorderRadius.circular(10),
+                //           boxShadow: [
+                //             BoxShadow(
+                //               color: MyColors.kPrimary,
+                //             ),
+                //           ],
+                //         ),
+                //         child: Center(
+                //           child: Text(
+                //             'Pick UP ${order.status}',
+                //             style: kTextStyleWhite,
+                //           ),
+                //         ),
+                //       ),
+                //     ),
+                //   )
               ],
             ),
           ),

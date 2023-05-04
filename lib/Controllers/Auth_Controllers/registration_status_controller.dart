@@ -9,19 +9,19 @@ class RegistrationStatusController{
   
   Future<SellerOrInspectorModel?> readSellerDataFromDatabase(var whichUser,var user) async {
     if (whichUser == 'Seller') {
-      final docPrices = FirebaseFirestore.instance
+      final data = FirebaseFirestore.instance
           .collection('Sellers')
           .doc('${user!.email}');
-      final snapshot = await docPrices.get();
+      final snapshot = await data.get();
 
       if (snapshot.exists) {
         return SellerOrInspectorModel.fromJson(snapshot.data()!);
       }
     } else {
-      final docPrices = FirebaseFirestore.instance
+      final data = FirebaseFirestore.instance
           .collection('Inspectors')
           .doc('${user!.email}');
-      final snapshot = await docPrices.get();
+      final snapshot = await data.get();
 
       if (snapshot.exists) {
         return SellerOrInspectorModel.fromJson(snapshot.data()!);

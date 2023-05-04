@@ -6,6 +6,7 @@ import 'package:milk_zilla/View/Seller_UI/Customer%20Orders/customer_orders_pend
 import 'package:milk_zilla/View/Seller_UI/Customer%20Orders/customer_orders_pickedby_inspecter.dart';
 
 import '../../../res/Components/my_drawers/seller_drawer.dart';
+import '../../../res/my_colors.dart';
 
 class MyAllCustomerOrders extends StatefulWidget {
   const MyAllCustomerOrders({super.key});
@@ -21,6 +22,8 @@ class _MyAllCustomerOrdersState extends State<MyAllCustomerOrders> {
       length: 3,
       child: Scaffold(
         appBar: AppBar(
+           backgroundColor: MyColors.kWhite,
+          foregroundColor: MyColors.kPrimary,
           title: const Text('Customer Orders'),
           centerTitle: true,
          
@@ -35,6 +38,12 @@ class _MyAllCustomerOrdersState extends State<MyAllCustomerOrders> {
                         )))
           ],
           bottom: TabBar(
+                 indicatorColor: MyColors.kPrimary,
+            unselectedLabelColor: Color.fromARGB(255, 139, 211, 142),
+            labelColor: MyColors.kPrimary,
+            labelStyle: TextStyle(fontSize: 15),
+            
+            automaticIndicatorColorAdjustment: true,
             tabs: [
               Tab(
                 text: 'Pending',

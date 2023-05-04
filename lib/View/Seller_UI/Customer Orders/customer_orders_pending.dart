@@ -15,7 +15,7 @@ class CustomerOrdersInPedningByShop extends StatefulWidget {
 
 class _CustomerOrdersInPedningByShopState
     extends State<CustomerOrdersInPedningByShop> {
-  SellerContoller buyerContoller = SellerContoller();
+  SellerContoller sellerController = SellerContoller();
   var shopId;
   @override
   void initState() {
@@ -35,7 +35,7 @@ class _CustomerOrdersInPedningByShopState
   Widget build(BuildContext context) {
     return Scaffold(
         body: FutureBuilder<List<OrderModel>>(
-      future: buyerContoller.getOrdersForShop(shopId, 'Pending'),
+      future: sellerController.getOrdersForShop(shopId, 'Pending'),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return Center(
@@ -49,7 +49,7 @@ class _CustomerOrdersInPedningByShopState
             itemCount: orders.length,
             itemBuilder: (context, index) {
               OrderModel order = orders[index];
-              return MyStaticUIWidgets.buildOrderUI2(context, order, 'Pending');
+              return MyStaticUIWidgets.buildOrderUI2(context, order, 'Pending','Seller');
             },
           );
         } else {

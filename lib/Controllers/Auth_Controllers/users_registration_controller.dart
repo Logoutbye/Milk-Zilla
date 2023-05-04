@@ -174,6 +174,7 @@ Future createUserInFirebase(
     'email': emailTextController.text,
     'password': PasswordTextController.text,
     'inspector_adress': buyerOrinspectorOrShopAdressTextControl.text,
+    'role': 'Buyer'
   };
   final jsonForSeller = {
     'name': nameTextControl.text,
@@ -183,7 +184,8 @@ Future createUserInFirebase(
     'shop_adress': buyerOrinspectorOrShopAdressTextControl.text,
     'email': emailTextController.text,
     'password': PasswordTextController.text,
-    'status': 'Pending'
+    'status': 'Pending',
+    'role' : 'Seller'
   };
   final jsonForInspector = {
     'name': nameTextControl.text,
@@ -192,7 +194,8 @@ Future createUserInFirebase(
     'email': emailTextController.text,
     'password': PasswordTextController.text,
     'inspector_adress': buyerOrinspectorOrShopAdressTextControl.text,
-    'status': 'Pending'
+    'status': 'Pending',
+    'role': 'Inspector'
   };
   //create document and write data to firebase
   if (whichUser == 'Buyer') {

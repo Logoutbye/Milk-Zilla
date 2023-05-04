@@ -7,6 +7,8 @@ import 'package:milk_zilla/View/Inspector_UI/inspector_orders_picked.dart';
 import 'package:milk_zilla/res/Components/my_drawer.dart';
 import 'package:milk_zilla/res/Components/my_drawers/inspector_drawer.dart';
 
+import '../../res/my_colors.dart';
+
 class InspectorScreen extends StatefulWidget {
   const InspectorScreen({super.key});
 
@@ -21,9 +23,17 @@ class _InspectorScreenState extends State<InspectorScreen> {
       length: 3,
       child: Scaffold(
         appBar: AppBar(
+         backgroundColor: MyColors.kWhite,
+          foregroundColor: MyColors.kPrimary,  
           title: const Text('My Orders'),
           centerTitle: true,
           bottom: TabBar(
+                 indicatorColor: MyColors.kPrimary,
+            unselectedLabelColor: Color.fromARGB(255, 139, 211, 142),
+            labelColor: MyColors.kPrimary,
+            labelStyle: TextStyle(fontSize: 15),
+            
+            automaticIndicatorColorAdjustment: true,
             tabs: [
               Tab(
                 text: 'Ready to pick',

@@ -53,7 +53,7 @@ class _CustomerOrdersDeliverdByShopState
             itemBuilder: (context, index) {
               OrderModel order = orders[index];
               return MyStaticUIWidgets.buildOrderUI2(
-                  context, order, 'Delivered');
+                  context, order, 'Delivered','Seller');
             },
           );
         } else {
