@@ -2,6 +2,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
+import 'package:milk_zilla/Utils/utils.dart';
+import 'package:milk_zilla/View/Buyer_UI/set_customer_address_on_google_map.dart';
 import 'package:milk_zilla/controllers/Buyer_Controllers/get_real_time_prices_from_database_for_creating_an_order.dart';
 import 'package:milk_zilla/res/Components/custom_divider.dart';
 import 'package:milk_zilla/res/Components/error_screen.dart';
@@ -37,6 +39,11 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
   var getUserName;
 
   var getShopId;
+
+  // latitude and longitude for storing in firebase
+  double latitudeofuser = 0.0;
+  double longitudeofuser = 0.0;
+
   @override
   void initState() {
     getShopId = widget.getShopId;
@@ -282,7 +289,21 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
                             child: TextField(
                               controller: deliveryAddressController,
                               obscureText: false,
-                              onTap: () {},
+                              readOnly: true,
+                              onTap: () {
+                                Navigator.pushNamed(context,
+                                        '/setCustomerAddressOnGoogleMap')
+                                    .then((result) {
+                                  List<double> myLatLang =
+                                      result as List<double>;
+                                  latitudeofuser = myLatLang[0];
+                                  longitudeofuser = myLatLang[1];
+                                  setState(() {});
+                                  Utils.flushBarErrorMessage(
+                                      'latidtude and longitude: ${myLatLang[0]} ${myLatLang[1]}',
+                                      context);
+                                });
+                              },
                               style: TextStyle(
                                 color: MyColors.kBlack,
                                 // fontSize: 18,
