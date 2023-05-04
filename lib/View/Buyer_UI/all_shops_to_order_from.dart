@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:milk_zilla/Model/seller_model.dart';
+import 'package:milk_zilla/View/Buyer_UI/Customer%20Orders%20With%20Shop/customer_orders_with_shop.dart';
 import 'package:milk_zilla/View/Buyer_UI/review_cart.dart';
 import 'package:milk_zilla/controllers/Buyer_Controllers/get_all_approved_shopes_with_specif_city_controller.dart';
 import 'package:milk_zilla/res/Components/my_drawers/buyer_drawer.dart';
@@ -46,20 +47,23 @@ class _AllShopesToOrderFromState extends State<AllShopesToOrderFrom> {
                       fontSize: 18.0,
                     ),
                   ),
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => CustomerOrdersWithShop()));
+                  },
                 ),
               ),
             ],
           ),
           actions: [
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: IconButton(
-                icon: Icon(Icons.shopping_cart_checkout),
-                iconSize: 35,
-                onPressed: () {},
-              ),
-            ),
+            // Padding(
+            //   padding: const EdgeInsets.symmetric(horizontal: 20),
+            //   child: IconButton(
+            //     icon: Icon(Icons.shopping_cart_checkout),
+            //     iconSize: 35,
+            //     onPressed: () {},
+            //   ),
+            // ),
             Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16),
                 child: Builder(

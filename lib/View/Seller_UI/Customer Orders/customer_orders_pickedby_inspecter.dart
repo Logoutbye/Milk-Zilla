@@ -40,7 +40,7 @@ class _CustomerOrdersPickedbyInspecterFromShopState
   Widget build(BuildContext context) {
     return Scaffold(
         body: FutureBuilder<List<OrderModel>>(
-      future: buyerContoller.getOrdersForShop(shopId, 'Picked'),
+      future: buyerContoller.getOrdersForShop(shopId, 'Prepared'),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return Center(
@@ -54,7 +54,7 @@ class _CustomerOrdersPickedbyInspecterFromShopState
             itemCount: orders.length,
             itemBuilder: (context, index) {
               OrderModel order = orders[index];
-              return MyStaticUIWidgets.buildOrderUI2(context, order, 'Picked');
+              return MyStaticUIWidgets.buildOrderUI2(context, order, 'Prepared','Seller');
             },
           );
         } else {

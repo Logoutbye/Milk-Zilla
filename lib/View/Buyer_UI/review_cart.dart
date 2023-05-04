@@ -8,6 +8,7 @@ import 'package:provider/provider.dart';
 
 import '../../res/Components/create_an_order.dart';
 import '../../res/my_colors.dart';
+import 'Customer Orders With Shop/customer_orders_with_shop.dart';
 
 class ReviewCart extends StatefulWidget {
   var getShopId;
@@ -60,20 +61,23 @@ class _ReviewCartState extends State<ReviewCart> {
                     fontSize: 18.0,
                   ),
                 ),
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => CustomerOrdersWithShop()));
+                },
               ),
             ),
           ],
         ),
         actions: [
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
-            child: IconButton(
-              icon: Icon(Icons.shopping_cart_checkout),
-              iconSize: 35,
-              onPressed: () {},
-            ),
-          ),
+          // Padding(
+          //   padding: const EdgeInsets.symmetric(horizontal: 20),
+          //   child: IconButton(
+          //     icon: Icon(Icons.shopping_cart_checkout),
+          //     iconSize: 35,
+          //     onPressed: () {},
+          //   ),
+          // ),
           Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16),
               child: Builder(
@@ -372,7 +376,8 @@ class MilkCounter extends StatelessWidget {
             fontSize: 20.0,
             fontWeight: FontWeight.bold,
           ),
-        ),Text(
+        ),
+        Text(
           '${Provider.of<ShoppingItemProvider>(context).getCount(productType)} $unit',
           style: TextStyle(
             color: Colors.black,
