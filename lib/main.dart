@@ -6,12 +6,12 @@ import 'package:milk_zilla/View/Buyer_UI/all_shops_to_order_from.dart';
 import 'package:milk_zilla/View/Buyer_UI/review_cart.dart';
 import 'package:milk_zilla/View/Inspector_UI/insector_screen.dart';
 import 'package:milk_zilla/View/Seller_UI/seller_screen.dart';
-import 'package:milk_zilla/View/conver_laittude_to_address.dart';
-import 'package:milk_zilla/View/google_map_practice.dart';
+
 import 'package:milk_zilla/provider/Sopping_item_provider.dart';
 import 'package:milk_zilla/res/Components/firebase_helper.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'View/Googl Map Practice/conver_laittude_to_address.dart';
 import 'View/Seller_UI/Customer Orders/customers_orders.dart';
 import 'View/my_home_page.dart';
 
@@ -49,7 +49,6 @@ Future<void> main() async {
 
 final navigatorKey = GlobalKey<NavigatorState>();
 
-
 class MyApp extends StatelessWidget {
   var whichUserLoggedIn;
 
@@ -71,41 +70,41 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           primarySwatch: Colors.green,
         ),
-        home: 
-        // ConvertLatToAddress(),
-        // if user is buyer and approved
-        whichUserLoggedIn == 'Buyer'
-            ? AllShopesToOrderFrom()
+        home:
+            // ConvertLatToAddress(),
+            // if user is buyer and approved
+            whichUserLoggedIn == 'Buyer'
+                ? AllShopesToOrderFrom()
 
-        //if user is seller and approved
-        : whichUserLoggedIn == 'Seller' &&
-                FirestoreHelper.currentSellerStatusInFirestore ==
-                    'Approved'
-            ? MyAllCustomerOrders()
-            //if user is Seller and is not approved
-            : whichUserLoggedIn == 'Seller' &&
-                    FirestoreHelper.currentSellerStatusInFirestore ==
-                        'Pending'
-                ? RegistrationStatusScreen(
-                    whichUser: 'Seller',
-                  )
-
-                //if user is Inspector and approved
-                : whichUserLoggedIn == 'Inspector' &&
-                        FirestoreHelper
-                                .currentInspectorStatusInFirestore ==
+                //if user is seller and approved
+                : whichUserLoggedIn == 'Seller' &&
+                        FirestoreHelper.currentSellerStatusInFirestore ==
                             'Approved'
-                    ? InspectorScreen()
-
+                    ? MyAllCustomerOrders()
                     //if user is Seller and is not approved
-                    : whichUserLoggedIn == 'Inspector' &&
-                            FirestoreHelper
-                                    .currentInspectorStatusInFirestore ==
+                    : whichUserLoggedIn == 'Seller' &&
+                            FirestoreHelper.currentSellerStatusInFirestore ==
                                 'Pending'
                         ? RegistrationStatusScreen(
-                            whichUser: 'Inspector',
+                            whichUser: 'Seller',
                           )
-                        : MyHomePage(),
+
+                        //if user is Inspector and approved
+                        : whichUserLoggedIn == 'Inspector' &&
+                                FirestoreHelper
+                                        .currentInspectorStatusInFirestore ==
+                                    'Approved'
+                            ? InspectorScreen()
+
+                            //if user is Seller and is not approved
+                            : whichUserLoggedIn == 'Inspector' &&
+                                    FirestoreHelper
+                                            .currentInspectorStatusInFirestore ==
+                                        'Pending'
+                                ? RegistrationStatusScreen(
+                                    whichUser: 'Inspector',
+                                  )
+                                : MyHomePage(),
       ),
     );
   }

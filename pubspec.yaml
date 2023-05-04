@@ -38,10 +38,16 @@ dependencies:
   cupertino_icons: ^1.0.2
 
   google_maps_flutter: ^2.2.5
-  #this package not working in new android OS
-  #flutter_geocoder: ^0.2.2-nullsafety
-  #alternative package
+  # converting address to latlang and latlang to address
   geocoding: ^2.1.0
+  # for user current location
+  geolocator: ^9.0.2
+  #customer info_window
+  custom_info_window: ^1.0.1
+
+  #package for finding device id and sending to google map api server
+  uuid: ^3.0.7
+  http:
 
   # firebase database
   cloud_firestore: ^4.5.1
