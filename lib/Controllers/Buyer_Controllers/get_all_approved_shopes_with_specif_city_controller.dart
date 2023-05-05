@@ -3,11 +3,12 @@ import 'package:milk_zilla/Model/seller_model.dart';
 
 class GetAllApprovedShopeswithSpecifCityController {
   Future<List<SellerOrInspectorModel>>
-      getAllApprovedShopeswithSpecifCity() async {
+      getAllApprovedShopeswithSpecifCity(var city) async {
     try {
+      print('user is searching for shops in ${city}');
       QuerySnapshot querySnapshot = await FirebaseFirestore.instance
           .collection('Sellers')
-          .where('city', isEqualTo: 'Abbottabad')
+          .where('city', isEqualTo:city )
           .where('status', isEqualTo: 'Approved')
           .get();
       List<SellerOrInspectorModel> shops = querySnapshot.docs

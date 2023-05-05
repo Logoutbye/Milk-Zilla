@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:milk_zilla/Model/seller_model.dart';
@@ -8,6 +10,9 @@ import 'package:milk_zilla/res/Components/my_drawers/buyer_drawer.dart';
 import 'package:milk_zilla/res/constanst.dart';
 import 'package:milk_zilla/res/my_colors.dart';
 
+import '../../Model/price_list_model.dart';
+import '../../res/Components/custom_divider.dart';
+
 class AllShopesToOrderFrom extends StatefulWidget {
   const AllShopesToOrderFrom({super.key});
 
@@ -16,7 +21,15 @@ class AllShopesToOrderFrom extends StatefulWidget {
 }
 
 class _AllShopesToOrderFromState extends State<AllShopesToOrderFrom> {
-  // creating object of buyerContolerr here to acces all the data fetched
+  final user = FirebaseAuth.instance.currentUser;
+  var getUserCity;
+
+  @override
+  void initState() {
+    getDataOfLoginedUser();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -77,7 +90,7 @@ class _AllShopesToOrderFromState extends State<AllShopesToOrderFrom> {
         endDrawer: BuyerDrawer(),
         body: FutureBuilder<List<SellerOrInspectorModel>>(
           future: GetAllApprovedShopeswithSpecifCityController()
-              .getAllApprovedShopeswithSpecifCity(),
+              .getAllApprovedShopeswithSpecifCity(getUserCity),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return Center(
@@ -103,6 +116,27 @@ class _AllShopesToOrderFromState extends State<AllShopesToOrderFrom> {
         ));
   }
 
+  // to get current user name customer id
+  Future getDataOfLoginedUser() async {
+    FirebaseFirestore firestore = FirebaseFirestore.instance;
+    // get document reference
+    DocumentReference documentReference =
+        firestore.collection('Buyers').doc('${user!.email}');
+    // get document snapshot
+    DocumentSnapshot documentSnapshot = await documentReference.get();
+    // check if document exists
+    if (documentSnapshot.exists) {
+      // get document data
+      Map<String, dynamic>? data =
+          documentSnapshot.data() as Map<String, dynamic>?;
+      // access specific fields
+      String user_city = data!['city'];
+      print('user_city${user_city}');
+      getUserCity = user_city;
+      print('getUserCity:$getUserCity');
+    }
+  }
+
   Widget buildShopsUI(BuildContext context, SellerOrInspectorModel shops) {
     var heightbetweenWidgetsInOrder = MediaQuery.of(context).size.height / 90;
 
@@ -121,113 +155,217 @@ class _AllShopesToOrderFromState extends State<AllShopesToOrderFrom> {
               ),
             ],
           ),
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: SingleChildScrollView(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  //Status
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Container(
-                          decoration: BoxDecoration(
-                            color: Color.fromARGB(255, 255, 255, 255),
-                            border: Border.all(
-                              color: MyColors.kPrimary,
-                              width: 1.0,
+          child: Center(
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    //Status
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Container(
+                            decoration: BoxDecoration(
+                              color: Color.fromARGB(255, 255, 255, 255),
+                              border: Border.all(
+                                color: MyColors.kPrimary,
+                                width: 1.0,
+                              ),
+                              borderRadius: BorderRadius.only(
+                                topLeft: Radius.circular(15),
+                                bottomLeft: Radius.circular(15),
+                              ),
                             ),
-                            borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(15),
-                              bottomLeft: Radius.circular(15),
-                            ),
-                          ),
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Text(
-                              'Status',
-                              style: TextStyle(fontWeight: FontWeight.bold),
-                            ),
-                          )),
-                      const SizedBox(width: 10.0),
-                      Container(
-                          decoration: BoxDecoration(
-                            color: MyColors.kPrimary,
-                            border: Border.all(
-                              color: MyColors.kSecondary,
-                              width: 1.0,
-                            ),
-                            borderRadius: BorderRadius.only(
-                              topRight: Radius.circular(15),
-                              bottomRight: Radius.circular(15),
-                            ),
-                          ),
-                          child: Padding(
+                            child: Padding(
                               padding: const EdgeInsets.all(8.0),
-                              child: Text('Pending',
-                                  style:
-                                      TextStyle(fontWeight: FontWeight.bold)))),
-                    ],
-                  ),
-                  SizedBox(height: heightbetweenWidgetsInOrder),
-                  Text('Order Details'),
-                  SizedBox(height: heightbetweenWidgetsInOrder),
-                  // all the seller shopes
-                  Center(
-                    child: SingleChildScrollView(
-                      child: Column(
+                              child: Text(
+                                'Shop',
+                                style: TextStyle(fontWeight: FontWeight.bold),
+                              ),
+                            )),
+                        const SizedBox(width: 10.0),
+                        Container(
+                            decoration: BoxDecoration(
+                              color: MyColors.kPrimary,
+                              border: Border.all(
+                                color: MyColors.kSecondary,
+                                width: 1.0,
+                              ),
+                              borderRadius: BorderRadius.only(
+                                topRight: Radius.circular(15),
+                                bottomRight: Radius.circular(15),
+                              ),
+                            ),
+                            child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Text('Detials',
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold)))),
+                      ],
+                    ),
+                    SizedBox(height: heightbetweenWidgetsInOrder),
+                    // all the seller shopes
+                    Center(
+                      child: SingleChildScrollView(
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              SizedBox(
+                                width: MediaQuery.of(context).size.width / 3,
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    Text('Shop Name:'),
+                                    SizedBox(height: 8.0),
+                                    CustomDivider(),
+                                    SizedBox(height: 8.0),
+
+                                    Text('Shop Owner Name:'),
+                                    SizedBox(height: 8.0),
+                                    CustomDivider(),
+                                    SizedBox(height: 8.0),
+
+                                    Text('Mobile Number:'),
+                                    SizedBox(height: 8.0),
+                                    CustomDivider(),
+                                    SizedBox(height: 8.0),
+
+                                    Text('Shop Address:'),
+                                    SizedBox(height: 8.0),
+                                    CustomDivider(),
+                                    SizedBox(height: 8.0),
+
+                                    // Text('Shop Address:'),
+                                    // SizedBox(height: 8.0),
+                                    // CustomDivider(),
+                                    // SizedBox(height: 8.0),
+
+                                    // Text('Shope Name:'),
+                                    // SizedBox(height: 8.0),
+                                    // // Text('Status: ${shops.status}'),
+                                    // SizedBox(height: 8.0),
+                                  ],
+                                ),
+                              ),
+                              SizedBox(
+                                width: MediaQuery.of(context).size.width / 3,
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    Text('${shops.shop_name}'),
+                                    SizedBox(height: 8.0),
+                                    CustomDivider(),
+                                    SizedBox(height: 8.0),
+                                    
+                                    Text('${shops.name}'),
+                                    SizedBox(height: 8.0),
+                                    CustomDivider(),
+                                    SizedBox(height: 8.0),
+
+                                    Text('${shops.mobile_no}'),
+                                    SizedBox(height: 8.0),
+                                    CustomDivider(),
+                                    SizedBox(height: 8.0),
+
+                                    Text('${shops.shop_adress}'),
+                                    SizedBox(height: 8.0),
+                                    CustomDivider(),
+                                    SizedBox(height: 8.0),
+
+                                    // Text('${shops.shop_adress}'),
+                                    // SizedBox(height: 8.0),
+                                    // CustomDivider(),
+                                    // SizedBox(height: 8.0),
+
+                                    // Text('${shops.shop_name}'),
+                                    // SizedBox(height: 8.0),
+                                    // Text('Status: ${shops.status}'),
+                                    // SizedBox(height: 8.0),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                    //Pickup Button
+                    ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        fixedSize: Size(
+                          MediaQuery.of(context).size.width / 1.6,
+                          MediaQuery.of(context).size.height / 20,
+                        ),
+                        padding: const EdgeInsets.all(8.0),
+                        elevation: 0,
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(15.0)),
+                        backgroundColor: MyColors.kPrimary,
+                      ),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Text('Shop Name: ${shops.name}'),
-                          SizedBox(height: 8.0),
-                          Text('Shop City: ${shops.city}'),
-                          SizedBox(height: 8.0),
-                          Text('Shop Email: ${shops.email}'),
-                          SizedBox(height: 8.0),
-                          Text('Moble Number: ${shops.mobile_no}'),
-                          SizedBox(height: 8.0),
-                          Text('Password: ${shops.password}'),
-                          SizedBox(height: 8.0),
-                          Text('Shop Address: ${shops.shop_adress}'),
-                          SizedBox(height: 8.0),
-                          Text('Shope Name: ${shops.shop_name}'),
-                          SizedBox(height: 8.0),
-                          Text('Status: ${shops.status}'),
-                          SizedBox(height: 8.0),
+                          Text(
+                            'Place An Order',
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 18.0,
+                            ),
+                          ),
+                          Spacer(),
+                          Icon(
+                            Icons.shopping_cart,
+                            size: 33,
+                          )
                         ],
                       ),
+                      onPressed: () {
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => ReviewCart(
+                                  getShopId: shops.email,
+                                )));
+                      },
                     ),
-                  ),
 
-                  //Pickup Button
-                  InkWell(
-                    onTap: () => Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => ReviewCart(
-                              getShopId: shops.email,
-                            ))),
-                    child: Center(
-                      child: Container(
-                        width: MediaQuery.of(context).size.width / 1.6,
-                        height: MediaQuery.of(context).size.height / 20,
-                        decoration: BoxDecoration(
-                          color: MyColors.kPrimary,
-                          borderRadius: BorderRadius.circular(10),
-                          boxShadow: [
-                            BoxShadow(
-                              color: MyColors.kPrimary,
-                            ),
-                          ],
-                        ),
-                        child: Center(
-                            child: Text(
-                          "Place An Order",
-                          style: kTextStyleWhite,
-                        )),
-                      ),
-                    ),
-                  ),
-                ],
+                    // //Pickup Button
+                    // InkWell(
+                    //   onTap: () => Navigator.of(context).push(MaterialPageRoute(
+                    //       builder: (context) => ReviewCart(
+                    //             getShopId: shops.email,
+                    //           ))),
+                    //   child: Center(
+                    //     child: Container(
+                    //       width: MediaQuery.of(context).size.width / 1.6,
+                    //       height: MediaQuery.of(context).size.height / 20,
+                    //       decoration: BoxDecoration(
+                    //         color: MyColors.kPrimary,
+                    //         borderRadius: BorderRadius.circular(10),
+                    //         boxShadow: [
+                    //           BoxShadow(
+                    //             color: MyColors.kPrimary,
+                    //           ),
+                    //         ],
+                    //       ),
+                    //       child: Center(
+                    //           child: Text(
+                    //         "Place An Order",
+                    //         style: kTextStyleWhite,
+                    //       )),
+                    //     ),
+                    //   ),
+                    // ),
+                  ],
+                ),
               ),
             ),
           ),

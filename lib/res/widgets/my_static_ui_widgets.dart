@@ -107,7 +107,14 @@ class MyStaticUIWidgets {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text('${order.order_id}'),
+                          SingleChildScrollView(
+                            scrollDirection: Axis.horizontal,
+                            child: Column(
+                              children: [
+                                Text('${order.order_id}'),
+                              ],
+                            ),
+                          ),
                           Divider(),
                           Text('${order.customerName}'),
                           Divider(),
