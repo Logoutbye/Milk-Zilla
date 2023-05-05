@@ -1,7 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:milk_zilla/Model/order_model.dart';
 import 'package:milk_zilla/controllers/Global_Controllers/update_status_global_controller.dart';
+import 'package:milk_zilla/controllers/Inspector_Controllers/pick_order_controller.dart';
 import 'package:milk_zilla/res/constanst.dart';
 import '../../View/Buyer_UI/Customer Orders With Shop/customer_orders_with_shop.dart';
 import '../../View/Inspector_UI/insector_screen.dart';
@@ -259,6 +261,15 @@ class MyStaticUIWidgets {
                                   onPressed: () {
                                     UpdateStatusGlobalController().updateStatus(
                                         context, order, 'Shipped');
+                                    final user =
+                                        FirebaseAuth.instance.currentUser;
+                                    final email = user!.email;
+                                    print('current users email::${email}');
+
+                                    //order is picked by
+                                    PickOderController()
+                                        .PickOder(context, order, email);
+
                                     Navigator.pop(context);
                                     Navigator.of(context).push(
                                         MaterialPageRoute(
@@ -293,9 +304,7 @@ class MyStaticUIWidgets {
                                                 fontSize: 18.0,
                                               ),
                                             ),
-                                            onPressed: () {
-                                             
-                                            },
+                                            onPressed: () {},
                                           ),
                                         ),
                                       ),
