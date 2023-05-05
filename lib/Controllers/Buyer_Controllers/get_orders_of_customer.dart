@@ -21,7 +21,7 @@ class getOrdersOfCustomerController {
           .toList();
       return orders;
     } catch (e) {
-      print('Error getting orders for shop: $e');
+      print('Error getting orders of Customer: $e');
       return [];
     }
   }

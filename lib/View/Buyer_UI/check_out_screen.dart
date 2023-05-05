@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:geocoding/geocoding.dart';
 import 'package:lottie/lottie.dart';
 import 'package:milk_zilla/Utils/utils.dart';
 import 'package:milk_zilla/View/Buyer_UI/set_customer_address_on_google_map.dart';
@@ -35,8 +36,7 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
   final user = FirebaseAuth.instance.currentUser;
   TextEditingController deliveryAddressController =
       TextEditingController(text: '');
-  TextEditingController InstructionTextController =
-      TextEditingController();
+  TextEditingController InstructionTextController = TextEditingController();
 
   var getUserName;
 
@@ -295,46 +295,6 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
                             height: 15,
                           )
                         : SizedBox(),
-                    // description TextField
-                    // totalPrice > snapshot.data.delivery_charges
-                    //     ? Container(
-                    //         child: TextField(
-                    //           controller: InstructionTextController,
-                    //           obscureText: false,
-                    //           readOnly: false,
-                    //           onTap: () {
-                    //           },
-                    //           style: TextStyle(
-                    //             color: MyColors.kBlack,
-                    //             // fontSize: 18,
-                    //           ),
-                    //           decoration: InputDecoration(
-                    //             hintText: 'Try to be more conscise',
-                    //             labelText: 'Enter Special Instructions',
-                    //             labelStyle: TextStyle(color: MyColors.kPrimary),
-                    //             hintStyle: TextStyle(color: MyColors.kPrimary),
-                    //             enabledBorder: new OutlineInputBorder(
-                    //               borderRadius: BorderRadius.circular(10),
-                    //               borderSide: BorderSide(
-                    //                 color: Color.fromARGB(255, 193, 198, 198),
-                    //                 //Color.fromARGB(255, 115, 38, 38),
-                    //               ),
-                    //             ),
-                    //             focusedBorder: OutlineInputBorder(
-                    //               borderSide:
-                    //                   BorderSide(color: MyColors.kPrimary),
-                    //               borderRadius: BorderRadius.circular(10),
-                    //             ),
-                    //             prefixIcon: Icon(
-                    //               Icons.location_pin,
-                    //               // color:
-                    //               //     MyColors.kPrimary,
-                    //               // size: 25,
-                    //             ),
-                    //           ),
-                    //         ),
-                    //       )
-                    //     : SizedBox(),
                     totalPrice > snapshot.data.delivery_charges
                         ? SizedBox(
                             height: 15,
@@ -344,22 +304,45 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
                     totalPrice > snapshot.data.delivery_charges
                         ? Container(
                             child: TextField(
-                              // controller: deliveryAddressController,
+                              controller: deliveryAddressController,
                               obscureText: false,
                               readOnly: true,
                               onTap: () {
                                 Navigator.pushNamed(context,
                                         '/setCustomerAddressOnGoogleMap')
-                                    .then((result) {
+                                    .then((result) async {
                                   List<double> myLatLang =
                                       result as List<double>;
                                   latitudeofuser = myLatLang[0];
                                   longitudeofuser = myLatLang[1];
+
+                                  // converting latlang to String address
+                                  List<Placemark> placemarks =
+                                      await placemarkFromCoordinates(
+                                          latitudeofuser, longitudeofuser);
+                                  var deliverFullAddress =
+                                      "${placemarks.reversed.last.subLocality}  ${placemarks.reversed.last.locality}, ${placemarks.reversed.last.administrativeArea}";
+                                  deliveryAddressController.text =
+                                      deliverFullAddress;
+
+                                  //===============================
                                   setState(() {});
                                   Utils.flushBarErrorMessage(
                                       'latidtude and longitude: ${myLatLang[0]} ${myLatLang[1]}',
                                       context);
                                 });
+                                // Navigator.pushNamed(context,
+                                //         '/setCustomerAddressOnGoogleMap')
+                                //     .then((result) {
+                                //   List<double> myLatLang =
+                                //       result as List<double>;
+                                //   latitudeofuser = myLatLang[0];
+                                //   longitudeofuser = myLatLang[1];
+                                //   setState(() {});
+                                //   Utils.flushBarErrorMessage(
+                                //       'latidtude and longitude: ${myLatLang[0]} ${myLatLang[1]}',
+                                //       context);
+                                // });
                               },
                               style: TextStyle(
                                 color: MyColors.kBlack,
@@ -473,7 +456,7 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
                                   context,
                                   user!.email,
                                   getUserName,
-                                  // deliveryAddressController.text,
+                                  deliveryAddressController.text,
                                   snapshot.data.delivery_charges,
                                   orderDetails,
                                   // generateOrderNumber,

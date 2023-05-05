@@ -5,9 +5,9 @@ class OrderModel {
   String customerId;
   String ispectorId;
   String customerName;
-  String lat;
-  String long;
-  // String delivery_address;
+  var lat;
+  var long;
+  String delivery_address;
   int delivery_charges;
   String shopId;
   var status;
@@ -25,7 +25,7 @@ class OrderModel {
     required this.customerName,
     required this.shopId,
     required this.status,
-    // required this.delivery_address,
+    required this.delivery_address,
     required this.delivery_charges,
     required this.total_items,
     required this.total_price,
@@ -45,7 +45,7 @@ class OrderModel {
       shopId: data['shop_id'],
       status: data['status'],
       total_items: data['total_items'],
-      // delivery_address: data['delivery_address'],
+      delivery_address: data['delivery_address'],
       delivery_charges: data['delivery_charges'],
       total_price: data['total_price'],
       items: List<Map<String, dynamic>>.from(data['items']),
