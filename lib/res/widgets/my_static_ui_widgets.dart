@@ -111,7 +111,14 @@ class MyStaticUIWidgets {
                           Divider(),
                           Text('${order.customerName}'),
                           Divider(),
-                          Text('${order.lat}${order.long}'),
+                          SingleChildScrollView(
+                            scrollDirection: Axis.horizontal,
+                            child: Column(
+                              children: [
+                                Text('${order.delivery_address}'),
+                              ],
+                            ),
+                          ),
                           Divider(),
                           Text('${order.total_price}'),
                           Divider(),

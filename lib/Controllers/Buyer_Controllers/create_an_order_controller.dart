@@ -12,7 +12,7 @@ class CreateAnOrderController {
     BuildContext context,
     var giveme_customer_id,
     var giveme_customer_name,
-    // var giveme_delivery_adress,
+    var giveme_delivery_adress,
     var giveme_delivery_charges,
     List<Map<dynamic, dynamic>> giveme_order_details,
     // var giveme_order_id,
@@ -38,7 +38,7 @@ class CreateAnOrderController {
       DocumentReference orderRef = await orders.add({
         'customer_id': giveme_customer_id,
         'customer_name': giveme_customer_name,
-        // 'delivery_address': giveme_delivery_adress,
+        'delivery_address': giveme_delivery_adress,
         'delivery_charges': giveme_delivery_charges,
         'inspector_id': giveme_inspector_id,
         'items': giveme_order_details,

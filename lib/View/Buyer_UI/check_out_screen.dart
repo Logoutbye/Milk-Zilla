@@ -36,6 +36,7 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
   final user = FirebaseAuth.instance.currentUser;
   TextEditingController deliveryAddressController =
       TextEditingController(text: '');
+  TextEditingController InstructionTextController = TextEditingController();
 
   var getUserName;
 
@@ -283,7 +284,23 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
                     SizedBox(
                       height: 15,
                     ),
-                    // Password TextField
+                    totalPrice > snapshot.data.delivery_charges
+                        ? CustomDivider()
+                        : SizedBox(),
+                    totalPrice > snapshot.data.delivery_charges
+                        ? CustomDivider()
+                        : SizedBox(),
+                    totalPrice > snapshot.data.delivery_charges
+                        ? SizedBox(
+                            height: 15,
+                          )
+                        : SizedBox(),
+                    totalPrice > snapshot.data.delivery_charges
+                        ? SizedBox(
+                            height: 15,
+                          )
+                        : SizedBox(),
+                    // Pick Location
                     totalPrice > snapshot.data.delivery_charges
                         ? Container(
                             // color: Colors.red,
@@ -315,6 +332,18 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
                                       'latidtude and longitude: ${myLatLang[0]} ${myLatLang[1]}',
                                       context);
                                 });
+                                // Navigator.pushNamed(context,
+                                //         '/setCustomerAddressOnGoogleMap')
+                                //     .then((result) {
+                                //   List<double> myLatLang =
+                                //       result as List<double>;
+                                //   latitudeofuser = myLatLang[0];
+                                //   longitudeofuser = myLatLang[1];
+                                //   setState(() {});
+                                //   Utils.flushBarErrorMessage(
+                                //       'latidtude and longitude: ${myLatLang[0]} ${myLatLang[1]}',
+                                //       context);
+                                // });
                               },
                               style: TextStyle(
                                 color: MyColors.kBlack,
@@ -372,6 +401,7 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
                           ),
                         ),
                         onPressed: () {
+                          onPressed: () {
                           if (totalPrice > snapshot.data.delivery_charges) {
                             List<Map<dynamic, dynamic>> orderDetails = [
                               if (provider.getCount('Buffalo Milk') > 0)
@@ -421,22 +451,35 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
                                       provider.getCount('Desi Ghee'),
                                 },
                             ];
-                            CreateAnOrderController().createOrder(
-                              context,
-                              user!.email,
-                              getUserName,
-                              deliveryAddressController.text,
-                              snapshot.data.delivery_charges,
-                              orderDetails,
-                              generateOrderNumber,
-                              '${getShopId}',
-                              'Pending',
-                              totalItems,
-                              totalPrice,
-                            );
+
+                            if (latitudeofuser != 0.0 &&
+                                longitudeofuser != 0.0) {
+                              CreateAnOrderController().createOrder(
+                                  context,
+                                  user!.email,
+                                  getUserName,
+                                  deliveryAddressController.text,
+                                  snapshot.data.delivery_charges,
+                                  orderDetails,
+                                  // generateOrderNumber,
+                                  '${getShopId}',
+                                  'Pending',
+                                  totalItems,
+                                  totalPrice,
+                                  //initial inspector id is empty
+                                  '',
+                                  // giveme lat
+                                  latitudeofuser,
+                                  // give me long
+                                  longitudeofuser);
+                            } else {
+                              Utils.flushBarErrorMessage(
+                                  'Please Select Delivery Location', context);
+                            }
                           } else {
                             Navigator.pop(context);
                           }
+                        },
                         },
                       ),
                     ),
