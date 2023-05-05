@@ -35,6 +35,8 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
   final user = FirebaseAuth.instance.currentUser;
   TextEditingController deliveryAddressController =
       TextEditingController(text: '');
+  TextEditingController InstructionTextController =
+      TextEditingController();
 
   var getUserName;
 
@@ -282,12 +284,67 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
                     SizedBox(
                       height: 15,
                     ),
-                    // Password TextField
+                    totalPrice > snapshot.data.delivery_charges
+                        ? CustomDivider()
+                        : SizedBox(),
+                    totalPrice > snapshot.data.delivery_charges
+                        ? CustomDivider()
+                        : SizedBox(),
+                    totalPrice > snapshot.data.delivery_charges
+                        ? SizedBox(
+                            height: 15,
+                          )
+                        : SizedBox(),
+                    // description TextField
+                    // totalPrice > snapshot.data.delivery_charges
+                    //     ? Container(
+                    //         child: TextField(
+                    //           controller: InstructionTextController,
+                    //           obscureText: false,
+                    //           readOnly: false,
+                    //           onTap: () {
+                    //           },
+                    //           style: TextStyle(
+                    //             color: MyColors.kBlack,
+                    //             // fontSize: 18,
+                    //           ),
+                    //           decoration: InputDecoration(
+                    //             hintText: 'Try to be more conscise',
+                    //             labelText: 'Enter Special Instructions',
+                    //             labelStyle: TextStyle(color: MyColors.kPrimary),
+                    //             hintStyle: TextStyle(color: MyColors.kPrimary),
+                    //             enabledBorder: new OutlineInputBorder(
+                    //               borderRadius: BorderRadius.circular(10),
+                    //               borderSide: BorderSide(
+                    //                 color: Color.fromARGB(255, 193, 198, 198),
+                    //                 //Color.fromARGB(255, 115, 38, 38),
+                    //               ),
+                    //             ),
+                    //             focusedBorder: OutlineInputBorder(
+                    //               borderSide:
+                    //                   BorderSide(color: MyColors.kPrimary),
+                    //               borderRadius: BorderRadius.circular(10),
+                    //             ),
+                    //             prefixIcon: Icon(
+                    //               Icons.location_pin,
+                    //               // color:
+                    //               //     MyColors.kPrimary,
+                    //               // size: 25,
+                    //             ),
+                    //           ),
+                    //         ),
+                    //       )
+                    //     : SizedBox(),
+                    totalPrice > snapshot.data.delivery_charges
+                        ? SizedBox(
+                            height: 15,
+                          )
+                        : SizedBox(),
+                    // Pick Location
                     totalPrice > snapshot.data.delivery_charges
                         ? Container(
-                            // color: Colors.red,
                             child: TextField(
-                              controller: deliveryAddressController,
+                              // controller: deliveryAddressController,
                               obscureText: false,
                               readOnly: true,
                               onTap: () {
@@ -309,8 +366,8 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
                                 // fontSize: 18,
                               ),
                               decoration: InputDecoration(
-                                hintText: 'Street/Muhllah/city',
-                                labelText: 'Enter Delivery Location',
+                                // hintText: 'Street/Muhllah/city',
+                                labelText: 'Pick Delivery Location',
                                 labelStyle: TextStyle(color: MyColors.kPrimary),
                                 hintStyle: TextStyle(color: MyColors.kPrimary),
                                 enabledBorder: new OutlineInputBorder(
@@ -409,19 +466,31 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
                                       provider.getCount('Desi Ghee'),
                                 },
                             ];
-                            CreateAnOrderController().createOrder(
-                              context,
-                              user!.email,
-                              getUserName,
-                              deliveryAddressController.text,
-                              snapshot.data.delivery_charges,
-                              orderDetails,
-                              generateOrderNumber,
-                              '${getShopId}',
-                              'Pending',
-                              totalItems,
-                              totalPrice,
-                            );
+
+                            if (latitudeofuser != 0.0 &&
+                                longitudeofuser != 0.0) {
+                              CreateAnOrderController().createOrder(
+                                  context,
+                                  user!.email,
+                                  getUserName,
+                                  // deliveryAddressController.text,
+                                  snapshot.data.delivery_charges,
+                                  orderDetails,
+                                  // generateOrderNumber,
+                                  '${getShopId}',
+                                  'Pending',
+                                  totalItems,
+                                  totalPrice,
+                                  //initial inspector id is empty
+                                  '',
+                                  // giveme lat
+                                  latitudeofuser,
+                                  // give me long
+                                  longitudeofuser);
+                            } else {
+                              Utils.flushBarErrorMessage(
+                                  'Please Select Delivery Location', context);
+                            }
                           } else {
                             Navigator.pop(context);
                           }
@@ -574,6 +643,7 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
       print('Total Quantity is :$totalItems');
     }
   }
+
   // to get current user name customer id
   Future<PriceListModel?> getDataOfLoginedUser() async {
     FirebaseFirestore firestore = FirebaseFirestore.instance;

@@ -111,7 +111,7 @@ class MyStaticUIWidgets {
                           Divider(),
                           Text('${order.customerName}'),
                           Divider(),
-                          Text('${order.delivery_address}'),
+                          Text('${order.lat}${order.long}'),
                           Divider(),
                           Text('${order.total_price}'),
                           Divider(),

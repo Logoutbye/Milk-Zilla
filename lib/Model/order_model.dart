@@ -3,8 +3,11 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 class OrderModel {
   String order_id;
   String customerId;
+  String ispectorId;
   String customerName;
-  String delivery_address;
+  String lat;
+  String long;
+  // String delivery_address;
   int delivery_charges;
   String shopId;
   var status;
@@ -16,10 +19,13 @@ class OrderModel {
   OrderModel({
     required this.order_id,
     required this.customerId,
+    required this.ispectorId,
+    required this.lat,
+    required this.long,
     required this.customerName,
     required this.shopId,
     required this.status,
-    required this.delivery_address,
+    // required this.delivery_address,
     required this.delivery_charges,
     required this.total_items,
     required this.total_price,
@@ -33,10 +39,13 @@ class OrderModel {
       order_id: doc.id,
       customerId: data['customer_id'],
       customerName: data['customer_name'],
+      ispectorId: data['inspector_id'],
+      lat: data['lat'],
+      long: data['long'],
       shopId: data['shop_id'],
       status: data['status'],
       total_items: data['total_items'],
-      delivery_address: data['delivery_address'],
+      // delivery_address: data['delivery_address'],
       delivery_charges: data['delivery_charges'],
       total_price: data['total_price'],
       items: List<Map<String, dynamic>>.from(data['items']),
