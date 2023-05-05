@@ -2,10 +2,11 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
+import 'package:milk_zilla/Controllers/Buyer_Controllers/get_all_approved_shopes_with_specif_city_controller.dart';
 import 'package:milk_zilla/Model/seller_model.dart';
 import 'package:milk_zilla/View/Buyer_UI/Customer%20Orders%20With%20Shop/customer_orders_with_shop.dart';
 import 'package:milk_zilla/View/Buyer_UI/review_cart.dart';
-import 'package:milk_zilla/controllers/Buyer_Controllers/get_all_approved_shopes_with_specif_city_controller.dart';
+
 import 'package:milk_zilla/res/Components/my_drawers/buyer_drawer.dart';
 import 'package:milk_zilla/res/constanst.dart';
 import 'package:milk_zilla/res/my_colors.dart';
@@ -265,7 +266,7 @@ class _AllShopesToOrderFromState extends State<AllShopesToOrderFrom> {
                                     SizedBox(height: 8.0),
                                     CustomDivider(),
                                     SizedBox(height: 8.0),
-                                    
+
                                     Text('${shops.name}'),
                                     SizedBox(height: 8.0),
                                     CustomDivider(),
