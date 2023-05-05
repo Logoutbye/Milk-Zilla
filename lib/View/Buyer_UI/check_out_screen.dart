@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:geocoding/geocoding.dart';
 import 'package:lottie/lottie.dart';
 import 'package:milk_zilla/Utils/utils.dart';
 import 'package:milk_zilla/View/Buyer_UI/set_customer_address_on_google_map.dart';
@@ -293,11 +294,22 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
                               onTap: () {
                                 Navigator.pushNamed(context,
                                         '/setCustomerAddressOnGoogleMap')
-                                    .then((result) {
+                                    .then((result) async {
                                   List<double> myLatLang =
                                       result as List<double>;
                                   latitudeofuser = myLatLang[0];
                                   longitudeofuser = myLatLang[1];
+
+                                  // converting latlang to String address
+                                  List<Placemark> placemarks =
+                                      await placemarkFromCoordinates(
+                                          latitudeofuser, longitudeofuser);
+                                  var deliverFullAddress =
+                                      "${placemarks.reversed.last.subLocality}  ${placemarks.reversed.last.locality}, ${placemarks.reversed.last.administrativeArea}";
+                                  deliveryAddressController.text =
+                                      deliverFullAddress;
+
+                                  //===============================
                                   setState(() {});
                                   Utils.flushBarErrorMessage(
                                       'latidtude and longitude: ${myLatLang[0]} ${myLatLang[1]}',
@@ -574,6 +586,7 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
       print('Total Quantity is :$totalItems');
     }
   }
+
   // to get current user name customer id
   Future<PriceListModel?> getDataOfLoginedUser() async {
     FirebaseFirestore firestore = FirebaseFirestore.instance;
