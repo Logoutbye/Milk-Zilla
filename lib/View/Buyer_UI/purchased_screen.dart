@@ -6,6 +6,7 @@ import 'package:milk_zilla/main.dart';
 
 import '../../res/constanst.dart';
 import '../../res/my_colors.dart';
+import 'Customer Orders With Shop/customer_orders_with_shop.dart';
 
 class PurchasedScreen extends StatefulWidget {
   var result;
@@ -117,7 +118,7 @@ class _PurchasedScreenState extends State<PurchasedScreen> {
                     onPressed: () {
                       if(widget.result =='successful'){
                        navigatorKey.currentState!.popUntil((route) => route.isFirst);
-                      //  Navigator.of(context).push(MaterialPageRoute(builder: (context)=>MyOrders()));
+                       Navigator.of(context).push(MaterialPageRoute(builder: (context)=>CustomerOrdersWithShop()));
                       }else{
                         Navigator.pop(context);
                       }

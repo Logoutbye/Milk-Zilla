@@ -29,7 +29,6 @@ class _CustomerOrdersWithShopState extends State<CustomerOrdersWithShop> {
             unselectedLabelColor: Color.fromARGB(255, 139, 211, 142),
             labelColor: MyColors.kPrimary,
             labelStyle: TextStyle(fontSize: 15),
-            
             automaticIndicatorColorAdjustment: true,
             tabs: [
               Tab(

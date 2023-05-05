@@ -23,16 +23,15 @@ class _InspectorScreenState extends State<InspectorScreen> {
       length: 3,
       child: Scaffold(
         appBar: AppBar(
-         backgroundColor: MyColors.kWhite,
-          foregroundColor: MyColors.kPrimary,  
+          backgroundColor: MyColors.kWhite,
+          foregroundColor: MyColors.kPrimary,
           title: const Text('My Orders'),
           centerTitle: true,
           bottom: TabBar(
-                 indicatorColor: MyColors.kPrimary,
+            indicatorColor: MyColors.kPrimary,
             unselectedLabelColor: Color.fromARGB(255, 139, 211, 142),
             labelColor: MyColors.kPrimary,
             labelStyle: TextStyle(fontSize: 15),
-            
             automaticIndicatorColorAdjustment: true,
             tabs: [
               Tab(
@@ -46,8 +45,18 @@ class _InspectorScreenState extends State<InspectorScreen> {
               ),
             ],
           ),
+          actions: [
+            Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                child: Builder(
+                    builder: (context) => IconButton(
+                          icon: Icon(Icons.settings),
+                          // iconSize: 40,
+                          onPressed: () => Scaffold.of(context).openEndDrawer(),
+                        )))
+          ],
         ),
-        drawer: InspectorDrawer(),
+        endDrawer: InspectorDrawer(),
         body: TabBarView(
           children: [
             InspectorOrdersPending(),
