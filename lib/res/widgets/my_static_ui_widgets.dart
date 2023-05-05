@@ -42,6 +42,7 @@ class MyStaticUIWidgets {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
+<<<<<<< HEAD
                     Row(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -57,6 +58,92 @@ class MyStaticUIWidgets {
                                 topLeft: Radius.circular(15),
                                 bottomLeft: Radius.circular(15),
                               ),
+=======
+                    Container(
+                        decoration: BoxDecoration(
+                          color: Color.fromARGB(255, 255, 255, 255),
+                          border: Border.all(
+                            color: MyColors.kPrimary,
+                            width: 1.0,
+                          ),
+                          borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(15),
+                            bottomLeft: Radius.circular(15),
+                          ),
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text(
+                            'Status',
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                        )),
+                    const SizedBox(width: 10.0),
+                    Container(
+                        decoration: BoxDecoration(
+                          color: MyColors.kPrimary,
+                          border: Border.all(
+                            color: MyColors.kSecondary,
+                            width: 1.0,
+                          ),
+                          borderRadius: BorderRadius.only(
+                            topRight: Radius.circular(15),
+                            bottomRight: Radius.circular(15),
+                          ),
+                        ),
+                        child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text('${order.status}',
+                                style:
+                                    TextStyle(fontWeight: FontWeight.bold)))),
+                  ],
+                ),
+                SizedBox(
+                  height: heightbetweenWidgetsInOrder,
+                ),
+                Row(
+                  children: [
+                    SizedBox(
+                      width: MediaQuery.of(context).size.width / 2.8,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text('Order ID:'),
+                          Divider(),
+                          Text('Customer Name:'),
+                          Divider(),
+                          Text('Delivery Address'),
+                          Divider(),
+                          Text('Total Price'),
+                          Divider(),
+                          Text('Order PlacementTime'),
+                        ],
+                      ),
+                    ),
+                    Spacer(),
+                    SizedBox(
+                      width: MediaQuery.of(context).size.width / 2.5,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          SingleChildScrollView(
+                            scrollDirection: Axis.horizontal,
+                            child: Column(
+                              children: [
+                                Text('${order.order_id}'),
+                              ],
+                            ),
+                          ),
+                          Divider(),
+                          Text('${order.customerName}'),
+                          Divider(),
+                          SingleChildScrollView(
+                            scrollDirection: Axis.horizontal,
+                            child: Column(
+                              children: [
+                                Text('${order.delivery_address}'),
+                              ],
+>>>>>>> 35bd8c887b40cd2eb49061c8124ba882f54a8ff5
                             ),
                             child: Padding(
                               padding: const EdgeInsets.all(8.0),
