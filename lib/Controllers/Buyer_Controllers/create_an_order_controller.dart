@@ -48,8 +48,8 @@ class CreateAnOrderController {
         'timestamp': FieldValue.serverTimestamp(),
         'total_items': giveme_total_items,
         'total_price': giveme_total_price,
-        'lat':giveme_lat,
-        'long' :giveme_long
+        'lat': giveme_lat,
+        'long': giveme_long
       });
 
       // once data of an order is sent to firebase the provider then would be reset to zero so that

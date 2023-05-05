@@ -53,8 +53,7 @@ class OrderModel {
     );
   }
 
-
-   Map<String, dynamic> toMap() {
+  Map<String, dynamic> toMap() {
     return {
       'status': this.status,
     };
@@ -72,7 +71,6 @@ class OrderModel {
   //   items =json['items'];
   //   timestamp=json['timestamp'];
 
-    
   // }
 
   // Map<String, dynamic> toJson() {
