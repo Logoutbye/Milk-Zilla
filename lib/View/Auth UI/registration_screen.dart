@@ -87,7 +87,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                     child: Center(
                       child: Container(
                         width: MediaQuery.of(context).size.width / 1.2,
-                        height: MediaQuery.of(context).size.height / 1.55,
+                        height: MediaQuery.of(context).size.height / 1.9,
                         decoration: BoxDecoration(
                           color: MyColors.kSecondary,
                           borderRadius: BorderRadius.circular(20),
@@ -159,7 +159,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                                           borderRadius:
                                               BorderRadius.circular(10),
                                         ),
-                                        prefixIcon: Icon(Icons.flag),
+                                        prefixIcon: Icon(Icons.drive_file_rename_outline_sharp),
                                       ),
                                     ),
                                   ),
@@ -198,7 +198,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                                           borderRadius:
                                               BorderRadius.circular(10),
                                         ),
-                                        prefixIcon: Icon(Icons.flag),
+                                        prefixIcon: Icon(Icons.call,color: MyColors.kPrimary,),
                                       ),
                                     ),
                                   ),
@@ -237,7 +237,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                                           borderRadius:
                                               BorderRadius.circular(10),
                                         ),
-                                        prefixIcon: Icon(Icons.flag),
+                                        prefixIcon: Icon(Icons.location_city_sharp,color: MyColors.kPrimary,),
                                       ),
                                     ),
                                   ),
@@ -279,7 +279,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                                                 borderRadius:
                                                     BorderRadius.circular(10),
                                               ),
-                                              prefixIcon: Icon(Icons.flag),
+                                              prefixIcon: Icon(Icons.shopping_cart_sharp,color: MyColors.kPrimary,),
                                             ),
                                           ),
                                         )
@@ -324,7 +324,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                                           borderRadius:
                                               BorderRadius.circular(10),
                                         ),
-                                        prefixIcon: Icon(Icons.flag),
+                                        prefixIcon: Icon(Icons.location_on_sharp,color: MyColors.kPrimary,),
                                       ),
                                     ),
                                   ),
@@ -364,7 +364,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                                           borderRadius:
                                               BorderRadius.circular(10),
                                         ),
-                                        prefixIcon: Icon(Icons.email_outlined),
+                                        prefixIcon: Icon(Icons.email_outlined,color: MyColors.kPrimary,),
                                       ),
                                     ),
                                   ),
@@ -404,8 +404,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                                         ),
                                         prefixIcon: Icon(
                                           Icons.lock,
-                                          // color:
-                                          //     MyColors.kPrimary,
+                                          color:MyColors.kPrimary,
                                           // size: 25,
                                         ),
                                       ),

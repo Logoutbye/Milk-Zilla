@@ -1,0 +1,858 @@
+@startuml
+set namespaceSeparator ::
+
+class "milk_zilla::controllers::Auth_Controllers::forget_password_controller.dart::ForgetPasswordController" {
+  +dynamic firebaseForgetPassword()
+}
+
+class "milk_zilla::controllers::Auth_Controllers::login_controller.dart::LoginController" {
+  +Future<dynamic> FirebaseLogin()
+}
+
+class "milk_zilla::controllers::Auth_Controllers::registration_status_controller.dart::RegistrationStatusController" {
+  +Future<SellerOrInspectorModel?> readSellerDataFromDatabase()
+}
+
+class "milk_zilla::controllers::Auth_Controllers::users_registration_controller.dart::UserRegistrationController" {
+  +Future<dynamic> FirebaseRegistration()
+}
+
+class "milk_zilla::controllers::Buyer_Controllers::create_an_order_controller.dart::CreateAnOrderController" {
+  +Future<void> createOrder()
+}
+
+class "milk_zilla::controllers::Buyer_Controllers::get_all_approved_shopes_with_specif_city_controller.dart::GetAllApprovedShopeswithSpecifCityController" {
+  +Future<List<SellerOrInspectorModel>> getAllApprovedShopeswithSpecifCity()
+}
+
+class "milk_zilla::controllers::Buyer_Controllers::get_orders_of_customer.dart::getOrdersOfCustomerController" {
+  +Future<List<OrderModel>> getOrdersOfCustomer()
+}
+
+class "milk_zilla::controllers::Buyer_Controllers::get_real_time_prices_from_database_for_creating_an_order.dart::getRealTimePricesFromDatabaseforCreatingAnOrderController" {
+  +Future<PriceListModel?> getRealTimePricesFromDatabaseforCreatingAnOrder()
+}
+
+class "milk_zilla::controllers::Global_Controllers::update_status_global_controller.dart::UpdateStatusGlobalController" {
+  +Future<void> updateStatus()
+}
+
+class "milk_zilla::controllers::Inspector_Controllers::get_orders_for_inpectors.dart::getOrdersForInspectorController" {
+  +Future<List<OrderModel>> getOrdersForInspector()
+}
+
+class "milk_zilla::controllers::Inspector_Controllers::pick_order_controller.dart::PickOderController" {
+  +Future<void> PickOder()
+}
+
+class "milk_zilla::controllers::Seller_Controllers::seller_controller.dart::SellerContoller" {
+  +Future<List<OrderModel>> getOrdersForShop()
+}
+
+class "milk_zilla::main.dart::MyApp" {
+  +dynamic whichUserLoggedIn
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "milk_zilla::main.dart::MyApp"
+
+class "milk_zilla::Model::order_item_model.dart::OrderItemModel" {
+  +String? name
+  +int? quantity
+  +dynamic price
+  +dynamic unit
+  +void Function() onPressedDecrement
+  +void Function() onPressedIncrement
+}
+
+"milk_zilla::Model::order_item_model.dart::OrderItemModel" o-- "dart::ui::void Function()"
+
+class "milk_zilla::Model::order_model.dart::OrderModel" {
+  +String order_id
+  +String customerId
+  +String ispectorId
+  +String customerName
+  +dynamic lat
+  +dynamic long
+  +String delivery_address
+  +int delivery_charges
+  +String shopId
+  +dynamic status
+  +int total_items
+  +int total_price
+  +List<Map<String, dynamic>> items
+  +DateTime timestamp
+  +Map<String, dynamic> toMap()
+}
+
+class "milk_zilla::Model::price_list_model.dart::PriceListModel" {
+  +dynamic cow_milk
+  +dynamic buffalo_milk
+  +dynamic mix_milk
+  +dynamic yougurt
+  +dynamic butter
+  +dynamic desi_ghee
+  +dynamic delivery_charges
+  +Map<String, dynamic> toJson()
+}
+
+class "milk_zilla::Model::seller_model.dart::SellerOrInspectorModel" {
+  +dynamic name
+  +dynamic mobile_no
+  +dynamic city
+  +dynamic shop_name
+  +dynamic shop_adress
+  +dynamic inspector_adress
+  +dynamic email
+  +dynamic password
+  +dynamic status
+  +Map<String, dynamic> toJson()
+}
+
+class "milk_zilla::provider::Sopping_item_provider.dart::ShoppingItemProvider" {
+  -Map<String, int> _counts
+  +int getCount()
+  +void incrementCount()
+  +void decrementCount()
+  +void reset()
+}
+
+"flutter::src::foundation::change_notifier.dart::ChangeNotifier" <|-- "milk_zilla::provider::Sopping_item_provider.dart::ShoppingItemProvider"
+
+class "milk_zilla::res::Components::create_an_order.dart::CreateAnOrder" {
+  +dynamic itemname
+  +void Function() onPressedIncrement
+  +void Function() onPressedDecrement
+  +Widget build()
+}
+
+"milk_zilla::res::Components::create_an_order.dart::CreateAnOrder" o-- "dart::ui::void Function()"
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "milk_zilla::res::Components::create_an_order.dart::CreateAnOrder"
+
+class "milk_zilla::res::Components::custom_divider.dart::CustomDivider" {
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "milk_zilla::res::Components::custom_divider.dart::CustomDivider"
+
+class "milk_zilla::res::Components::error_screen.dart::ErrorScreen" {
+  +String Message
+  +void Function() onpress
+  +dynamic butontitle
+  +Widget build()
+  +Future<void> SignOut()
+}
+
+"milk_zilla::res::Components::error_screen.dart::ErrorScreen" o-- "dart::ui::void Function()"
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "milk_zilla::res::Components::error_screen.dart::ErrorScreen"
+
+class "milk_zilla::res::Components::error_screen.dart::MyStaticComponents" {
+  {static} +dynamic myAppDialogBox()
+  {static} +String generateOrderNumber()
+}
+
+class "milk_zilla::res::Components::firebase_helper.dart::FirestoreHelper" {
+  {static} +String currentSellerStatusInFirestore
+  {static} +String currentInspectorStatusInFirestore
+  {static} +Future<void> initializeToCheckStatusForSellers()
+  {static} +Future<void> initializeToCheckStatusForInspector()
+}
+
+class "milk_zilla::res::Components::my_drawer.dart::MyAppDrawer" {
+  +State<MyAppDrawer> createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "milk_zilla::res::Components::my_drawer.dart::MyAppDrawer"
+
+class "milk_zilla::res::Components::my_drawer.dart::_MyAppDrawerState" {
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::State" <|-- "milk_zilla::res::Components::my_drawer.dart::_MyAppDrawerState"
+
+class "milk_zilla::res::Components::my_drawers::buyer_drawer.dart::BuyerDrawer" {
+  +State<BuyerDrawer> createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "milk_zilla::res::Components::my_drawers::buyer_drawer.dart::BuyerDrawer"
+
+class "milk_zilla::res::Components::my_drawers::buyer_drawer.dart::_BuyerDrawerState" {
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::State" <|-- "milk_zilla::res::Components::my_drawers::buyer_drawer.dart::_BuyerDrawerState"
+
+class "milk_zilla::res::Components::my_drawers::inspector_drawer.dart::InspectorDrawer" {
+  +State<InspectorDrawer> createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "milk_zilla::res::Components::my_drawers::inspector_drawer.dart::InspectorDrawer"
+
+class "milk_zilla::res::Components::my_drawers::inspector_drawer.dart::_InspectorDrawerState" {
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::State" <|-- "milk_zilla::res::Components::my_drawers::inspector_drawer.dart::_InspectorDrawerState"
+
+class "milk_zilla::res::Components::my_drawers::seller_drawer.dart::SellerDrawer" {
+  +State<SellerDrawer> createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "milk_zilla::res::Components::my_drawers::seller_drawer.dart::SellerDrawer"
+
+class "milk_zilla::res::Components::my_drawers::seller_drawer.dart::_SellerDrawerState" {
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::State" <|-- "milk_zilla::res::Components::my_drawers::seller_drawer.dart::_SellerDrawerState"
+
+class "milk_zilla::res::Components::my_shared_prefrences.dart::MySharedPrefencesSessionHandling" {
+  {static} +String? whichUserLoggedIn
+  {static} +dynamic getWhichUserLoggedInFromSharedPreferences()
+  {static} +dynamic removeWhichUserLoggedInFromSharedPreferences()
+  {static} +void setOrupdateWhichUserLoggedInSharedPreferences()
+}
+
+class "milk_zilla::res::Components::order_list_item.dart::OrderListItem" {
+  +OrderItemModel? item
+  +Widget build()
+}
+
+"milk_zilla::res::Components::order_list_item.dart::OrderListItem" o-- "milk_zilla::Model::order_item_model.dart::OrderItemModel"
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "milk_zilla::res::Components::order_list_item.dart::OrderListItem"
+
+class "milk_zilla::res::Components::round_button.dart::RoundButton" {
+  +String title
+  +bool loading
+  +void Function() onpress
+  +double width
+  +Widget build()
+}
+
+"milk_zilla::res::Components::round_button.dart::RoundButton" o-- "dart::ui::void Function()"
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "milk_zilla::res::Components::round_button.dart::RoundButton"
+
+class "milk_zilla::res::Components::round_button.dart::MyElevatedButton" {
+  +String title
+  +void Function() onpress
+  +Widget build()
+}
+
+"milk_zilla::res::Components::round_button.dart::MyElevatedButton" o-- "dart::ui::void Function()"
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "milk_zilla::res::Components::round_button.dart::MyElevatedButton"
+
+class "milk_zilla::res::my_colors.dart::MyColors" {
+  {static} +MaterialColor kPrimary
+  {static} +Color kSecondary
+  {static} +Color kWhite
+  {static} +Color kBlack
+  {static} +Color kshadow
+}
+
+"milk_zilla::res::my_colors.dart::MyColors" o-- "flutter::src::material::colors.dart::MaterialColor"
+"milk_zilla::res::my_colors.dart::MyColors" o-- "dart::ui::Color"
+
+class "milk_zilla::res::widgets::my_static_ui_widgets.dart::MyStaticUIWidgets" {
+  {static} +Widget buildOrderUI2()
+}
+
+class "milk_zilla::Utils::utils.dart::Utils" {
+  {static} +void fieldfocusChange()
+  {static} +dynamic toastMessage()
+  {static} +dynamic flushBarErrorMessage()
+  {static} +dynamic flushBarErrorMessageWithAction()
+}
+
+class "milk_zilla::View::Auth%20UI::login_screen.dart::LoginScreen" {
+  +String whichUser
+  +State<LoginScreen> createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "milk_zilla::View::Auth%20UI::login_screen.dart::LoginScreen"
+
+class "milk_zilla::View::Auth%20UI::login_screen.dart::_LoginScreenState" {
+  +TextEditingController emailTextController
+  +TextEditingController PasswordTextController
+  +bool islogedInbuttonPressed
+  +LoginController loginController
+  +ForgetPasswordController forgetPasswordController
+  +dynamic whichUser
+  +void initState()
+  +dynamic getiingSatus()
+  +void dispose()
+  +Widget build()
+}
+
+"milk_zilla::View::Auth%20UI::login_screen.dart::_LoginScreenState" o-- "flutter::src::widgets::editable_text.dart::TextEditingController"
+"milk_zilla::View::Auth%20UI::login_screen.dart::_LoginScreenState" o-- "milk_zilla::controllers::Auth_Controllers::login_controller.dart::LoginController"
+"milk_zilla::View::Auth%20UI::login_screen.dart::_LoginScreenState" o-- "milk_zilla::controllers::Auth_Controllers::forget_password_controller.dart::ForgetPasswordController"
+"flutter::src::widgets::framework.dart::State" <|-- "milk_zilla::View::Auth%20UI::login_screen.dart::_LoginScreenState"
+
+class "milk_zilla::View::Auth%20UI::registration_screen.dart::RegistrationScreen" {
+  +String whichUser
+  +State<RegistrationScreen> createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "milk_zilla::View::Auth%20UI::registration_screen.dart::RegistrationScreen"
+
+class "milk_zilla::View::Auth%20UI::registration_screen.dart::_RegistrationScreenState" {
+  +UserRegistrationController userRegistrationController
+  +TextEditingController mobileNumberTextController
+  +TextEditingController PasswordTextController
+  +TextEditingController nameTextControl
+  +TextEditingController emailTextController
+  +TextEditingController cityTextControl
+  +TextEditingController shopNameTextControl
+  +TextEditingController buyerOrinspectorOrShopAdressTextControl
+  +dynamic whichUser
+  +void initState()
+  +Widget build()
+}
+
+"milk_zilla::View::Auth%20UI::registration_screen.dart::_RegistrationScreenState" o-- "milk_zilla::controllers::Auth_Controllers::users_registration_controller.dart::UserRegistrationController"
+"milk_zilla::View::Auth%20UI::registration_screen.dart::_RegistrationScreenState" o-- "flutter::src::widgets::editable_text.dart::TextEditingController"
+"flutter::src::widgets::framework.dart::State" <|-- "milk_zilla::View::Auth%20UI::registration_screen.dart::_RegistrationScreenState"
+
+class "milk_zilla::View::Auth%20UI::registration_status_screen.dart::RegistrationStatusScreen" {
+  +String whichUser
+  +State<RegistrationStatusScreen> createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "milk_zilla::View::Auth%20UI::registration_status_screen.dart::RegistrationStatusScreen"
+
+class "milk_zilla::View::Auth%20UI::registration_status_screen.dart::_RegistrationStatusScreenState" {
+  +User? user
+  +dynamic whichUser
+  +RegistrationStatusController registrationStatusController
+  +void initState()
+  +Widget build()
+}
+
+"milk_zilla::View::Auth%20UI::registration_status_screen.dart::_RegistrationStatusScreenState" o-- "firebase_auth::firebase_auth.dart::User"
+"milk_zilla::View::Auth%20UI::registration_status_screen.dart::_RegistrationStatusScreenState" o-- "milk_zilla::controllers::Auth_Controllers::registration_status_controller.dart::RegistrationStatusController"
+"flutter::src::widgets::framework.dart::State" <|-- "milk_zilla::View::Auth%20UI::registration_status_screen.dart::_RegistrationStatusScreenState"
+class "milk_zilla::View::Buyer_UI::all_shops_addresses_on_google_map.dart::AllShopsAddressesOnGoogleMap" {
+  +State<AllShopsAddressesOnGoogleMap> createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "milk_zilla::View::Buyer_UI::all_shops_addresses_on_google_map.dart::AllShopsAddressesOnGoogleMap"
+
+class "milk_zilla::View::Buyer_UI::all_shops_addresses_on_google_map.dart::_AllShopsAddressesOnGoogleMapState" {
+  -Completer<GoogleMapController> _controller
+  -LatLng _markerPosition
+  -List<LatLng> _shopesLatLang
+  +List<Placemark> placemarks
+  -List<Marker> _markers
+  +List<double> latitudeLongitude
+  +dynamic addMarkers()
+  +void initState()
+  +Widget build()
+  +dynamic showCurrentLocation()
+  +Future<Position> getUserCurrentLocation()
+}
+
+"milk_zilla::View::Buyer_UI::all_shops_addresses_on_google_map.dart::_AllShopsAddressesOnGoogleMapState" o-- "dart::async::Completer<GoogleMapController>"
+"milk_zilla::View::Buyer_UI::all_shops_addresses_on_google_map.dart::_AllShopsAddressesOnGoogleMapState" o-- "google_maps_flutter_platform_interface::src::types::location.dart::LatLng"
+"flutter::src::widgets::framework.dart::State" <|-- "milk_zilla::View::Buyer_UI::all_shops_addresses_on_google_map.dart::_AllShopsAddressesOnGoogleMapState"
+
+class "milk_zilla::View::Buyer_UI::all_shops_to_order_from.dart::AllShopesToOrderFrom" {
+  +State<AllShopesToOrderFrom> createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "milk_zilla::View::Buyer_UI::all_shops_to_order_from.dart::AllShopesToOrderFrom"
+
+class "milk_zilla::View::Buyer_UI::all_shops_to_order_from.dart::_AllShopesToOrderFromState" {
+  +User? user
+  +dynamic getUserCity
+  +void initState()
+  +Widget build()
+  +Future<dynamic> getDataOfLoginedUser()
+  +Widget buildShopsUI()
+}
+
+"milk_zilla::View::Buyer_UI::all_shops_to_order_from.dart::_AllShopesToOrderFromState" o-- "firebase_auth::firebase_auth.dart::User"
+"flutter::src::widgets::framework.dart::State" <|-- "milk_zilla::View::Buyer_UI::all_shops_to_order_from.dart::_AllShopesToOrderFromState"
+
+class "milk_zilla::View::Buyer_UI::buyer_profile.dart::BuyerProfile" {
+  +State<BuyerProfile> createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "milk_zilla::View::Buyer_UI::buyer_profile.dart::BuyerProfile"
+
+class "milk_zilla::View::Buyer_UI::buyer_profile.dart::_BuyerProfileState" {
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::State" <|-- "milk_zilla::View::Buyer_UI::buyer_profile.dart::_BuyerProfileState"
+
+class "milk_zilla::View::Buyer_UI::check_out_screen.dart::CheckOutScreen" {
+  +dynamic getShopId
+  +State<CheckOutScreen> createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "milk_zilla::View::Buyer_UI::check_out_screen.dart::CheckOutScreen"
+
+class "milk_zilla::View::Buyer_UI::check_out_screen.dart::_CheckOutScreenState" {
+  +dynamic totalPrice
+  +dynamic totalItems
+  +String generateOrderNumber
+  +User? user
+  +TextEditingController deliveryAddressController
+  +TextEditingController InstructionTextController
+  +dynamic getUserName
+  +dynamic getShopId
+  +double latitudeofuser
+  +double longitudeofuser
+  +void initState()
+  +Widget build()
+  +dynamic calculatetotalPricesandTotalItems()
+  +Future<PriceListModel?> getDataOfLoginedUser()
+}
+
+"milk_zilla::View::Buyer_UI::check_out_screen.dart::_CheckOutScreenState" o-- "firebase_auth::firebase_auth.dart::User"
+"milk_zilla::View::Buyer_UI::check_out_screen.dart::_CheckOutScreenState" o-- "flutter::src::widgets::editable_text.dart::TextEditingController"
+"flutter::src::widgets::framework.dart::State" <|-- "milk_zilla::View::Buyer_UI::check_out_screen.dart::_CheckOutScreenState"
+
+class "milk_zilla::View::Buyer_UI::Customer%20Orders%20With%20Shop::customer_orders_withshope_delivered.dart::CustomerOrdersWithShopeDelivered" {
+  +State<CustomerOrdersWithShopeDelivered> createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "milk_zilla::View::Buyer_UI::Customer%20Orders%20With%20Shop::customer_orders_withshope_delivered.dart::CustomerOrdersWithShopeDelivered"
+
+class "milk_zilla::View::Buyer_UI::Customer%20Orders%20With%20Shop::customer_orders_withshope_delivered.dart::_CustomerOrdersWithShopeDeliveredState" {
+  +getOrdersOfCustomerController getOrdersForShop
+  +dynamic CustomerId
+  +void initState()
+  +Widget build()
+}
+
+"milk_zilla::View::Buyer_UI::Customer%20Orders%20With%20Shop::customer_orders_withshope_delivered.dart::_CustomerOrdersWithShopeDeliveredState" o-- "milk_zilla::controllers::Buyer_Controllers::get_orders_of_customer.dart::getOrdersOfCustomerController"
+"flutter::src::widgets::framework.dart::State" <|-- "milk_zilla::View::Buyer_UI::Customer%20Orders%20With%20Shop::customer_orders_withshope_delivered.dart::_CustomerOrdersWithShopeDeliveredState"
+
+class "milk_zilla::View::Buyer_UI::Customer%20Orders%20With%20Shop::customer_orders_withshop_pending.dart::CustomerOrdersWithShopPending" {
+  +State<CustomerOrdersWithShopPending> createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "milk_zilla::View::Buyer_UI::Customer%20Orders%20With%20Shop::customer_orders_withshop_pending.dart::CustomerOrdersWithShopPending"
+
+class "milk_zilla::View::Buyer_UI::Customer%20Orders%20With%20Shop::customer_orders_withshop_pending.dart::_CustomerOrdersWithShopPendingState" {
+  +getOrdersOfCustomerController getOrdersForShop
+  +dynamic CustomerId
+  +void initState()
+  +Widget build()
+}
+
+"milk_zilla::View::Buyer_UI::Customer%20Orders%20With%20Shop::customer_orders_withshop_pending.dart::_CustomerOrdersWithShopPendingState" o-- "milk_zilla::controllers::Buyer_Controllers::get_orders_of_customer.dart::getOrdersOfCustomerController"
+"flutter::src::widgets::framework.dart::State" <|-- "milk_zilla::View::Buyer_UI::Customer%20Orders%20With%20Shop::customer_orders_withshop_pending.dart::_CustomerOrdersWithShopPendingState"
+
+class "milk_zilla::View::Buyer_UI::Customer%20Orders%20With%20Shop::customer_orders_withshop_picked_by_inspecter.dart::CustomerOrdersWithShopPickedByInspector" {
+  +State<CustomerOrdersWithShopPickedByInspector> createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "milk_zilla::View::Buyer_UI::Customer%20Orders%20With%20Shop::customer_orders_withshop_picked_by_inspecter.dart::CustomerOrdersWithShopPickedByInspector"
+
+class "milk_zilla::View::Buyer_UI::Customer%20Orders%20With%20Shop::customer_orders_withshop_picked_by_inspecter.dart::_CustomerOrdersWithShopPickedByInspectorState" {
+  +getOrdersOfCustomerController getOrdersForShop
+  +dynamic CustomerId
+  +void initState()
+  +Widget build()
+}
+
+"milk_zilla::View::Buyer_UI::Customer%20Orders%20With%20Shop::customer_orders_withshop_picked_by_inspecter.dart::_CustomerOrdersWithShopPickedByInspectorState" o-- "milk_zilla::controllers::Buyer_Controllers::get_orders_of_customer.dart::getOrdersOfCustomerController"
+"flutter::src::widgets::framework.dart::State" <|-- "milk_zilla::View::Buyer_UI::Customer%20Orders%20With%20Shop::customer_orders_withshop_picked_by_inspecter.dart::_CustomerOrdersWithShopPickedByInspectorState"
+
+class "milk_zilla::View::Buyer_UI::Customer%20Orders%20With%20Shop::customer_orders_withshop_prepared_by_seller.dart::CustomerOrdersWithShopPreparedBySeller" {
+  +State<CustomerOrdersWithShopPreparedBySeller> createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "milk_zilla::View::Buyer_UI::Customer%20Orders%20With%20Shop::customer_orders_withshop_prepared_by_seller.dart::CustomerOrdersWithShopPreparedBySeller"
+
+class "milk_zilla::View::Buyer_UI::Customer%20Orders%20With%20Shop::customer_orders_withshop_prepared_by_seller.dart::_CustomerOrdersWithShopPreparedBySellerState" {
+  +getOrdersOfCustomerController getOrdersForShop
+  +dynamic CustomerId
+  +void initState()
+  +Widget build()
+}
+
+"milk_zilla::View::Buyer_UI::Customer%20Orders%20With%20Shop::customer_orders_withshop_prepared_by_seller.dart::_CustomerOrdersWithShopPreparedBySellerState" o-- "milk_zilla::controllers::Buyer_Controllers::get_orders_of_customer.dart::getOrdersOfCustomerController"
+"flutter::src::widgets::framework.dart::State" <|-- "milk_zilla::View::Buyer_UI::Customer%20Orders%20With%20Shop::customer_orders_withshop_prepared_by_seller.dart::_CustomerOrdersWithShopPreparedBySellerState"
+
+class "milk_zilla::View::Buyer_UI::Customer%20Orders%20With%20Shop::customer_orders_with_shop.dart::CustomerOrdersWithShop" {
+  +State<CustomerOrdersWithShop> createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "milk_zilla::View::Buyer_UI::Customer%20Orders%20With%20Shop::customer_orders_with_shop.dart::CustomerOrdersWithShop"
+
+class "milk_zilla::View::Buyer_UI::Customer%20Orders%20With%20Shop::customer_orders_with_shop.dart::_CustomerOrdersWithShopState" {
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::State" <|-- "milk_zilla::View::Buyer_UI::Customer%20Orders%20With%20Shop::customer_orders_with_shop.dart::_CustomerOrdersWithShopState"
+
+class "milk_zilla::View::Buyer_UI::price_list.dart::priceList" {
+  +State<priceList> createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "milk_zilla::View::Buyer_UI::price_list.dart::priceList"
+
+class "milk_zilla::View::Buyer_UI::price_list.dart::_priceListState" {
+  +Widget build()
+  +Future<PriceListModel?> readPriceListFromDatabase()
+  -Container _buildDivider()
+}
+
+"flutter::src::widgets::framework.dart::State" <|-- "milk_zilla::View::Buyer_UI::price_list.dart::_priceListState"
+
+class "milk_zilla::View::Buyer_UI::purchased_screen.dart::PurchasedScreen" {
+  +dynamic result
+  +dynamic order_no
+  +State<PurchasedScreen> createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "milk_zilla::View::Buyer_UI::purchased_screen.dart::PurchasedScreen"
+
+class "milk_zilla::View::Buyer_UI::purchased_screen.dart::_PurchasedScreenState" {
+  +void initState()
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::State" <|-- "milk_zilla::View::Buyer_UI::purchased_screen.dart::_PurchasedScreenState"
+
+class "milk_zilla::View::Buyer_UI::review_cart.dart::ReviewCart" {
+  +dynamic getShopId
+  +State<ReviewCart> createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "milk_zilla::View::Buyer_UI::review_cart.dart::ReviewCart"
+
+class "milk_zilla::View::Buyer_UI::review_cart.dart::_ReviewCartState" {
+  +dynamic getShopId
+  +void initState()
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::State" <|-- "milk_zilla::View::Buyer_UI::review_cart.dart::_ReviewCartState"
+
+class "milk_zilla::View::Buyer_UI::review_cart.dart::ItemButton" {
+  +String productType
+  +void Function() onPressed
+  +Widget build()
+}
+
+"milk_zilla::View::Buyer_UI::review_cart.dart::ItemButton" o-- "dart::ui::void Function()"
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "milk_zilla::View::Buyer_UI::review_cart.dart::ItemButton"
+
+class "milk_zilla::View::Buyer_UI::review_cart.dart::MilkCounter" {
+  +String productType
+  +String unit
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "milk_zilla::View::Buyer_UI::review_cart.dart::MilkCounter"
+
+class "milk_zilla::View::Buyer_UI::set_customer_address_on_google_map.dart::SetCuctomerAddressOnGoogleMap" {
+  +State<SetCuctomerAddressOnGoogleMap> createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "milk_zilla::View::Buyer_UI::set_customer_address_on_google_map.dart::SetCuctomerAddressOnGoogleMap"
+
+class "milk_zilla::View::Buyer_UI::set_customer_address_on_google_map.dart::_SetCuctomerAddressOnGoogleMapState" {
+  -Completer<GoogleMapController> _controller
+  -LatLng _markerPosition
+  +List<Placemark> placemarks
+  +List<double> latitudeLongitude
+  +void initState()
+  +Widget build()
+  +dynamic showCurrentLocation()
+  +Future<Position> getUserCurrentLocation()
+  -void _onMarkerDragEnd()
+}
+
+"milk_zilla::View::Buyer_UI::set_customer_address_on_google_map.dart::_SetCuctomerAddressOnGoogleMapState" o-- "dart::async::Completer<GoogleMapController>"
+"milk_zilla::View::Buyer_UI::set_customer_address_on_google_map.dart::_SetCuctomerAddressOnGoogleMapState" o-- "google_maps_flutter_platform_interface::src::types::location.dart::LatLng"
+"flutter::src::widgets::framework.dart::State" <|-- "milk_zilla::View::Buyer_UI::set_customer_address_on_google_map.dart::_SetCuctomerAddressOnGoogleMapState"
+
+class "milk_zilla::View::Googl%20Map%20Practice::conver_laittude_to_address.dart::ConvertLatToAddress" {
+  +State<ConvertLatToAddress> createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "milk_zilla::View::Googl%20Map%20Practice::conver_laittude_to_address.dart::ConvertLatToAddress"
+
+class "milk_zilla::View::Googl%20Map%20Practice::conver_laittude_to_address.dart::_ConvertLatToAddressState" {
+  +String stAddress
+  +String latlngaddress
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::State" <|-- "milk_zilla::View::Googl%20Map%20Practice::conver_laittude_to_address.dart::_ConvertLatToAddressState"
+
+class "milk_zilla::View::Googl%20Map%20Practice::custom_window_marker_info.dart::CustomWindowMarkerInfo" {
+  +State<CustomWindowMarkerInfo> createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "milk_zilla::View::Googl%20Map%20Practice::custom_window_marker_info.dart::CustomWindowMarkerInfo"
+
+class "milk_zilla::View::Googl%20Map%20Practice::custom_window_marker_info.dart::_CustomWindowMarkerInfoState" {
+  -CustomInfoWindowController _customInfoWindowController
+  -List<Marker> _markers
+  -List<LatLng> _latlng
+  +void initState()
+  +Widget build()
+  +dynamic loadData()
+}
+
+"milk_zilla::View::Googl%20Map%20Practice::custom_window_marker_info.dart::_CustomWindowMarkerInfoState" o-- "custom_info_window::custom_info_window.dart::CustomInfoWindowController"
+"flutter::src::widgets::framework.dart::State" <|-- "milk_zilla::View::Googl%20Map%20Practice::custom_window_marker_info.dart::_CustomWindowMarkerInfoState"
+
+class "milk_zilla::View::Googl%20Map%20Practice::google_map_practice.dart::GoogleMapPratices" {
+  +State<GoogleMapPratices> createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "milk_zilla::View::Googl%20Map%20Practice::google_map_practice.dart::GoogleMapPratices"
+
+class "milk_zilla::View::Googl%20Map%20Practice::google_map_practice.dart::_GoogleMapPraticesState" {
+  -Completer<GoogleMapController> _controller
+  {static} -CameraPosition _kGooglePlex
+  -List<Marker> _marker
+  +List<Marker> markerList
+  +void initState()
+  +Widget build()
+}
+
+"milk_zilla::View::Googl%20Map%20Practice::google_map_practice.dart::_GoogleMapPraticesState" o-- "dart::async::Completer<GoogleMapController>"
+"milk_zilla::View::Googl%20Map%20Practice::google_map_practice.dart::_GoogleMapPraticesState" o-- "google_maps_flutter_platform_interface::src::types::camera.dart::CameraPosition"
+"flutter::src::widgets::framework.dart::State" <|-- "milk_zilla::View::Googl%20Map%20Practice::google_map_practice.dart::_GoogleMapPraticesState"
+
+class "milk_zilla::View::Googl%20Map%20Practice::google_places_api.dart::GooglePlacesApi" {
+  +State<GooglePlacesApi> createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "milk_zilla::View::Googl%20Map%20Practice::google_places_api.dart::GooglePlacesApi"
+
+class "milk_zilla::View::Googl%20Map%20Practice::google_places_api.dart::_GooglePlacesApiState" {
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::State" <|-- "milk_zilla::View::Googl%20Map%20Practice::google_places_api.dart::_GooglePlacesApiState"
+
+class "milk_zilla::View::Googl%20Map%20Practice::user_current_location.dart::GetUserCurrentLocation" {
+  +State<GetUserCurrentLocation> createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "milk_zilla::View::Googl%20Map%20Practice::user_current_location.dart::GetUserCurrentLocation"
+
+class "milk_zilla::View::Googl%20Map%20Practice::user_current_location.dart::_GetUserCurrentLocationState" {
+  -Completer<GoogleMapController> _controller
+  {static} -CameraPosition _kGooglePlex
+  -List<Marker> _marker
+  +Widget build()
+  +Future<Position> getUserCurrentLocation()
+}
+
+"milk_zilla::View::Googl%20Map%20Practice::user_current_location.dart::_GetUserCurrentLocationState" o-- "dart::async::Completer<GoogleMapController>"
+"milk_zilla::View::Googl%20Map%20Practice::user_current_location.dart::_GetUserCurrentLocationState" o-- "google_maps_flutter_platform_interface::src::types::camera.dart::CameraPosition"
+"flutter::src::widgets::framework.dart::State" <|-- "milk_zilla::View::Googl%20Map%20Practice::user_current_location.dart::_GetUserCurrentLocationState"
+
+class "milk_zilla::View::Inspector_UI::customer_delivery_location.dart::CustomerDeliveryLocation" {
+  +double latitudeOfCustomer
+  +double longitudeOfCustomer
+  +String customerName
+  +State<CustomerDeliveryLocation> createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "milk_zilla::View::Inspector_UI::customer_delivery_location.dart::CustomerDeliveryLocation"
+
+class "milk_zilla::View::Inspector_UI::customer_delivery_location.dart::_CustomerDeliveryLocationState" {
+  -Completer<GoogleMapController> _controller
+  -LatLng _markerPosition
+  +List<Placemark> placemarks
+  +List<double> latitudeLongitude
+  +void initState()
+  +Widget build()
+  +dynamic showCurrentLocation()
+  +Future<Position> getUserCurrentLocation()
+}
+
+"milk_zilla::View::Inspector_UI::customer_delivery_location.dart::_CustomerDeliveryLocationState" o-- "dart::async::Completer<GoogleMapController>"
+"milk_zilla::View::Inspector_UI::customer_delivery_location.dart::_CustomerDeliveryLocationState" o-- "google_maps_flutter_platform_interface::src::types::location.dart::LatLng"
+"flutter::src::widgets::framework.dart::State" <|-- "milk_zilla::View::Inspector_UI::customer_delivery_location.dart::_CustomerDeliveryLocationState"
+
+class "milk_zilla::View::Inspector_UI::insector_screen.dart::InspectorScreen" {
+  +State<InspectorScreen> createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "milk_zilla::View::Inspector_UI::insector_screen.dart::InspectorScreen"
+
+class "milk_zilla::View::Inspector_UI::insector_screen.dart::_InspectorScreenState" {
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::State" <|-- "milk_zilla::View::Inspector_UI::insector_screen.dart::_InspectorScreenState"
+
+class "milk_zilla::View::Inspector_UI::inspector_orders_delivered.dart::InspectorOrdersDelivered" {
+  +State<InspectorOrdersDelivered> createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "milk_zilla::View::Inspector_UI::inspector_orders_delivered.dart::InspectorOrdersDelivered"
+
+class "milk_zilla::View::Inspector_UI::inspector_orders_delivered.dart::_InspectorOrdersDeliveredState" {
+  +getOrdersForInspectorController GetOrdersForInspectorController
+  +Widget build()
+}
+
+"milk_zilla::View::Inspector_UI::inspector_orders_delivered.dart::_InspectorOrdersDeliveredState" o-- "milk_zilla::controllers::Inspector_Controllers::get_orders_for_inpectors.dart::getOrdersForInspectorController"
+"flutter::src::widgets::framework.dart::State" <|-- "milk_zilla::View::Inspector_UI::inspector_orders_delivered.dart::_InspectorOrdersDeliveredState"
+
+class "milk_zilla::View::Inspector_UI::inspector_orders_pending.dart::InspectorOrdersPending" {
+  +State<InspectorOrdersPending> createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "milk_zilla::View::Inspector_UI::inspector_orders_pending.dart::InspectorOrdersPending"
+
+class "milk_zilla::View::Inspector_UI::inspector_orders_pending.dart::_InspectorOrdersPending" {
+  +getOrdersForInspectorController GetOrdersForInspectorController
+  +Widget build()
+}
+
+"milk_zilla::View::Inspector_UI::inspector_orders_pending.dart::_InspectorOrdersPending" o-- "milk_zilla::controllers::Inspector_Controllers::get_orders_for_inpectors.dart::getOrdersForInspectorController"
+"flutter::src::widgets::framework.dart::State" <|-- "milk_zilla::View::Inspector_UI::inspector_orders_pending.dart::_InspectorOrdersPending"
+
+class "milk_zilla::View::Inspector_UI::inspector_orders_picked.dart::InspectorOrdersPicked" {
+  +State<InspectorOrdersPicked> createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "milk_zilla::View::Inspector_UI::inspector_orders_picked.dart::InspectorOrdersPicked"
+class "milk_zilla::View::Inspector_UI::inspector_orders_picked.dart::_InspectorOrdersPickedState" {
+  +getOrdersForInspectorController GetOrdersForInspectorController
+  +Widget build()
+}
+
+"milk_zilla::View::Inspector_UI::inspector_orders_picked.dart::_InspectorOrdersPickedState" o-- "milk_zilla::controllers::Inspector_Controllers::get_orders_for_inpectors.dart::getOrdersForInspectorController"
+"flutter::src::widgets::framework.dart::State" <|-- "milk_zilla::View::Inspector_UI::inspector_orders_picked.dart::_InspectorOrdersPickedState"
+
+class "milk_zilla::View::Inspector_UI::Inspector_profile.dart::InspectorProfile" {
+  +State<InspectorProfile> createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "milk_zilla::View::Inspector_UI::Inspector_profile.dart::InspectorProfile"
+
+class "milk_zilla::View::Inspector_UI::Inspector_profile.dart::_InspectorProfileState" {
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::State" <|-- "milk_zilla::View::Inspector_UI::Inspector_profile.dart::_InspectorProfileState"
+
+class "milk_zilla::View::my_home_page.dart::MyHomePage" {
+  +State<MyHomePage> createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "milk_zilla::View::my_home_page.dart::MyHomePage"
+
+class "milk_zilla::View::my_home_page.dart::_MyHomePageState" {
+  +dynamic whichUserLoggedIn
+  +void initState()
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::State" <|-- "milk_zilla::View::my_home_page.dart::_MyHomePageState"
+
+class "milk_zilla::View::Seller_UI::Customer%20Orders::customers_orders.dart::MyAllCustomerOrders" {
+  +State<MyAllCustomerOrders> createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "milk_zilla::View::Seller_UI::Customer%20Orders::customers_orders.dart::MyAllCustomerOrders"
+
+class "milk_zilla::View::Seller_UI::Customer%20Orders::customers_orders.dart::_MyAllCustomerOrdersState" {
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::State" <|-- "milk_zilla::View::Seller_UI::Customer%20Orders::customers_orders.dart::_MyAllCustomerOrdersState"
+
+class "milk_zilla::View::Seller_UI::Customer%20Orders::customer_orders_delivered.dart::CustomerOrdersDeliverdByShop" {
+  +State<CustomerOrdersDeliverdByShop> createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "milk_zilla::View::Seller_UI::Customer%20Orders::customer_orders_delivered.dart::CustomerOrdersDeliverdByShop"
+
+class "milk_zilla::View::Seller_UI::Customer%20Orders::customer_orders_delivered.dart::_CustomerOrdersDeliverdByShopState" {
+  +SellerContoller sellerController
+  +dynamic shopId
+  +void initState()
+  +Widget build()
+}
+
+"milk_zilla::View::Seller_UI::Customer%20Orders::customer_orders_delivered.dart::_CustomerOrdersDeliverdByShopState" o-- "milk_zilla::Controllers::Seller_Controllers::seller_controller.dart::SellerContoller"
+"flutter::src::widgets::framework.dart::State" <|-- "milk_zilla::View::Seller_UI::Customer%20Orders::customer_orders_delivered.dart::_CustomerOrdersDeliverdByShopState"
+
+class "milk_zilla::View::Seller_UI::Customer%20Orders::customer_orders_pending.dart::CustomerOrdersInPedningByShop" {
+  +State<CustomerOrdersInPedningByShop> createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "milk_zilla::View::Seller_UI::Customer%20Orders::customer_orders_pending.dart::CustomerOrdersInPedningByShop"
+
+class "milk_zilla::View::Seller_UI::Customer%20Orders::customer_orders_pending.dart::_CustomerOrdersInPedningByShopState" {
+  +SellerContoller sellerController
+  +dynamic shopId
+  +void initState()
+  +Widget build()
+}
+
+"milk_zilla::View::Seller_UI::Customer%20Orders::customer_orders_pending.dart::_CustomerOrdersInPedningByShopState" o-- "milk_zilla::Controllers::Seller_Controllers::seller_controller.dart::SellerContoller"
+"flutter::src::widgets::framework.dart::State" <|-- "milk_zilla::View::Seller_UI::Customer%20Orders::customer_orders_pending.dart::_CustomerOrdersInPedningByShopState"
+
+class "milk_zilla::View::Seller_UI::Customer%20Orders::customer_orders_pickedby_inspecter.dart::CustomerOrdersPickedbyInspecterFromShop" {
+  +State<CustomerOrdersPickedbyInspecterFromShop> createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "milk_zilla::View::Seller_UI::Customer%20Orders::customer_orders_pickedby_inspecter.dart::CustomerOrdersPickedbyInspecterFromShop"
+
+class "milk_zilla::View::Seller_UI::Customer%20Orders::customer_orders_pickedby_inspecter.dart::_CustomerOrdersPickedbyInspecterFromShopState" {
+  +SellerContoller buyerContoller
+  +dynamic shopId
+  +void initState()
+  +Widget build()
+}
+
+"milk_zilla::View::Seller_UI::Customer%20Orders::customer_orders_pickedby_inspecter.dart::_CustomerOrdersPickedbyInspecterFromShopState" o-- "milk_zilla::Controllers::Seller_Controllers::seller_controller.dart::SellerContoller"
+"flutter::src::widgets::framework.dart::State" <|-- "milk_zilla::View::Seller_UI::Customer%20Orders::customer_orders_pickedby_inspecter.dart::_CustomerOrdersPickedbyInspecterFromShopState"
+
+class "milk_zilla::View::Seller_UI::seller_profile.dart::SellerProfile" {
+  +State<SellerProfile> createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "milk_zilla::View::Seller_UI::seller_profile.dart::SellerProfile"
+
+class "milk_zilla::View::Seller_UI::seller_profile.dart::_SellerProfileState" {
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::State" <|-- "milk_zilla::View::Seller_UI::seller_profile.dart::_SellerProfileState"
+
+class "milk_zilla::View::Seller_UI::Shop%20Orders::order_items_from_farm.dart::OrderItemsFromFram" {
+  +State<OrderItemsFromFram> createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "milk_zilla::View::Seller_UI::Shop%20Orders::order_items_from_farm.dart::OrderItemsFromFram"
+
+class "milk_zilla::View::Seller_UI::Shop%20Orders::order_items_from_farm.dart::_OrderItemsFromFramState" {
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::State" <|-- "milk_zilla::View::Seller_UI::Shop%20Orders::order_items_from_farm.dart::_OrderItemsFromFramState"
+
+class "milk_zilla::View::Seller_UI::shop_products_for_selling.dart::ShopeProductsForSelling" {
+  +State<ShopeProductsForSelling> createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "milk_zilla::View::Seller_UI::shop_products_for_selling.dart::ShopeProductsForSelling"
+
+class "milk_zilla::View::Seller_UI::shop_products_for_selling.dart::_ShopeProductsForSellingState" {
+  +List<bool> myCheckBoxes
+  +Widget build()
+  +void storeDataofCheckBoxesinSharedPreferences()
+}
+
+"flutter::src::widgets::framework.dart::State" <|-- "milk_zilla::View::Seller_UI::shop_products_for_selling.dart::_ShopeProductsForSellingState"
+
+
+@enduml
