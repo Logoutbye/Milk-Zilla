@@ -384,102 +384,158 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
                       padding: const EdgeInsets.symmetric(
                           horizontal: 32.0, vertical: 8.0),
                       child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          padding: const EdgeInsets.all(16.0),
-                          elevation: 0,
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(15.0)),
-                          backgroundColor: MyColors.kPrimary,
-                        ),
-                        child: Text(
-                          totalPrice > snapshot.data.delivery_charges
-                              ? "Proceed Order"
-                              : "Select Items",
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 18.0,
+                          style: ElevatedButton.styleFrom(
+                            padding: const EdgeInsets.all(16.0),
+                            elevation: 0,
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(15.0)),
+                            backgroundColor: MyColors.kPrimary,
                           ),
-                        ),
-                        onPressed: () {
-                          if (totalPrice > snapshot.data.delivery_charges) {
-                            List<Map<dynamic, dynamic>> orderDetails = [
-                              if (provider.getCount('Buffalo Milk') > 0)
-                                {
-                                  'item_name': 'Buffalo Milk',
-                                  'item_quantity':
-                                      provider.getCount('Buffalo Milk'),
-                                  'item_price': snapshot.data.buffalo_milk *
-                                      provider.getCount('Buffalo Milk'),
-                                },
-                              if (provider.getCount('Cow Milk') > 0)
-                                {
-                                  'item_name': 'Cow Milk',
-                                  'item_quantity':
-                                      provider.getCount('Cow Milk'),
-                                  'item_price': snapshot.data.cow_milk *
-                                      provider.getCount('Cow Milk'),
-                                },
-                              if (provider.getCount('Mix Milk') > 0)
-                                {
-                                  'item_name': 'Mix Milk',
-                                  'item_quantity':
-                                      provider.getCount('Mix Milk'),
-                                  'item_price': snapshot.data.mix_milk *
-                                      provider.getCount('Mix Milk'),
-                                },
-                              if (provider.getCount('Yogurt') > 0)
-                                {
-                                  'item_name': 'Yogurt',
-                                  'item_quantity': provider.getCount('Yogurt'),
-                                  'item_price': snapshot.data.yougurt *
-                                      provider.getCount('Yogurt'),
-                                },
-                              if (provider.getCount('Butter') > 0)
-                                {
-                                  'item_name': 'Butter',
-                                  'item_quantity': provider.getCount('Butter'),
-                                  'item_price': snapshot.data.butter *
-                                      provider.getCount('Butter'),
-                                },
-                              if (provider.getCount('Desi Ghee') > 0)
-                                {
-                                  'item_name': 'Desi Ghee',
-                                  'item_quantity':
-                                      provider.getCount('Desi Ghee'),
-                                  'item_price': snapshot.data.desi_ghee *
-                                      provider.getCount('Desi Ghee'),
-                                },
-                            ];
+                          child: Text(
+                            totalPrice > snapshot.data.delivery_charges
+                                ? "Proceed Order"
+                                : "Select Items",
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 18.0,
+                            ),
+                          ),
+                          onPressed: () {
+                            if (totalPrice > snapshot.data.delivery_charges) {
+                              List<Map<dynamic, dynamic>> orderDetails = [
+                                if (provider.getCount('Buffalo Milk') > 0)
+                                  {
+                                    'item_name': 'Buffalo Milk',
+                                    'item_quantity':
+                                        provider.getCount('Buffalo Milk'),
+                                    'item_price': snapshot.data.buffalo_milk *
+                                        provider.getCount('Buffalo Milk'),
+                                  },
+                                if (provider.getCount('Cow Milk') > 0)
+                                  {
+                                    'item_name': 'Cow Milk',
+                                    'item_quantity':
+                                        provider.getCount('Cow Milk'),
+                                    'item_price': snapshot.data.cow_milk *
+                                        provider.getCount('Cow Milk'),
+                                  },
+                                if (provider.getCount('Mix Milk') > 0)
+                                  {
+                                    'item_name': 'Mix Milk',
+                                    'item_quantity':
+                                        provider.getCount('Mix Milk'),
+                                    'item_price': snapshot.data.mix_milk *
+                                        provider.getCount('Mix Milk'),
+                                  },
+                                if (provider.getCount('Yogurt') > 0)
+                                  {
+                                    'item_name': 'Yogurt',
+                                    'item_quantity':
+                                        provider.getCount('Yogurt'),
+                                    'item_price': snapshot.data.yougurt *
+                                        provider.getCount('Yogurt'),
+                                  },
+                                if (provider.getCount('Butter') > 0)
+                                  {
+                                    'item_name': 'Butter',
+                                    'item_quantity':
+                                        provider.getCount('Butter'),
+                                    'item_price': snapshot.data.butter *
+                                        provider.getCount('Butter'),
+                                  },
+                                if (provider.getCount('Desi Ghee') > 0)
+                                  {
+                                    'item_name': 'Desi Ghee',
+                                    'item_quantity':
+                                        provider.getCount('Desi Ghee'),
+                                    'item_price': snapshot.data.desi_ghee *
+                                        provider.getCount('Desi Ghee'),
+                                  },
+                              ];
 
-                            if (latitudeofuser != 0.0 &&
-                                longitudeofuser != 0.0) {
-                              CreateAnOrderController().createOrder(
-                                  context,
-                                  user!.email,
-                                  getUserName,
-                                  deliveryAddressController.text,
-                                  snapshot.data.delivery_charges,
-                                  orderDetails,
-                                  // generateOrderNumber,
-                                  '${getShopId}',
-                                  'Pending',
-                                  totalItems,
-                                  totalPrice,
-                                  //initial inspector id is empty
-                                  '',
-                                  // giveme lat
-                                  latitudeofuser,
-                                  // give me long
-                                  longitudeofuser);
-                            } else {
-                              Utils.flushBarErrorMessage(
-                                  'Please Select Delivery Location', context);
+                              if (totalPrice > snapshot.data.delivery_charges) {
+                                List<Map<dynamic, dynamic>> orderDetails = [
+                                  if (provider.getCount('Buffalo Milk') > 0)
+                                    {
+                                      'item_name': 'Buffalo Milk',
+                                      'item_quantity':
+                                          provider.getCount('Buffalo Milk'),
+                                      'item_price': snapshot.data.buffalo_milk *
+                                          provider.getCount('Buffalo Milk'),
+                                    },
+                                  if (provider.getCount('Cow Milk') > 0)
+                                    {
+                                      'item_name': 'Cow Milk',
+                                      'item_quantity':
+                                          provider.getCount('Cow Milk'),
+                                      'item_price': snapshot.data.cow_milk *
+                                          provider.getCount('Cow Milk'),
+                                    },
+                                  if (provider.getCount('Mix Milk') > 0)
+                                    {
+                                      'item_name': 'Mix Milk',
+                                      'item_quantity':
+                                          provider.getCount('Mix Milk'),
+                                      'item_price': snapshot.data.mix_milk *
+                                          provider.getCount('Mix Milk'),
+                                    },
+                                  if (provider.getCount('Yogurt') > 0)
+                                    {
+                                      'item_name': 'Yogurt',
+                                      'item_quantity':
+                                          provider.getCount('Yogurt'),
+                                      'item_price': snapshot.data.yougurt *
+                                          provider.getCount('Yogurt'),
+                                    },
+                                  if (provider.getCount('Butter') > 0)
+                                    {
+                                      'item_name': 'Butter',
+                                      'item_quantity':
+                                          provider.getCount('Butter'),
+                                      'item_price': snapshot.data.butter *
+                                          provider.getCount('Butter'),
+                                    },
+                                  if (provider.getCount('Desi Ghee') > 0)
+                                    {
+                                      'item_name': 'Desi Ghee',
+                                      'item_quantity':
+                                          provider.getCount('Desi Ghee'),
+                                      'item_price': snapshot.data.desi_ghee *
+                                          provider.getCount('Desi Ghee'),
+                                    },
+                                ];
+
+                                if (latitudeofuser != 0.0 &&
+                                    longitudeofuser != 0.0) {
+                                  CreateAnOrderController().createOrder(
+                                      context,
+                                      user!.email,
+                                      getUserName,
+                                      deliveryAddressController.text,
+                                      snapshot.data.delivery_charges,
+                                      orderDetails,
+                                      // generateOrderNumber,
+                                      '${getShopId}',
+                                      'Pending',
+                                      totalItems,
+                                      totalPrice,
+                                      //initial inspector id is empty
+                                      '',
+                                      // giveme lat
+                                      latitudeofuser,
+                                      // give me long
+                                      longitudeofuser);
+                                } else {
+                                  Utils.flushBarErrorMessage(
+                                      'Please Select Delivery Location',
+                                      context);
+                                }
+                              } else {
+                                Navigator.pop(context);
+                              }
                             }
-                          } else {
-                            Navigator.pop(context);
-                          }
-                        },
-                      ),
+                            ;
+                          }),
                     ),
                   ],
                 ),

@@ -1,20 +1,18 @@
 import 'package:firebase_auth/firebase_auth.dart';
+
+// import 'package:dcdg/dcdg.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:milk_zilla/View/Auth%20UI/registration_status_screen.dart';
 import 'package:milk_zilla/View/Buyer_UI/all_shops_addresses_on_google_map.dart';
 import 'package:milk_zilla/View/Buyer_UI/all_shops_to_order_from.dart';
-import 'package:milk_zilla/View/Buyer_UI/check_out_screen.dart';
-import 'package:milk_zilla/View/Buyer_UI/review_cart.dart';
 import 'package:milk_zilla/View/Buyer_UI/set_customer_address_on_google_map.dart';
 import 'package:milk_zilla/View/Inspector_UI/insector_screen.dart';
-import 'package:milk_zilla/View/Seller_UI/seller_screen.dart';
 
 import 'package:milk_zilla/provider/Sopping_item_provider.dart';
 import 'package:milk_zilla/res/Components/firebase_helper.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'View/Googl Map Practice/conver_laittude_to_address.dart';
 import 'View/Seller_UI/Customer Orders/customers_orders.dart';
 import 'View/my_home_page.dart';
 
