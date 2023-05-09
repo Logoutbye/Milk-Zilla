@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:milk_zilla/View/Buyer_UI/Customer%20Orders%20With%20Shop/customer_orders_withshop_pending.dart';
-import 'package:milk_zilla/View/Buyer_UI/Customer%20Orders%20With%20Shop/customer_orders_withshop_pickedbyinspecter.dart';
+import 'package:milk_zilla/View/Buyer_UI/Customer%20Orders%20With%20Shop/customer_orders_withshop_picked_by_inspecter.dart';
 import 'package:milk_zilla/View/Buyer_UI/Customer%20Orders%20With%20Shop/customer_orders_withshope_delivered.dart';
 import 'package:milk_zilla/res/Components/my_drawers/buyer_drawer.dart';
 import 'package:milk_zilla/res/my_colors.dart';
+
+import 'customer_orders_withshop_prepared_by_seller.dart';
 
 class CustomerOrdersWithShop extends StatefulWidget {
   const CustomerOrdersWithShop({super.key});
@@ -16,7 +18,7 @@ class _CustomerOrdersWithShopState extends State<CustomerOrdersWithShop> {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-      length: 3,
+      length: 4,
       child: Scaffold(
         appBar: AppBar(
           title: const Text('My Orders'),
@@ -35,10 +37,13 @@ class _CustomerOrdersWithShopState extends State<CustomerOrdersWithShop> {
                 text: 'Pending',
               ),
               Tab(
-                text: 'Picked',
+                text: 'Prepared',
               ),
               Tab(
-                text: 'Deliverd',
+                text: 'Shipped',
+              ),
+              Tab(
+                text: 'Delivered',
               ),
             ],
           ),
@@ -57,6 +62,7 @@ class _CustomerOrdersWithShopState extends State<CustomerOrdersWithShop> {
         body: TabBarView(
           children: [
             CustomerOrdersWithShopPending(),
+            CustomerOrdersWithShopPreparedBySeller(),
             CustomerOrdersWithShopPickedByInspector(),
             CustomerOrdersWithShopeDelivered(),
           ],

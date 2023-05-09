@@ -31,20 +31,25 @@ class _SellerDrawerState extends State<SellerDrawer> {
             child: Image(image: AssetImage('assets/images/icon.png')),
           ), //DrawerHeader
 
-          // ListTile(
-          //   leading: const Icon(Icons.production_quantity_limits),
-          //   title: const Text('My Profile'),
-          //   onTap: () {
-          //     // MySharedPrefencesSessionHandling
-          //     //     .removeWhichUserLoggedInFromSharedPreferences();
-
-          //     // FirebaseAuth.instance.signOut();
-          //     Navigator.pop(context);
-          //     Navigator.of(context).push(
-          //         MaterialPageRoute(builder: (context) => SellerProfile()));
-          //   },
-          // ),
-
+          ListTile(
+            leading: const Icon(
+              Icons.production_quantity_limits,
+              size: 35,
+              color: MyColors.kPrimary,
+            ),
+            title: const Text('Order Items from Shop',
+                style: TextStyle(
+                  color: MyColors.kPrimary,
+                )),
+            onTap: () {
+              // Navigator.pop(context);
+              // Navigator.of(context).push(
+              //     MaterialPageRoute(builder: (context) => SellerProfile()));
+            },
+          ),
+          Divider(
+            color: MyColors.kPrimary,
+          ),
           ListTile(
             leading: Image.asset(
               'assets/images/my_products.png',

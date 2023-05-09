@@ -6,16 +6,16 @@ import '../../../Model/order_model.dart';
 import '../../../controllers/Buyer_Controllers/get_orders_of_customer.dart';
 import '../../../res/widgets/my_static_ui_widgets.dart';
 
-class CustomerOrdersWithShopPickedByInspector extends StatefulWidget {
-  const CustomerOrdersWithShopPickedByInspector({super.key});
+class CustomerOrdersWithShopPreparedBySeller extends StatefulWidget {
+  const CustomerOrdersWithShopPreparedBySeller({super.key});
 
   @override
-  State<CustomerOrdersWithShopPickedByInspector> createState() =>
-      _CustomerOrdersWithShopPickedByInspectorState();
+  State<CustomerOrdersWithShopPreparedBySeller> createState() =>
+      _CustomerOrdersWithShopPreparedBySellerState();
 }
 
-class _CustomerOrdersWithShopPickedByInspectorState
-    extends State<CustomerOrdersWithShopPickedByInspector> {
+class _CustomerOrdersWithShopPreparedBySellerState
+    extends State<CustomerOrdersWithShopPreparedBySeller> {
   getOrdersOfCustomerController getOrdersForShop =
       getOrdersOfCustomerController();
 
@@ -38,7 +38,7 @@ class _CustomerOrdersWithShopPickedByInspectorState
   Widget build(BuildContext context) {
     return Scaffold(
         body: FutureBuilder<List<OrderModel>>(
-      future:getOrdersForShop.getOrdersOfCustomer(CustomerId, 'Picked'),
+      future: getOrdersForShop.getOrdersOfCustomer(CustomerId, 'Prepared'),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return Center(
@@ -53,7 +53,7 @@ class _CustomerOrdersWithShopPickedByInspectorState
             itemBuilder: (context, index) {
               OrderModel order = orders[index];
               return MyStaticUIWidgets.buildOrderUI2(
-                  context, order, 'Picked', 'Buyer');
+                  context, order, 'Prepared', 'Buyer');
             },
           );
         } else {

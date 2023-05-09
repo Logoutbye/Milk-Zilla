@@ -401,8 +401,7 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
                           ),
                         ),
                         onPressed: () {
-                          onPressed:
-                          () {
+                          
                             if (totalPrice > snapshot.data.delivery_charges) {
                               List<Map<dynamic, dynamic>> orderDetails = [
                                 if (provider.getCount('Buffalo Milk') > 0)
@@ -482,7 +481,7 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
                             } else {
                               Navigator.pop(context);
                             }
-                          };
+                          
                         },
                       ),
                     ),

@@ -175,9 +175,7 @@ class MyStaticUIWidgets {
                     ),
                   ],
                 ),
-                status == 'Pending' ||
-                        status == 'Prepared' ||
-                        status == 'Shipped'
+                status == 'Pending' || status == 'Prepared' || status == 'Shipped' 
                     ? SizedBox(
                         height: heightbetweenWidgetsInOrder,
                       )
