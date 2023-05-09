@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:milk_zilla/View/Auth%20UI/registration_status_screen.dart';
+import 'package:milk_zilla/View/Buyer_UI/all_shops_addresses_on_google_map.dart';
 import 'package:milk_zilla/View/Buyer_UI/all_shops_to_order_from.dart';
 import 'package:milk_zilla/View/Buyer_UI/check_out_screen.dart';
 import 'package:milk_zilla/View/Buyer_UI/review_cart.dart';
@@ -76,40 +77,40 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           primarySwatch: Colors.green,
         ),
-        home:
-            // if user is buyer and approved
-            whichUserLoggedIn == 'Buyer'
-                ? AllShopesToOrderFrom()
+        home: AllShopsAddressesOnGoogleMap(),
+        // if user is buyer and approved
+        // whichUserLoggedIn == 'Buyer'
+        //     ? AllShopesToOrderFrom()
 
-                //if user is seller and approved
-                : whichUserLoggedIn == 'Seller' &&
-                        FirestoreHelper.currentSellerStatusInFirestore ==
-                            'Approved'
-                    ? MyAllCustomerOrders()
-                    //if user is Seller and is not approved
-                    : whichUserLoggedIn == 'Seller' &&
-                            FirestoreHelper.currentSellerStatusInFirestore ==
-                                'Pending'
-                        ? RegistrationStatusScreen(
-                            whichUser: 'Seller',
-                          )
+        //     //if user is seller and approved
+        //     : whichUserLoggedIn == 'Seller' &&
+        //             FirestoreHelper.currentSellerStatusInFirestore ==
+        //                 'Approved'
+        //         ? MyAllCustomerOrders()
+        //         //if user is Seller and is not approved
+        //         : whichUserLoggedIn == 'Seller' &&
+        //                 FirestoreHelper.currentSellerStatusInFirestore ==
+        //                     'Pending'
+        //             ? RegistrationStatusScreen(
+        //                 whichUser: 'Seller',
+        //               )
 
-                        //if user is Inspector and approved
-                        : whichUserLoggedIn == 'Inspector' &&
-                                FirestoreHelper
-                                        .currentInspectorStatusInFirestore ==
-                                    'Approved'
-                            ? InspectorScreen()
+        //             //if user is Inspector and approved
+        //             : whichUserLoggedIn == 'Inspector' &&
+        //                     FirestoreHelper
+        //                             .currentInspectorStatusInFirestore ==
+        //                         'Approved'
+        //                 ? InspectorScreen()
 
-                            //if user is Seller and is not approved
-                            : whichUserLoggedIn == 'Inspector' &&
-                                    FirestoreHelper
-                                            .currentInspectorStatusInFirestore ==
-                                        'Pending'
-                                ? RegistrationStatusScreen(
-                                    whichUser: 'Inspector',
-                                  )
-                                : MyHomePage(),
+        //                 //if user is Seller and is not approved
+        //                 : whichUserLoggedIn == 'Inspector' &&
+        //                         FirestoreHelper
+        //                                 .currentInspectorStatusInFirestore ==
+        //                             'Pending'
+        //                     ? RegistrationStatusScreen(
+        //                         whichUser: 'Inspector',
+        //                       )
+        //                     : MyHomePage(),
       ),
     );
   }

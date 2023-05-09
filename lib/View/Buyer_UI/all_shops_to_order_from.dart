@@ -5,6 +5,7 @@ import 'package:lottie/lottie.dart';
 import 'package:milk_zilla/Controllers/Buyer_Controllers/get_all_approved_shopes_with_specif_city_controller.dart';
 import 'package:milk_zilla/Model/seller_model.dart';
 import 'package:milk_zilla/View/Buyer_UI/Customer%20Orders%20With%20Shop/customer_orders_with_shop.dart';
+import 'package:milk_zilla/View/Buyer_UI/all_shops_addresses_on_google_map.dart';
 import 'package:milk_zilla/View/Buyer_UI/review_cart.dart';
 
 import 'package:milk_zilla/res/Components/my_drawers/buyer_drawer.dart';
@@ -34,87 +35,112 @@ class _AllShopesToOrderFromState extends State<AllShopesToOrderFrom> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: MyColors.kWhite,
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+        // backgroundColor: Color.fromARGB(255, 255, 255, 255),
+        // foregroundColor: MyColors.kPrimary,
+        elevation: 0,
         backgroundColor: MyColors.kWhite,
-        appBar: AppBar(
-          automaticallyImplyLeading: false,
-          // backgroundColor: Color.fromARGB(255, 255, 255, 255),
-          // foregroundColor: MyColors.kPrimary,
-          elevation: 0,
-          backgroundColor: MyColors.kWhite,
-          foregroundColor: MyColors.kPrimary,
-          title: Row(
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(left: 8),
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    padding: const EdgeInsets.all(10.0),
-                    elevation: 0,
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(15.0)),
-                    backgroundColor: MyColors.kPrimary,
-                  ),
-                  child: Text(
-                    'My Orders',
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 18.0,
-                    ),
-                  ),
-                  onPressed: () {
-                    Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => CustomerOrdersWithShop()));
-                  },
-                ),
-              ),
-            ],
-          ),
-          actions: [
-            // Padding(
-            //   padding: const EdgeInsets.symmetric(horizontal: 20),
-            //   child: IconButton(
-            //     icon: Icon(Icons.shopping_cart_checkout),
-            //     iconSize: 35,
-            //     onPressed: () {},
-            //   ),
-            // ),
+        foregroundColor: MyColors.kPrimary,
+        title: Row(
+          children: [
             Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: Builder(
-                    builder: (context) => IconButton(
-                          icon: Icon(Icons.settings),
-                          iconSize: 40,
-                          onPressed: () => Scaffold.of(context).openEndDrawer(),
-                        )))
+              padding: const EdgeInsets.only(left: 8),
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  padding: const EdgeInsets.all(10.0),
+                  elevation: 0,
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(15.0)),
+                  backgroundColor: MyColors.kPrimary,
+                ),
+                child: Text(
+                  'My Orders',
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 18.0,
+                  ),
+                ),
+                onPressed: () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => CustomerOrdersWithShop()));
+                },
+              ),
+            ),
           ],
         ),
-        endDrawer: BuyerDrawer(),
-        body: FutureBuilder<List<SellerOrInspectorModel>>(
-          future: GetAllApprovedShopeswithSpecifCityController()
-              .getAllApprovedShopeswithSpecifCity(getUserCity),
-          builder: (context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return Center(
-                  child: Lottie.asset('assets/animations/loading.json',
-                      height: MediaQuery.of(context).size.height / 5));
-            } else if (snapshot.hasError) {
-              return Text('Error: ${snapshot.error}');
-            } else if (snapshot.hasData) {
-              List<SellerOrInspectorModel> shops = snapshot.data!;
-              return ListView.builder(
-                itemCount: shops.length,
-                itemBuilder: (context, index) {
-                  print("Shopes Length: ${shops.length}");
-                  SellerOrInspectorModel shopes = shops[index];
-                  // TODO: Build UI for each order
-                  return buildShopsUI(context, shopes);
-                },
-              );
-            } else {
-              return Text('No Shopes found');
-            }
-          },
-        ));
+        actions: [
+          // Padding(
+          //   padding: const EdgeInsets.symmetric(horizontal: 20),
+          //   child: IconButton(
+          //     icon: Icon(Icons.shopping_cart_checkout),
+          //     iconSize: 35,
+          //     onPressed: () {},
+          //   ),
+          // ),
+          Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: Builder(
+                  builder: (context) => IconButton(
+                        icon: Icon(Icons.settings),
+                        iconSize: 40,
+                        onPressed: () => Scaffold.of(context).openEndDrawer(),
+                      )))
+        ],
+      ),
+      endDrawer: BuyerDrawer(),
+      body: FutureBuilder<List<SellerOrInspectorModel>>(
+        future: GetAllApprovedShopeswithSpecifCityController()
+            .getAllApprovedShopeswithSpecifCity(getUserCity),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return Center(
+                child: Lottie.asset('assets/animations/loading.json',
+                    height: MediaQuery.of(context).size.height / 5));
+          } else if (snapshot.hasError) {
+            return Text('Error: ${snapshot.error}');
+          } else if (snapshot.hasData) {
+            List<SellerOrInspectorModel> shops = snapshot.data!;
+            return ListView.builder(
+              itemCount: shops.length,
+              itemBuilder: (context, index) {
+                print("Shopes Length: ${shops.length}");
+                SellerOrInspectorModel shopes = shops[index];
+                // TODO: Build UI for each order
+                return buildShopsUI(context, shopes);
+              },
+            );
+          } else {
+            return Text('No Shopes found');
+          }
+        },
+      ),
+      floatingActionButton: FloatingActionButton(
+        child: Container(
+          width: 200.0,
+          height: 200.0,
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            //color: Colors.blue,
+          ),
+          child: Center(
+            child: Text(
+              'Near shop',
+              style: TextStyle(
+                fontSize: 16.0,
+                color: Colors.white,
+              ),
+            ),
+          ),
+        ),
+        onPressed: () {
+          Navigator.of(context).push(MaterialPageRoute(builder: (context) {
+            return AllShopsAddressesOnGoogleMap();
+          }));
+        },
+      ),
+    );
   }
 
   // to get current user name customer id

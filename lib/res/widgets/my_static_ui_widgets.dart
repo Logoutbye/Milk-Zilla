@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:milk_zilla/Model/order_model.dart';
+import 'package:milk_zilla/View/Inspector_UI/customer_delivery_location.dart';
 import 'package:milk_zilla/controllers/Global_Controllers/update_status_global_controller.dart';
 import 'package:milk_zilla/controllers/Inspector_Controllers/pick_order_controller.dart';
 import 'package:milk_zilla/res/constanst.dart';
@@ -22,8 +23,8 @@ class MyStaticUIWidgets {
           width: MediaQuery.of(context).size.width / 1.2,
           height:
               status == 'Pending' || status == 'Prepared' || status == 'Shipped'
-                  ? MediaQuery.of(context).size.height / 1.9
-                  : MediaQuery.of(context).size.height / 2,
+                  ? MediaQuery.of(context).size.height / 1.6
+                  : MediaQuery.of(context).size.height / 1.7,
           decoration: BoxDecoration(
             color: MyColors.kSecondary,
             borderRadius: BorderRadius.circular(20),
@@ -36,7 +37,8 @@ class MyStaticUIWidgets {
           child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -158,7 +160,7 @@ class MyStaticUIWidgets {
                           return Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text('Item ${index + 1}:'),
+                              Text('Item : ${index + 1}'),
                               Text('Name: ${order.items[index]['item_name']}'),
                               Text(
                                   'Price: ${order.items[index]['item_price']}'),
@@ -304,7 +306,19 @@ class MyStaticUIWidgets {
                                                 fontSize: 18.0,
                                               ),
                                             ),
-                                            onPressed: () {},
+                                            onPressed: () {
+                                              Navigator.of(context).push(
+                                                  MaterialPageRoute(
+                                                      builder: (context) {
+                                                return CustomerDeliveryLocation(
+                                                    latitudeOfCustomer:
+                                                        order.lat,
+                                                    longitudeOfCustomer:
+                                                        order.long,
+                                                    customerName:
+                                                        order.customerName);
+                                              }));
+                                            },
                                           ),
                                         ),
                                       ),
