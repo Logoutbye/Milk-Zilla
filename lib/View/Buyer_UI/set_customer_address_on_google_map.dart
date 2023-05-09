@@ -6,6 +6,7 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:milk_zilla/res/my_colors.dart';
 
 class SetCuctomerAddressOnGoogleMap extends StatefulWidget {
   const SetCuctomerAddressOnGoogleMap({super.key});
@@ -65,8 +66,13 @@ class _SetCuctomerAddressOnGoogleMapState
       ),
 
       // move camera to a specific location
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.location_disabled_outlined),
+        backgroundColor: MyColors.kSecondary,
+        child: Icon(
+          Icons.check,
+          color: MyColors.kPrimary,
+        ),
         onPressed: () async {
           Navigator.pop(context, latitudeLongitude);
           // GoogleMapController controller = await _controller.future;

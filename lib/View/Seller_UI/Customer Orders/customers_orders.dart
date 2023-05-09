@@ -26,6 +26,7 @@ class _MyAllCustomerOrdersState extends State<MyAllCustomerOrders> {
           foregroundColor: MyColors.kPrimary,
           title: const Text('Customer Orders'),
           centerTitle: true,
+          automaticallyImplyLeading: false,
          
           actions: [
             Padding(
