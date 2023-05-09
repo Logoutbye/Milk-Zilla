@@ -2,19 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 
-class FarmOrderDelivered extends StatefulWidget {
-  const FarmOrderDelivered({super.key});
+class FarmOrderPicked extends StatefulWidget {
+  const FarmOrderPicked({super.key});
 
   @override
-  State<FarmOrderDelivered> createState() => _FarmOrderDeliveredState();
+  State<FarmOrderPicked> createState() => _FarmOrderPickedState();
 }
 
-class _FarmOrderDeliveredState extends State<FarmOrderDelivered> {
+class _FarmOrderPickedState extends State<FarmOrderPicked> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: Text('Farm Orders Delivered'),
+        child: Text('Farm Orders Picked'),
       ),
     );
   }
