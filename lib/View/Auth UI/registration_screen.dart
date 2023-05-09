@@ -23,7 +23,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   TextEditingController nameTextControl = TextEditingController();
   TextEditingController emailTextController = TextEditingController();
   TextEditingController cityTextControl = TextEditingController();
-  TextEditingController shopNameTextControl = TextEditingController();
+  TextEditingController farmOrshopNameTextControl = TextEditingController();
   TextEditingController buyerOrinspectorOrShopAdressTextControl =
       TextEditingController();
 
@@ -159,7 +159,10 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                                           borderRadius:
                                               BorderRadius.circular(10),
                                         ),
-                                        prefixIcon: Icon(Icons.drive_file_rename_outline_sharp),
+                                        prefixIcon: Icon(
+                                          Icons.drive_file_rename_outline_sharp,
+                                          color: MyColors.kPrimary,
+                                        ),
                                       ),
                                     ),
                                   ),
@@ -198,7 +201,10 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                                           borderRadius:
                                               BorderRadius.circular(10),
                                         ),
-                                        prefixIcon: Icon(Icons.call,color: MyColors.kPrimary,),
+                                        prefixIcon: Icon(
+                                          Icons.call,
+                                          color: MyColors.kPrimary,
+                                        ),
                                       ),
                                     ),
                                   ),
@@ -237,17 +243,20 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                                           borderRadius:
                                               BorderRadius.circular(10),
                                         ),
-                                        prefixIcon: Icon(Icons.location_city_sharp,color: MyColors.kPrimary,),
+                                        prefixIcon: Icon(
+                                          Icons.location_city_sharp,
+                                          color: MyColors.kPrimary,
+                                        ),
                                       ),
                                     ),
                                   ),
                                   // if user is seller
                                   // shop name
-                                  widget.whichUser == 'Seller'
+                                  widget.whichUser == 'Seller'|| widget.whichUser == 'Farmer'
                                       ? Container(
                                           // color: Colors.red,
                                           child: TextField(
-                                            controller: shopNameTextControl,
+                                            controller: farmOrshopNameTextControl,
                                             maxLength: 60,
                                             onTap: () {},
                                             keyboardType: TextInputType.name,
@@ -260,7 +269,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                                             ),
                                             decoration: InputDecoration(
                                               // hintText: 'User',
-                                              labelText: 'Shop Name',
+                                              labelText:widget.whichUser == 'Seller'? 'Shop Name' : widget.whichUser == 'Farmer'?'Farm Name':'',
                                               labelStyle: TextStyle(
                                                   color: MyColors.kPrimary),
                                               hintStyle: TextStyle(
@@ -279,7 +288,10 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                                                 borderRadius:
                                                     BorderRadius.circular(10),
                                               ),
-                                              prefixIcon: Icon(Icons.shopping_cart_sharp,color: MyColors.kPrimary,),
+                                              prefixIcon: Icon(
+                                                Icons.shopping_cart_sharp,
+                                                color: MyColors.kPrimary,
+                                              ),
                                             ),
                                           ),
                                         )
@@ -301,12 +313,14 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                                       ),
                                       decoration: InputDecoration(
                                         // hintText: 'User',
-                                        labelText:
-                                            widget.whichUser == 'Inspector'
-                                                ? 'Inspector Adress'
-                                                : widget.whichUser == 'Buyer'
-                                                    ? 'Your Adress'
-                                                    : 'Shop Adress',
+                                        labelText: widget.whichUser ==
+                                                'Inspector'
+                                            ? 'Inspector Adress'
+                                            : widget.whichUser == 'Buyer'
+                                                ? 'Your Adress'
+                                                : widget.whichUser == 'Farmer'
+                                                    ? 'Farm Adress'
+                                                    : 'Shop Address',
                                         labelStyle:
                                             TextStyle(color: MyColors.kPrimary),
                                         hintStyle:
@@ -324,7 +338,10 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                                           borderRadius:
                                               BorderRadius.circular(10),
                                         ),
-                                        prefixIcon: Icon(Icons.location_on_sharp,color: MyColors.kPrimary,),
+                                        prefixIcon: Icon(
+                                          Icons.location_on_sharp,
+                                          color: MyColors.kPrimary,
+                                        ),
                                       ),
                                     ),
                                   ),
@@ -364,7 +381,10 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                                           borderRadius:
                                               BorderRadius.circular(10),
                                         ),
-                                        prefixIcon: Icon(Icons.email_outlined,color: MyColors.kPrimary,),
+                                        prefixIcon: Icon(
+                                          Icons.email_outlined,
+                                          color: MyColors.kPrimary,
+                                        ),
                                       ),
                                     ),
                                   ),
@@ -404,7 +424,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                                         ),
                                         prefixIcon: Icon(
                                           Icons.lock,
-                                          color:MyColors.kPrimary,
+                                          color: MyColors.kPrimary,
                                           // size: 25,
                                         ),
                                       ),
@@ -428,7 +448,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                                               cityTextControl,
                                               nameTextControl,
                                               buyerOrinspectorOrShopAdressTextControl,
-                                              shopNameTextControl);
+                                              farmOrshopNameTextControl);
                                       // FirebaseRegistration(context);
                                     },
                                   ),

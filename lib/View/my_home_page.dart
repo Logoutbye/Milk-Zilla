@@ -33,6 +33,7 @@ class _MyHomePageState extends State<MyHomePage> {
   void initState() {
     FirestoreHelper.initializeToCheckStatusForSellers();
     FirestoreHelper.initializeToCheckStatusForInspector();
+    FirestoreHelper.initializeToCheckStatusForFarmer();
     // TODO: implement initState
     super.initState();
   }
@@ -99,7 +100,6 @@ class _MyHomePageState extends State<MyHomePage> {
                                             .getInstance();
                                         whichUserLoggedIn = prefs
                                             .getString('whichUserLoggedIn');
-
 
                                         Navigator.of(context).push(
                                             MaterialPageRoute(
@@ -313,126 +313,265 @@ class _MyHomePageState extends State<MyHomePage> {
                       height: 15,
                     ),
 
-                    // Inpector
                     Center(
                       child: Container(
                         child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Container(
-                              child: SingleChildScrollView(
-                                scrollDirection: Axis.horizontal,
-                                child: Row(
-                                  children: [
-                                    SizedBox(
-                                      width: 10,
-                                    ),
+                            Row(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Container(
+                                  child: SingleChildScrollView(
+                                    scrollDirection: Axis.horizontal,
+                                    child: Row(
+                                      children: [
+                                        InkWell(
+                                          onTap: () async {
+                                            //to get current user type
+                                            final prefs =
+                                                await SharedPreferences
+                                                    .getInstance();
+                                            whichUserLoggedIn = prefs
+                                                .getString('whichUserLoggedIn');
 
-                                    InkWell(
-                                      onTap: () async {
-                                        //to get current user type
-                                        final prefs = await SharedPreferences
-                                            .getInstance();
-                                        whichUserLoggedIn = prefs
-                                            .getString('whichUserLoggedIn');
-
-                                        Navigator.of(context).push(
-                                            MaterialPageRoute(
-                                                builder: (context) {
-                                          if (snapshot.connectionState ==
-                                              ConnectionState.waiting) {
-                                            return Center(
-                                              child: Lottie.asset(
-                                                  'assets/animations/loading.json',
-                                                  height: MediaQuery.of(context)
-                                                          .size
-                                                          .height /
-                                                      5),
-                                            );
-                                          } else if (snapshot.hasError) {
-                                            return Utils.flushBarErrorMessage(
-                                                'Some thing went wrong',
-                                                context);
-                                          } else if (snapshot.hasData) {
-                                            if (whichUserLoggedIn ==
-                                                'Inspector') {
-                                              if (FirestoreHelper
-                                                      .currentInspectorStatusInFirestore ==
-                                                  'Approved') {
-                                                return InspectorScreen();
+                                            Navigator.of(context).push(
+                                                MaterialPageRoute(
+                                                    builder: (context) {
+                                              if (snapshot.connectionState ==
+                                                  ConnectionState.waiting) {
+                                                return Center(
+                                                  child: Lottie.asset(
+                                                      'assets/animations/loading.json',
+                                                      height:
+                                                          MediaQuery.of(context)
+                                                                  .size
+                                                                  .height /
+                                                              5),
+                                                );
+                                              } else if (snapshot.hasError) {
+                                                return Utils
+                                                    .flushBarErrorMessage(
+                                                        'Some thing went wrong',
+                                                        context);
+                                              } else if (snapshot.hasData) {
+                                                if (whichUserLoggedIn ==
+                                                    'Inspector') {
+                                                  if (FirestoreHelper
+                                                          .currentInspectorStatusInFirestore ==
+                                                      'Approved') {
+                                                    return InspectorScreen();
+                                                  } else {
+                                                    return RegistrationStatusScreen(
+                                                      whichUser: 'Inspector',
+                                                    );
+                                                  }
+                                                } else {
+                                                  return ErrorScreen(
+                                                      Message:
+                                                          'Please Logout as ${whichUserLoggedIn} first',
+                                                      onpress: () async {
+                                                        // SignOut();
+                                                      },
+                                                      butontitle: 'Log Out');
+                                                }
                                               } else {
-                                                return RegistrationStatusScreen(
+                                                return LoginScreen(
                                                   whichUser: 'Inspector',
                                                 );
                                               }
-                                            } else {
-                                              return ErrorScreen(
-                                                  Message:
-                                                      'Please Logout as ${whichUserLoggedIn} first',
-                                                  onpress: () async {
-                                                    // SignOut();
-                                                  },
-                                                  butontitle: 'Log Out');
-                                            }
-                                          } else {
-                                            return LoginScreen(
-                                              whichUser: 'Inspector',
-                                            );
-                                          }
-                                        }));
-                                      },
-                                      child: Container(
-                                        width:
-                                            MediaQuery.of(context).size.width /
+                                            }));
+                                          },
+                                          child: Container(
+                                            width: MediaQuery.of(context)
+                                                    .size
+                                                    .width /
                                                 2.4,
-                                        height:
-                                            MediaQuery.of(context).size.height /
+                                            height: MediaQuery.of(context)
+                                                    .size
+                                                    .height /
                                                 5,
-                                        decoration: BoxDecoration(
-                                          color: MyColors.kSecondary,
-                                          borderRadius:
-                                              BorderRadius.circular(20),
-                                          boxShadow: [
-                                            BoxShadow(
-                                              color: Colors.black,
-                                              blurRadius: 15,
-                                              spreadRadius: 2,
-                                              offset: Offset(
-                                                0,
-                                                5,
-                                              ), // Shadow position
+                                            decoration: BoxDecoration(
+                                              color: MyColors.kSecondary,
+                                              borderRadius:
+                                                  BorderRadius.circular(20),
+                                              boxShadow: [
+                                                BoxShadow(
+                                                  color: Colors.black,
+                                                  blurRadius: 15,
+                                                  spreadRadius: 2,
+                                                  offset: Offset(
+                                                    0,
+                                                    5,
+                                                  ), // Shadow position
+                                                ),
+                                              ],
                                             ),
-                                          ],
-                                        ),
-                                        child: Center(
-                                          child: Column(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                            children: [
-                                              ImageIcon(
-                                                AssetImage(
-                                                    "assets/images/inspector.png"),
-                                                size: 72,
-                                                color: MyColors.kPrimary,
+                                            child: Center(
+                                              child: Column(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.center,
+                                                children: [
+                                                  ImageIcon(
+                                                    AssetImage(
+                                                        "assets/images/inspector.png"),
+                                                    size: 72,
+                                                    color: MyColors.kPrimary,
+                                                  ),
+                                                  SizedBox(
+                                                    height:
+                                                        MediaQuery.of(context)
+                                                                .size
+                                                                .height /
+                                                            70,
+                                                  ),
+                                                  Text('Inspect',
+                                                      style: TextStyle(
+                                                          color:
+                                                              MyColors.kPrimary,
+                                                          fontWeight:
+                                                              FontWeight.bold)),
+                                                ],
                                               ),
-                                              SizedBox(
-                                                height: MediaQuery.of(context)
-                                                        .size
-                                                        .height /
-                                                    70,
-                                              ),
-                                              Text('Inspect',
-                                                  style: TextStyle(
-                                                      color: MyColors.kPrimary,
-                                                      fontWeight:
-                                                          FontWeight.bold)),
-                                            ],
+                                            ),
                                           ),
                                         ),
-                                      ),
-                                    ), // container for chating Doctor will move to next screen
-                                  ],
+                                      ],
+                                    ),
+                                  ),
                                 ),
-                              ),
+                                SizedBox(
+                                  width: 15,
+                                ),
+
+                                //Farm button
+                                Container(
+                                  child: SingleChildScrollView(
+                                    scrollDirection: Axis.horizontal,
+                                    child: Row(
+                                      children: [
+                                        InkWell(
+                                          onTap: () async {
+                                            //to get current user type
+                                            final prefs =
+                                                await SharedPreferences
+                                                    .getInstance();
+                                            whichUserLoggedIn = prefs
+                                                .getString('whichUserLoggedIn');
+
+                                            Navigator.of(context).push(
+                                                MaterialPageRoute(
+                                                    builder: (context) {
+                                              if (snapshot.connectionState ==
+                                                  ConnectionState.waiting) {
+                                                return Center(
+                                                  child: Lottie.asset(
+                                                      'assets/animations/loading.json',
+                                                      height:
+                                                          MediaQuery.of(context)
+                                                                  .size
+                                                                  .height /
+                                                              5),
+                                                );
+                                              } else if (snapshot.hasError) {
+                                                return Utils
+                                                    .flushBarErrorMessage(
+                                                        'Some thing went wrong',
+                                                        context);
+                                              } else if (snapshot.hasData) {
+                                                if (whichUserLoggedIn ==
+                                                    'Farmer') {
+                                                  if (FirestoreHelper
+                                                          .currentFarmerStatusInFirestore ==
+                                                      'Approved') {
+                                                    return InspectorScreen();
+                                                  } else {
+                                                    return RegistrationStatusScreen(
+                                                      whichUser: 'Farmer',
+                                                    );
+                                                  }
+                                                } else {
+                                                  return ErrorScreen(
+                                                      Message:
+                                                          'Please Logout as ${whichUserLoggedIn} first',
+                                                      onpress: () async {
+                                                        // SignOut();
+                                                      },
+                                                      butontitle: 'Log Out');
+                                                }
+                                              } else {
+                                                return LoginScreen(
+                                                  whichUser: 'Farmer',
+                                                );
+                                              }
+                                            }));
+                                          },
+                                          child: Container(
+                                            width: MediaQuery.of(context)
+                                                    .size
+                                                    .width /
+                                                2.4,
+                                            height: MediaQuery.of(context)
+                                                    .size
+                                                    .height /
+                                                5,
+                                            decoration: BoxDecoration(
+                                              color: MyColors.kSecondary,
+                                              borderRadius:
+                                                  BorderRadius.circular(20),
+                                              boxShadow: [
+                                                BoxShadow(
+                                                  color: Colors.black,
+                                                  blurRadius: 15,
+                                                  spreadRadius: 2,
+                                                  offset: Offset(
+                                                    0,
+                                                    5,
+                                                  ), // Shadow position
+                                                ),
+                                              ],
+                                            ),
+                                            child: Center(
+                                              child: Column(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.center,
+                                                children: [
+                                                  Icon(
+                                                    Icons.warehouse_outlined,
+                                                    size: 72,
+                                                    color: MyColors.kPrimary,
+                                                  ),
+                                                  // ImageIcon(
+                                                  //   AssetImage(
+                                                  //       "assets/images/inspector.png"),
+                                                  //   size: 72,
+                                                  //   color: MyColors.kPrimary,
+                                                  // ),
+                                                  SizedBox(
+                                                    height:
+                                                        MediaQuery.of(context)
+                                                                .size
+                                                                .height /
+                                                            70,
+                                                  ),
+                                                  Text('Farm',
+                                                      style: TextStyle(
+                                                          color:
+                                                              MyColors.kPrimary,
+                                                          fontWeight:
+                                                              FontWeight.bold)),
+                                                ],
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ],
                             ),
                           ],
                         ),
@@ -442,7 +581,6 @@ class _MyHomePageState extends State<MyHomePage> {
                     SizedBox(
                       height: 50,
                     ),
-                    // About US Area
                   ],
                 ),
               ),

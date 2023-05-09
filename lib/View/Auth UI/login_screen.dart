@@ -40,8 +40,10 @@ class _LoginScreenState extends State<LoginScreen> {
   getiingSatus() async {
     await FirestoreHelper.initializeToCheckStatusForSellers();
     await FirestoreHelper.initializeToCheckStatusForInspector();
+    await FirestoreHelper.initializeToCheckStatusForFarmer();
 
     await FirestoreHelper.currentSellerStatusInFirestore;
+    await FirestoreHelper.currentFarmerStatusInFirestore;
     await FirestoreHelper.currentInspectorStatusInFirestore;
   }
 
@@ -175,7 +177,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                           borderRadius:
                                               BorderRadius.circular(10),
                                         ),
-                                        prefixIcon: Icon(Icons.flag),
+                                        prefixIcon: Icon(Icons.email,color: MyColors.kPrimary,),
                                       ),
                                     ),
                                   ),
@@ -217,8 +219,8 @@ class _LoginScreenState extends State<LoginScreen> {
                                         ),
                                         prefixIcon: Icon(
                                           Icons.lock,
-                                          // color:
-                                          //     MyColors.kPrimary,
+                                          color:
+                                              MyColors.kPrimary,
                                           // size: 25,
                                         ),
                                       ),

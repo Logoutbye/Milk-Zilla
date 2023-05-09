@@ -20,8 +20,8 @@ class UserRegistrationController {
     var mobileNumberTextController,
     var cityTextControl,
     var nameTextControl,
-    var buyerOrinspectorOrShopAdressTextControl,
-    var shopNameTextControl,
+    var famrOrbuyerOrinspectorOrShopAdressTextControl,
+    var farmOrshopNameTextControl,
   ) async {
     showDialog(
         context: parentContext,
@@ -45,8 +45,8 @@ class UserRegistrationController {
             mobileNumberTextController,
             cityTextControl,
             nameTextControl,
-            buyerOrinspectorOrShopAdressTextControl,
-            shopNameTextControl);
+            famrOrbuyerOrinspectorOrShopAdressTextControl,
+            farmOrshopNameTextControl);
         if (whichUser == 'Buyer') {
           MySharedPrefencesSessionHandling
               .setOrupdateWhichUserLoggedInSharedPreferences('${whichUser}');
@@ -58,8 +58,8 @@ class UserRegistrationController {
           cityTextControl.clear();
           emailTextController.clear();
           nameTextControl.clear();
-          buyerOrinspectorOrShopAdressTextControl.clear();
-          shopNameTextControl.clear();
+          famrOrbuyerOrinspectorOrShopAdressTextControl.clear();
+          farmOrshopNameTextControl.clear();
         } else if (whichUser == 'Seller') {
           MySharedPrefencesSessionHandling
               .setOrupdateWhichUserLoggedInSharedPreferences('${whichUser}');
@@ -86,8 +86,40 @@ class UserRegistrationController {
           cityTextControl.clear();
           emailTextController.clear();
           nameTextControl.clear();
-          buyerOrinspectorOrShopAdressTextControl.clear();
-          shopNameTextControl.clear();
+          famrOrbuyerOrinspectorOrShopAdressTextControl.clear();
+          farmOrshopNameTextControl.clear();
+        } else if (whichUser == 'Farmer') {
+          MySharedPrefencesSessionHandling
+              .setOrupdateWhichUserLoggedInSharedPreferences('${whichUser}');
+
+          //get the approval status as soon as the user is created and navigate to relavent screen
+          await FirestoreHelper.initializeToCheckStatusForSellers();
+          await FirestoreHelper.initializeToCheckStatusForInspector();
+          await FirestoreHelper.initializeToCheckStatusForFarmer();
+
+          var currentFarmerStatusInFirestore =
+              await FirestoreHelper.currentFarmerStatusInFirestore;
+
+          if (currentFarmerStatusInFirestore == 'Approved') {
+            // Navigator.of(parentContext).push(
+            //     MaterialPageRoute(builder: (context) => InspectorScreen()));
+
+            Utils.toastMessage("Add Farmer Screen");
+          } else {
+            print('Something is wrong here');
+            Navigator.of(parentContext).push(MaterialPageRoute(
+                builder: (context) => RegistrationStatusScreen(
+                      whichUser: whichUser,
+                    )));
+          }
+          emailTextController.clear();
+          PasswordTextController.clear();
+          mobileNumberTextController.clear();
+          cityTextControl.clear();
+          emailTextController.clear();
+          nameTextControl.clear();
+          famrOrbuyerOrinspectorOrShopAdressTextControl.clear();
+          farmOrshopNameTextControl.clear();
         } else {
           //update the value in shared prefrences so that next time it may navigate to relavent screen
           MySharedPrefencesSessionHandling
@@ -115,8 +147,8 @@ class UserRegistrationController {
           cityTextControl.clear();
           emailTextController.clear();
           nameTextControl.clear();
-          buyerOrinspectorOrShopAdressTextControl.clear();
-          shopNameTextControl.clear();
+          famrOrbuyerOrinspectorOrShopAdressTextControl.clear();
+          farmOrshopNameTextControl.clear();
         }
       }).onError((FirebaseAuthException error, stackTrace) {
         if (error.code == "email-already-in-use") {
@@ -139,8 +171,8 @@ class UserRegistrationController {
       cityTextControl.clear();
       emailTextController.clear();
       nameTextControl.clear();
-      buyerOrinspectorOrShopAdressTextControl.clear();
-      shopNameTextControl.clear();
+      famrOrbuyerOrinspectorOrShopAdressTextControl.clear();
+      farmOrshopNameTextControl.clear();
     }
   }
 }
@@ -166,6 +198,9 @@ Future createUserInFirebase(
   final inpector = FirebaseFirestore.instance
       .collection('Inspectors')
       .doc('${emailTextController.text}');
+  final farmer = FirebaseFirestore.instance
+      .collection('Farmers')
+      .doc('${emailTextController.text}');
 
   final jsonForBuyer = {
     'name': nameTextControl.text,
@@ -185,7 +220,18 @@ Future createUserInFirebase(
     'email': emailTextController.text,
     'password': PasswordTextController.text,
     'status': 'Pending',
-    'role' : 'Seller'
+    'role': 'Seller'
+  };
+  final jsonForFarmer = {
+    'name': nameTextControl.text,
+    'mobile_no': mobileNumberTextController.text,
+    'city': cityTextControl.text,
+    'farm_name': shopNameTextControl.text,
+    'farm_adress': buyerOrinspectorOrShopAdressTextControl.text,
+    'email': emailTextController.text,
+    'password': PasswordTextController.text,
+    'status': 'Pending',
+    'role': 'Farmer'
   };
   final jsonForInspector = {
     'name': nameTextControl.text,
@@ -202,6 +248,8 @@ Future createUserInFirebase(
     await buyer.set(jsonForBuyer);
   } else if (whichUser == 'Seller') {
     await seller.set(jsonForSeller);
+  } else if (whichUser == 'Farmer') {
+    await farmer.set(jsonForFarmer);
   } else {
     await inpector.set(jsonForInspector);
   }

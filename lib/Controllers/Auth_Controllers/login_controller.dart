@@ -46,10 +46,18 @@ class LoginController {
 
         await FirestoreHelper.initializeToCheckStatusForSellers();
         await FirestoreHelper.initializeToCheckStatusForInspector();
+        await FirestoreHelper.initializeToCheckStatusForFarmer();
+
         var currentSellerStatusInFirestore =
             await FirestoreHelper.currentSellerStatusInFirestore;
         print(
             'checking currentUserStatusInFirestore at login success::$currentSellerStatusInFirestore');
+
+             var currentFarmerStatusInFirestore =
+            await FirestoreHelper.currentFarmerStatusInFirestore;
+        print(
+            'checking currentFarmerStatusInFirestore at login success::$currentFarmerStatusInFirestore');
+
         var currentInspectorStatusInFirestore =
             await FirestoreHelper.currentInspectorStatusInFirestore;
         print(
@@ -72,7 +80,25 @@ class LoginController {
                       whichUser: whichUser,
                     )));
           }
-        } else {
+        }
+        
+         else if (whichUser == 'Farmer') {
+          navigatorKey.currentState!.popUntil((route) => route.isFirst);
+          if (currentSellerStatusInFirestore == 'Approved') {
+            Utils.toastMessage('Add Screen for Farmer');
+            // Navigator.of(parentContext).push(
+            //     MaterialPageRoute(builder: (context) => MyAllCustomerOrders()));
+          } else {
+            print(
+                'After successful login i am waiting to be approved as seller');
+            Navigator.of(parentContext).push(MaterialPageRoute(
+                builder: (context) => RegistrationStatusScreen(
+                      whichUser: whichUser,
+                    )));
+          }
+        }
+        
+         else {
           if (currentInspectorStatusInFirestore == 'Approved') {
             navigatorKey.currentState!.popUntil((route) => route.isFirst);
             Navigator.of(parentContext).push(

@@ -5,7 +5,9 @@ class SellerOrInspectorModel {
   var mobile_no;
   var city;
   var shop_name;
+  var farm_name;
   var shop_adress;
+  var farm_adress;
   var inspector_adress;
   var email;
   var password;
@@ -16,7 +18,9 @@ class SellerOrInspectorModel {
     required this.mobile_no,
     required this.city,
     required this.shop_name,
+    required this.farm_name,
     required this.shop_adress,
+    required this.farm_adress,
     required this.inspector_adress,
     required this.email,
     required this.password,
@@ -30,7 +34,9 @@ class SellerOrInspectorModel {
         mobile_no: data['mobile_no'],
         city: data['city'],
         shop_name: data['shop_name'],
+        farm_name: data['farm_name'],
         shop_adress: data['shop_adress'],
+        farm_adress: data['farm_adress'],
         inspector_adress: data['inspector_adress'],
         email: data['email'],
         password: data['password'],
@@ -50,7 +56,9 @@ class SellerOrInspectorModel {
     mobile_no = json['mobile_no'];
     city = json['city'];
     shop_name = json['shop_name'];
+    farm_name = json['farm_name'];
     shop_adress = json['shop_adress'];
+    farm_adress = json['farm_adress'];
     inspector_adress = json['inspector_adress'];
     email = json['email'];
     status = json['status'];
@@ -62,7 +70,9 @@ class SellerOrInspectorModel {
     data['mobile_no'] = this.mobile_no;
     data['city'] = this.city;
     data['shop_name'] = this.shop_name;
+    data['farm_name'] = this.farm_name;
     data['shop_adress'] = this.shop_adress;
+    data['farm_adress'] = this.farm_adress;
     data['inspector_adress'] = this.inspector_adress;
     data['email'] = this.email;
     data['status'] = this.status;

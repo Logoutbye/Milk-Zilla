@@ -32,9 +32,13 @@ Future<void> main() async {
     // and if user was seller or inspector it will check if the status is approved so he may navigate to their relative dashbord else they see application status
     await FirestoreHelper.initializeToCheckStatusForSellers();
     await FirestoreHelper.initializeToCheckStatusForInspector();
+    await FirestoreHelper.initializeToCheckStatusForFarmer();
 
     await FirestoreHelper.currentSellerStatusInFirestore;
     await FirestoreHelper.currentInspectorStatusInFirestore;
+    await FirestoreHelper.currentFarmerStatusInFirestore;
+    print(
+        'in main currentFarmerStatusInFirestore :${FirestoreHelper.currentFarmerStatusInFirestore}');
     print(
         'in main currentSellerStatusInFirestore :${FirestoreHelper.currentSellerStatusInFirestore}');
     print(

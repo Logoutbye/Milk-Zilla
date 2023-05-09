@@ -69,6 +69,23 @@ class FirestoreHelper {
       currentInspectorStatusInFirestore = data!['status'];
     }
   }
+
+    static String currentFarmerStatusInFirestore = '';
+  static Future<void> initializeToCheckStatusForFarmer() async {
+    //to get Current user email to access the application status
+    final user = FirebaseAuth.instance.currentUser;
+    // to access the document
+    FirebaseFirestore firestore = FirebaseFirestore.instance;
+
+    DocumentReference documentReference =
+        firestore.collection('Farmers').doc('${user?.email}');
+    DocumentSnapshot documentSnapshot = await documentReference.get();
+    if (documentSnapshot.exists) {
+      Map<String, dynamic>? data =
+          documentSnapshot.data() as Map<String, dynamic>?;
+      currentInspectorStatusInFirestore = data!['status'];
+    }
+  }
 }
 
 // void main() async {

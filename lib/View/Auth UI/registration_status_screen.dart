@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
+import 'package:milk_zilla/Utils/utils.dart';
 import 'package:milk_zilla/View/Inspector_UI/insector_screen.dart';
 import 'package:milk_zilla/View/my_home_page.dart';
 import 'package:milk_zilla/controllers/Auth_Controllers/registration_status_controller.dart';
@@ -215,23 +216,31 @@ class _RegistrationStatusScreenState extends State<RegistrationStatusScreen> {
                                         children: [
                                           whichUser == 'Seller'
                                               ? Text('Shop Name')
-                                              : Text('Your Adress'),
+                                              : whichUser == 'Farmer'
+                                                  ? Text('Farm Name')
+                                                  : Text('Your Adress'),
                                           Spacer(),
                                           whichUser == 'Seller'
                                               ? Text(
                                                   '${snapshot.data!.shop_name}')
-                                              : Text(
-                                                  '${snapshot.data!.inspector_adress}'),
+                                              : whichUser == 'Farmer'
+                                                  ? Text(
+                                                      '${snapshot.data!.farm_name}')
+                                                  : Text(
+                                                      '${snapshot.data!.inspector_adress}'),
                                         ],
                                       ),
-                                      whichUser == 'Seller'
+                                      whichUser == 'Seller' ||
+                                              whichUser == 'Farmer'
                                           ? const SizedBox(height: 10.0)
                                           : SizedBox(),
-                                      whichUser == 'Seller'
+                                      whichUser == 'Seller' ||
+                                              whichUser == 'Farmer'
                                           ? CustomDivider()
                                           //  _buildDivider()
                                           : SizedBox(),
-                                      whichUser == 'Seller'
+                                      whichUser == 'Seller' ||
+                                              whichUser == 'Farmer'
                                           ? const SizedBox(height: 10.0)
                                           : SizedBox(),
                                       whichUser == 'Seller'
@@ -243,7 +252,16 @@ class _RegistrationStatusScreenState extends State<RegistrationStatusScreen> {
                                                     '${snapshot.data!.shop_adress}'),
                                               ],
                                             )
-                                          : SizedBox(),
+                                          : whichUser == 'Farmer'
+                                              ? Row(
+                                                  children: [
+                                                    Text('Farm Adress'),
+                                                    Spacer(),
+                                                    Text(
+                                                        '${snapshot.data!.farm_adress}'),
+                                                  ],
+                                                )
+                                              : SizedBox(),
                                     ],
                                   ))),
                       SizedBox(height: 30.0),
@@ -259,6 +277,13 @@ class _RegistrationStatusScreenState extends State<RegistrationStatusScreen> {
                                       MaterialPageRoute(
                                           builder: (context) =>
                                               MyAllCustomerOrders()));
+                                } else if (whichUser == 'Farmer') {
+                                  // Navigator.of(context).pushReplacement(
+                                  //     MaterialPageRoute(
+                                  //         builder: (context) =>
+                                  //             MyAllCustomerOrders()));
+
+                                  Utils.toastMessage('Add farmer Screen');
                                 } else {
                                   Navigator.of(context).pushReplacement(
                                       MaterialPageRoute(
@@ -283,7 +308,6 @@ class _RegistrationStatusScreenState extends State<RegistrationStatusScreen> {
               }
             }));
   }
-
 
   // Future<SellerOrInspectorModel?> readSellerDataFromDatabase() async {
   //   if (whichUser == 'Seller') {
