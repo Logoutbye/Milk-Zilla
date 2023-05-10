@@ -5,14 +5,14 @@ import '../../Model/order_model.dart';
 
 class FarmController {
   Future<List<OrderModel>> getOrderFromFarm(
-      String shopId, String status) async {
+      String farmId, String status) async {
     try {
-      print("shop id for which getting orders from database " + shopId);
+      print("farm id for which getting orders from database " + farmId);
       print("status of order for which getting orders from database " + status);
 
       QuerySnapshot querySnapshot = await FirebaseFirestore.instance
-          .collection('Orders')
-          .where('shop_id', isEqualTo: shopId)
+          .collection('Orders from Fram')
+          .where('farm_id', isEqualTo: farmId)
           .where('status', isEqualTo: status)
           .get();
       List<OrderModel> orders = querySnapshot.docs
@@ -21,7 +21,7 @@ class FarmController {
           .toList();
       return orders;
     } catch (e) {
-      print('Error getting orders for shop: $e');
+      print('Error getting orders form Farm: $e');
       return [];
     }
   }
