@@ -61,6 +61,8 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+      print(
+        'before navigation currentFarmerStatusInFirestore :${FirestoreHelper.currentFarmerStatusInFirestore}');
     print(
         'before navigation currentSellerStatusInFirestore :${FirestoreHelper.currentSellerStatusInFirestore}');
     print(
@@ -68,51 +70,68 @@ class MyApp extends StatelessWidget {
     return ChangeNotifierProvider(
       create: (_) => ShoppingItemProvider(),
       child: MaterialApp(
-          routes: {
-            '/setCustomerAddressOnGoogleMap': (context) =>
-                SetCuctomerAddressOnGoogleMap(),
-          },
-          navigatorKey: navigatorKey,
-          title: 'Milk Zilla',
-          debugShowCheckedModeBanner: false,
-          theme: ThemeData(
-            primarySwatch: Colors.green,
-          ),
-          home: FarmOrders()
-          // if user is buyer and approved
-          // whichUserLoggedIn == 'Buyer'
-          //     ? AllShopesToOrderFrom()
+        routes: {
+          '/setCustomerAddressOnGoogleMap': (context) =>
+              SetCuctomerAddressOnGoogleMap(),
+        },
+        navigatorKey: navigatorKey,
+        title: 'Milk Zilla',
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData(
+          primarySwatch: Colors.green,
+        ),
+        home:
+            // if user is buyer and aboviously approved
+            whichUserLoggedIn == 'Buyer'
+                ? AllShopesToOrderFrom()
 
-          //     //if user is seller and approved
-          //     : whichUserLoggedIn == 'Seller' &&
-          //             FirestoreHelper.currentSellerStatusInFirestore ==
-          //                 'Approved'
-          //         ? MyAllCustomerOrders()
-          //         //if user is Seller and is not approved
-          //         : whichUserLoggedIn == 'Seller' &&
-          //                 FirestoreHelper.currentSellerStatusInFirestore ==
-          //                     'Pending'
-          //             ? RegistrationStatusScreen(
-          //                 whichUser: 'Seller',
-          //               )
+                //if user is seller and approved
+                : whichUserLoggedIn == 'Seller' &&
+                        FirestoreHelper.currentSellerStatusInFirestore ==
+                            'Approved'
+                    ? MyAllCustomerOrders()
 
-          //             //if user is Inspector and approved
-          //             : whichUserLoggedIn == 'Inspector' &&
-          //                     FirestoreHelper
-          //                             .currentInspectorStatusInFirestore ==
-          //                         'Approved'
-          //                 ? InspectorScreen()
+                    //if user is Seller and is not approved
+                    : whichUserLoggedIn == 'Seller' &&
+                            FirestoreHelper.currentSellerStatusInFirestore ==
+                                'Pending'
+                        ? RegistrationStatusScreen(
+                            whichUser: 'Seller',
+                          )
 
-          //                 //if user is Seller and is not approved
-          //                 : whichUserLoggedIn == 'Inspector' &&
-          //                         FirestoreHelper
-          //                                 .currentInspectorStatusInFirestore ==
-          //                             'Pending'
-          //                     ? RegistrationStatusScreen(
-          //                         whichUser: 'Inspector',
-          //                       )
-          //                     : MyHomePage(),
-          ),
+                        //if user is Inspector and approved
+                        : whichUserLoggedIn == 'Inspector' &&
+                                FirestoreHelper
+                                        .currentInspectorStatusInFirestore ==
+                                    'Approved'
+                            ? InspectorScreen()
+
+                            //if user is Inspector and is not approved
+                            : whichUserLoggedIn == 'Inspector' &&
+                                    FirestoreHelper
+                                            .currentInspectorStatusInFirestore ==
+                                        'Pending'
+                                ? RegistrationStatusScreen(
+                                    whichUser: 'Inspector',
+                                  )
+
+                                //if user is Farmer and is approved
+                                : whichUserLoggedIn == 'Farmer' &&
+                                        FirestoreHelper
+                                                .currentFarmerStatusInFirestore ==
+                                            'Approved'
+                                    ? FarmOrders()
+
+                                    //if user is Farmer and is not approved
+                                    : whichUserLoggedIn == 'Farmer' &&
+                                            FirestoreHelper
+                                                    .currentFarmerStatusInFirestore ==
+                                                'Pending'
+                                        ? RegistrationStatusScreen(
+                                            whichUser: 'Farmer',
+                                          )
+                                        : MyHomePage(),
+      ),
     );
   }
 }

@@ -1,38 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
-// class FirestoreHelper {
-//   static FirebaseFirestore firestore = FirebaseFirestore.instance;
-
-//   static Future<Map<String, dynamic>?> getDocumentData(
-//       String collectionName, String documentID) async {
-//     DocumentReference documentReference =
-//         firestore.collection(collectionName).doc(documentID);
-//     DocumentSnapshot documentSnapshot = await documentReference.get();
-
-//     if (documentSnapshot.exists) {
-//       Map<String, dynamic>? data =
-//           documentSnapshot.data() as Map<String, dynamic>?;
-//       return data;
-//     } else {
-//       return null;
-//     }
-//   }
-
-// use this method
-//   getData() async {
-//   final user = FirebaseAuth.instance.currentUser;
-//   Map<String, dynamic>? data =
-//       await FirestoreHelper.getDocumentData('Sellers', '${user!.email}');
-//   if (data != null) {
-//     String field1Value = data['status'];
-//     print('field1 value: $field1Value');
-//   } else {
-//     print('Document does not exist');
-//   }
-// }
-// }
-
 class FirestoreHelper {
   static String currentSellerStatusInFirestore = '';
 
@@ -83,7 +51,7 @@ class FirestoreHelper {
     if (documentSnapshot.exists) {
       Map<String, dynamic>? data =
           documentSnapshot.data() as Map<String, dynamic>?;
-      currentInspectorStatusInFirestore = data!['status'];
+      currentFarmerStatusInFirestore = data!['status'];
     }
   }
 }

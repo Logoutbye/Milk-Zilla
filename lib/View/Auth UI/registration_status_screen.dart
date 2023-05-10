@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:milk_zilla/Utils/utils.dart';
+import 'package:milk_zilla/View/Farm_UI/farm_orders.dart';
 import 'package:milk_zilla/View/Inspector_UI/insector_screen.dart';
 import 'package:milk_zilla/View/my_home_page.dart';
 import 'package:milk_zilla/controllers/Auth_Controllers/registration_status_controller.dart';
@@ -278,12 +279,10 @@ class _RegistrationStatusScreenState extends State<RegistrationStatusScreen> {
                                           builder: (context) =>
                                               MyAllCustomerOrders()));
                                 } else if (whichUser == 'Farmer') {
-                                  // Navigator.of(context).pushReplacement(
-                                  //     MaterialPageRoute(
-                                  //         builder: (context) =>
-                                  //             MyAllCustomerOrders()));
-
-                                  Utils.toastMessage('Add farmer Screen');
+                                  Navigator.of(context).pushReplacement(
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              FarmOrders()));
                                 } else {
                                   Navigator.of(context).pushReplacement(
                                       MaterialPageRoute(

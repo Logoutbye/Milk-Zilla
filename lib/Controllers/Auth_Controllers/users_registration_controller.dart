@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
+import 'package:milk_zilla/View/Farm_UI/farm_orders.dart';
 
 import '../../Utils/utils.dart';
 import '../../View/Auth UI/registration_status_screen.dart';
@@ -101,10 +102,8 @@ class UserRegistrationController {
               await FirestoreHelper.currentFarmerStatusInFirestore;
 
           if (currentFarmerStatusInFirestore == 'Approved') {
-            // Navigator.of(parentContext).push(
-            //     MaterialPageRoute(builder: (context) => InspectorScreen()));
-
-            Utils.toastMessage("Add Farmer Screen");
+            Navigator.of(parentContext).push(
+                MaterialPageRoute(builder: (context) => FarmOrders()));
           } else {
             print('Something is wrong here');
             Navigator.of(parentContext).push(MaterialPageRoute(

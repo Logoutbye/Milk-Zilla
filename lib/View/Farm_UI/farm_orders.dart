@@ -20,14 +20,14 @@ class _FarmOrdersState extends State<FarmOrders> {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-      length: 4,
+      length: 3,
       child: Scaffold(
         appBar: AppBar(
           title: const Text('Farm Orders'),
           backgroundColor: MyColors.kWhite,
           foregroundColor: MyColors.kPrimary,
           centerTitle: true,
-          // automaticallyImplyLeading: false,
+          automaticallyImplyLeading: false,
           bottom: TabBar(
             indicatorColor: MyColors.kPrimary,
             unselectedLabelColor: Color.fromARGB(255, 139, 211, 142),

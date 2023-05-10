@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:milk_zilla/Model/seller_model.dart';
+import 'package:milk_zilla/View/Farm_UI/farm_orders.dart';
 import 'package:milk_zilla/main.dart';
 
 import '../../Utils/utils.dart';
@@ -84,10 +85,9 @@ class LoginController {
         
          else if (whichUser == 'Farmer') {
           navigatorKey.currentState!.popUntil((route) => route.isFirst);
-          if (currentSellerStatusInFirestore == 'Approved') {
-            Utils.toastMessage('Add Screen for Farmer');
-            // Navigator.of(parentContext).push(
-            //     MaterialPageRoute(builder: (context) => MyAllCustomerOrders()));
+          if (currentFarmerStatusInFirestore == 'Approved') {
+            Navigator.of(parentContext).push(
+                MaterialPageRoute(builder: (context) => FarmOrders()));
           } else {
             print(
                 'After successful login i am waiting to be approved as seller');
