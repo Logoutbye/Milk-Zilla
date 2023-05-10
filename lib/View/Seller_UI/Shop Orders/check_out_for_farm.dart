@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -35,8 +33,8 @@ class CheckOutForFarm extends StatefulWidget {
 }
 
 class _CheckOutForFarmState extends State<CheckOutForFarm> {
-  var totalItems = 60000000;
-  var totalPrice;
+  var totalItems;
+  var totalPrice = 60000;
 
   final user = FirebaseAuth.instance.currentUser;
 
@@ -111,11 +109,10 @@ class _CheckOutForFarmState extends State<CheckOutForFarm> {
                     if (widget.quantity250ml > 0)
                       OrderListItem(
                         item: OrderItemModel(
-                          name: "Buffalo Milk",
+                          name: "Milk",
                           unit: '250 ML',
                           quantity: widget.quantity250ml,
-                          // price: snapshot.data.quantity250ML,
-                          price: 33,
+                          price: snapshot.data.quantity250ML,
                           onPressedDecrement: () {},
                           onPressedIncrement: () {},
                         ),
@@ -123,12 +120,10 @@ class _CheckOutForFarmState extends State<CheckOutForFarm> {
                     if (widget.quantity500ml > 0)
                       OrderListItem(
                         item: OrderItemModel(
-                          name: "Buffalo Milk",
+                          name: "Milk ",
                           unit: '500 ML',
                           quantity: widget.quantity500ml,
-                          // price: snapshot.data.quantity500ML,
-                          price: 33,
-
+                          price: snapshot.data.quantity500ML,
                           onPressedDecrement: () {},
                           onPressedIncrement: () {},
                         ),
@@ -136,12 +131,10 @@ class _CheckOutForFarmState extends State<CheckOutForFarm> {
                     if (widget.quantity1L > 0)
                       OrderListItem(
                         item: OrderItemModel(
-                          name: "Buffalo Milk",
+                          name: "Milk",
                           unit: 'Liter',
                           quantity: widget.quantity1L,
-                          // price: snapshot.data.quantity1L,
-                          price: 33,
-
+                          price: snapshot.data.quantity1L,
                           onPressedDecrement: () {},
                           onPressedIncrement: () {},
                         ),
@@ -169,71 +162,71 @@ class _CheckOutForFarmState extends State<CheckOutForFarm> {
                     const SizedBox(height: 20.0),
                     CustomDivider(),
                     const SizedBox(height: 20.0),
-                    // totalPrice > snapshot.data.delivery_charges
-                    //     ? Row(
-                    //         children: [
-                    //           const SizedBox(width: 40.0),
-                    //           Text(
-                    //             "Delivery Charges",
-                    //             style: kTextStyleBlack,
-                    //           ),
-                    //           const Spacer(),
-                    //           Text(
-                    //             "Rs ${snapshot.data.delivery_charges}",
-                    //             style: kTextStyleBlack,
-                    //           ),
-                    //           const SizedBox(width: 20.0),
-                    //         ],
-                    //       )
-                    //     : Center(
-                    //         child: Text(
-                    //         'Must Select atleast one Item',
-                    //         style: kTextStyleBlack,
-                    //       )),
-                    // const SizedBox(height: 20.0),
-                    // CustomDivider(),
-                    // const SizedBox(height: 10.0),
-                    // totalPrice > snapshot.data.delivery_charges
-                    //     ? Row(
-                    //         children: [
-                    //           const SizedBox(width: 40.0),
-                    //           Text(
-                    //             "Total",
-                    //             style: kTextStyleBlack.copyWith(
-                    //                 color: Colors.black),
-                    //           ),
-                    //           const Spacer(),
-                    //           Text(
-                    //             "Rs $totalPrice",
-                    //             style: kTextStyleBlack.copyWith(
-                    //                 color: MyColors.kPrimary),
-                    //           ),
-                    //           const SizedBox(width: 20.0),
-                    //         ],
-                    // )
-                    // : SizedBox(),
+                    totalPrice > snapshot.data.delivery_charges
+                        ? Row(
+                            children: [
+                              const SizedBox(width: 40.0),
+                              Text(
+                                "Delivery Charges",
+                                style: kTextStyleBlack,
+                              ),
+                              const Spacer(),
+                              Text(
+                                "Rs ${snapshot.data.delivery_charges}",
+                                style: kTextStyleBlack,
+                              ),
+                              const SizedBox(width: 20.0),
+                            ],
+                          )
+                        : Center(
+                            child: Text(
+                            'Must Select atleast one Item',
+                            style: kTextStyleBlack,
+                          )),
+                    const SizedBox(height: 20.0),
+                    CustomDivider(),
+                    const SizedBox(height: 10.0),
+                    totalPrice > snapshot.data.delivery_charges
+                        ? Row(
+                            children: [
+                              const SizedBox(width: 40.0),
+                              Text(
+                                "Total",
+                                style: kTextStyleBlack.copyWith(
+                                    color: Colors.black),
+                              ),
+                              const Spacer(),
+                              Text(
+                                "Rs $totalPrice",
+                                style: kTextStyleBlack.copyWith(
+                                    color: MyColors.kPrimary),
+                              ),
+                              const SizedBox(width: 20.0),
+                            ],
+                          )
+                        : SizedBox(),
                     SizedBox(
                       height: 15,
                     ),
-                    // totalPrice > snapshot.data.delivery_charges
-                    //     ? CustomDivider()
-                    //     : SizedBox(),
-                    // totalPrice > snapshot.data.delivery_charges
-                    //     ? CustomDivider()
-                    //     : SizedBox(),
-                    // totalPrice > snapshot.data.delivery_charges
-                    //     ? SizedBox(
-                    //         height: 15,
-                    //       )
-                    //     : SizedBox(),
-                    // totalPrice > snapshot.data.delivery_charges
-                    //     ? SizedBox(
-                    //         height: 15,
-                    //       )
-                    //     : SizedBox(),
-                    // totalPrice > snapshot.data.delivery_charges
-                    //     ? SizedBox(height: 10.0)
-                    //     : SizedBox(),
+                    totalPrice > snapshot.data.delivery_charges
+                        ? CustomDivider()
+                        : SizedBox(),
+                    totalPrice > snapshot.data.delivery_charges
+                        ? CustomDivider()
+                        : SizedBox(),
+                    totalPrice > snapshot.data.delivery_charges
+                        ? SizedBox(
+                            height: 15,
+                          )
+                        : SizedBox(),
+                    totalPrice > snapshot.data.delivery_charges
+                        ? SizedBox(
+                            height: 15,
+                          )
+                        : SizedBox(),
+                    totalPrice > snapshot.data.delivery_charges
+                        ? SizedBox(height: 10.0)
+                        : SizedBox(),
                     Padding(
                       padding: const EdgeInsets.symmetric(
                           horizontal: 32.0, vertical: 8.0),
@@ -255,53 +248,50 @@ class _CheckOutForFarmState extends State<CheckOutForFarm> {
                             ),
                           ),
                           onPressed: () {
-                            // if (totalPrice > snapshot.data.delivery_charges) {
-                            List<Map<dynamic, dynamic>> orderDetails = [
-                              if (widget.quantity250ml > 0)
-                                {
-                                  'item_name': '250 ML Container',
-                                  'item_quantity': widget.quantity250ml,
-                                  'item_price': snapshot.data.buffalo_milk *
-                                      widget.quantity250ml,
-                                },
-                              if (widget.quantity500ml > 0)
-                                {
-                                  'item_name': '500 ML Container',
-                                  'item_quantity': widget.quantity500ml,
-                                  'item_price': snapshot.data.buffalo_milk *
-                                      widget.quantity500ml,
-                                },
-                              if (widget.quantity1L > 0)
-                                {
-                                  'item_name': '1 L Container',
-                                  'item_quantity': widget.quantity1L,
-                                  'item_price': snapshot.data.buffalo_milk *
-                                      widget.quantity1L,
-                                },
-                            ];
+                            if (totalPrice > snapshot.data.delivery_charges) {
+                              List<Map<dynamic, dynamic>> orderDetails = [
+                                if (widget.quantity250ml > 0)
+                                  {
+                                    'item_name': '250 ML Container',
+                                    'item_quantity': widget.quantity250ml,
+                                    'item_price': snapshot.data.quantity250ML,
+                                  },
+                                if (widget.quantity500ml > 0)
+                                  {
+                                    'item_name': '500 ML Container',
+                                    'item_quantity': widget.quantity500ml,
+                                    'item_price': snapshot.data.quantity500ML,
+                                  },
+                                if (widget.quantity1L > 0)
+                                  {
+                                    'item_name': '1 L Container',
+                                    'item_quantity': widget.quantity1L,
+                                    'item_price': snapshot.data.quantity1L,
+                                  },
+                              ];
 
-                            CreateAnOrderController().createOrder(
-                                context,
-                                user!.email,
-                                getUserName,
-                                '',
-                                snapshot.data.delivery_charges,
-                                orderDetails,
-                                // generateOrderNumber,
-                                '${widget.farmid}',
-                                'Pending',
-                                totalItems,
-                                totalPrice,
-                                //initial inspector id is empty
-                                '',
-                                // giveme lat
-                                '',
-                                // give me long
-                                '');
-                            // }
-                            //else {
-                            //   Navigator.pop(context);
-                            // }
+                              CreateAnOrderController().createOrder(
+                                  context,
+                                  user!.email,
+                                  getUserName,
+                                  '',
+                                  snapshot.data.delivery_charges,
+                                  orderDetails,
+                                  // generateOrderNumber,
+                                  '${widget.farmid}',
+                                  'Pending',
+                                  totalItems,
+                                  totalPrice,
+                                  //initial inspector id is empty
+                                  '',
+                                  // giveme lat
+                                  '',
+                                  // give me long
+                                  '',
+                                  'Orders With Farm');
+                            } else {
+                              Navigator.pop(context);
+                            }
                           }),
                     ),
                   ],

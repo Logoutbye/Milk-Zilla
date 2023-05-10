@@ -12,9 +12,9 @@ import 'package:milk_zilla/res/constanst.dart';
 import 'package:milk_zilla/res/my_colors.dart';
 import 'package:provider/provider.dart';
 
+import '../../Controllers/Buyer_Controllers/create_an_order_controller.dart';
 import '../../Model/order_item_model.dart';
 import '../../Model/price_list_model.dart';
-import '../../controllers/Buyer_Controllers/create_an_order_controller.dart';
 import '../../provider/Sopping_item_provider.dart';
 import '../../res/Components/order_list_item.dart';
 
@@ -524,7 +524,8 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
                                       // giveme lat
                                       latitudeofuser,
                                       // give me long
-                                      longitudeofuser);
+                                      longitudeofuser,
+                                      'Orders');
                                 } else {
                                   Utils.flushBarErrorMessage(
                                       'Please Select Delivery Location',

@@ -23,6 +23,7 @@ class CreateAnOrderController {
     var giveme_inspector_id,
     var giveme_lat,
     var giveme_long,
+    var collection,
   ) async {
     //start animation
     showDialog(
@@ -34,7 +35,7 @@ class CreateAnOrderController {
             ));
     try {
       CollectionReference orders =
-          FirebaseFirestore.instance.collection('Orders');
+          FirebaseFirestore.instance.collection(collection);
       DocumentReference orderRef = await orders.add({
         'customer_id': giveme_customer_id,
         'customer_name': giveme_customer_name,
@@ -54,16 +55,21 @@ class CreateAnOrderController {
 
       // once data of an order is sent to firebase the provider then would be reset to zero so that
       // user can make a new order easily.
-      Provider.of<ShoppingItemProvider>(context, listen: false)
-          .reset('Buffalo Milk');
-      Provider.of<ShoppingItemProvider>(context, listen: false)
-          .reset('Cow Milk');
-      Provider.of<ShoppingItemProvider>(context, listen: false)
-          .reset('Mix Milk');
-      Provider.of<ShoppingItemProvider>(context, listen: false).reset('Yogurt');
-      Provider.of<ShoppingItemProvider>(context, listen: false).reset('Butter');
-      Provider.of<ShoppingItemProvider>(context, listen: false)
-          .reset('Desi Ghee');
+      // if (collection == "Orders") {
+      //   Provider.of<ShoppingItemProvider>(context, listen: false)
+      //       .reset('Buffalo Milk');
+      //   Provider.of<ShoppingItemProvider>(context, listen: false)
+      //       .reset('Cow Milk');
+      //   Provider.of<ShoppingItemProvider>(context, listen: false)
+      //       .reset('Mix Milk');
+      //   Provider.of<ShoppingItemProvider>(context, listen: false)
+      //       .reset('Yogurt');
+      //   Provider.of<ShoppingItemProvider>(context, listen: false)
+      //       .reset('Butter');
+      //   Provider.of<ShoppingItemProvider>(context, listen: false)
+      //       .reset('Desi Ghee');
+      // }
+
       // totalItems = 0;
       // totalPrice = 0;
       // deliveryAddressController.clear();
