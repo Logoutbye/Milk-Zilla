@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:lottie/lottie.dart';
+import 'package:milk_zilla/controllers/Farm_Controllers/get_order_for_fram_controller.dart';
 
 import '../../../Model/order_model.dart';
-import '../../../controllers/Farm_Controllers/farm_controller.dart';
 import '../../../res/widgets/my_static_ui_widgets.dart';
 
 class FarmOrderPicked extends StatefulWidget {
@@ -33,11 +33,10 @@ class _FarmOrderPickedState extends State<FarmOrderPicked> {
 
   @override
   Widget build(BuildContext context) {
-    FarmController farmController = FarmController();
-
+getOrderForFarmController farmController =getOrderForFarmController();
     return Scaffold(
         body: FutureBuilder<List<OrderModel>>(
-      future: farmController.getOrderFromFarm(FarmId, 'Prepared'),
+      future: farmController.getOrdersForFarm(FarmId, 'Pending'),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return Center(
@@ -52,7 +51,7 @@ class _FarmOrderPickedState extends State<FarmOrderPicked> {
             itemBuilder: (context, index) {
               OrderModel order = orders[index];
               return MyStaticUIWidgets.buildOrderUI2(
-                  context, order, 'Prepared', 'Farmer');
+                  context, order, 'Pending', 'Farmer');
             },
           );
         } else {

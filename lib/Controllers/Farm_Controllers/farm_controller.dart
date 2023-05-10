@@ -4,24 +4,21 @@ import 'package:milk_zilla/Model/seller_model.dart';
 import '../../Model/order_model.dart';
 
 class FarmController {
-  Future<List<OrderModel>> getOrderFromFarm(
-      String farmId, String status) async {
+  Future<List<SellerOrInspectorModel>> getAllApprovedFarmswithSpecifCity(
+      var city) async {
     try {
-      print("farm id for which getting orders from database " + farmId);
-      print("status of order for which getting orders from database " + status);
-
+      print('user is searching for shops in ${city}');
       QuerySnapshot querySnapshot = await FirebaseFirestore.instance
-          .collection('Orders from Fram')
-          .where('farm_id', isEqualTo: farmId)
-          .where('status', isEqualTo: status)
+          .collection('Farmers')
+          .where('city', isEqualTo: city)
+          .where('status', isEqualTo: 'Approved')
           .get();
-      List<OrderModel> orders = querySnapshot.docs
-          .map((doc) => OrderModel.fromSnapshot(doc))
-          .cast<OrderModel>()
+      List<SellerOrInspectorModel> farms = querySnapshot.docs
+          .map((doc) => SellerOrInspectorModel.fromSnapshot(doc))
           .toList();
-      return orders;
+      return farms;
     } catch (e) {
-      print('Error getting orders form Farm: $e');
+      print('Error getting orders from Farm: $e');
       return [];
     }
   }

@@ -3,9 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:lottie/lottie.dart';
+import 'package:milk_zilla/Controllers/Farm_Controllers/farm_controller.dart';
+import 'package:milk_zilla/controllers/Farm_Controllers/get_order_for_fram_controller.dart';
 
 import '../../../Model/order_model.dart';
-import '../../../controllers/Farm_Controllers/farm_controller.dart';
 import '../../../res/widgets/my_static_ui_widgets.dart';
 
 class FarmOrderDelivered extends StatefulWidget {
@@ -33,11 +34,10 @@ class _FarmOrderDeliveredState extends State<FarmOrderDelivered> {
 
   @override
   Widget build(BuildContext context) {
-    FarmController farmController = FarmController();
-
+getOrderForFarmController farmController =getOrderForFarmController();
     return Scaffold(
         body: FutureBuilder<List<OrderModel>>(
-      future: farmController.getOrderFromFarm(FarmId, 'Delivered'),
+      future: farmController.getOrdersForFarm(FarmId, 'Delivered'),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return Center(
