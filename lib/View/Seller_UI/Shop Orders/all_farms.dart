@@ -1,20 +1,14 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:lottie/lottie.dart';
-import 'package:milk_zilla/Controllers/Farm_Controllers/farm_controller.dart';
 import 'package:milk_zilla/View/Seller_UI/Shop%20Orders/review_cart_for_farm.dart';
+import 'package:milk_zilla/controllers/Farm_Controllers/farm_controller.dart';
 import 'package:milk_zilla/res/Components/my_drawers/seller_drawer.dart';
-
-import '../../../Controllers/Buyer_Controllers/get_all_approved_shopes_with_specif_city_controller.dart';
 import '../../../Model/seller_model.dart';
 import '../../../res/Components/custom_divider.dart';
 import '../../../res/my_colors.dart';
 import '../../Buyer_UI/Customer Orders With Shop/customer_orders_with_shop.dart';
-import '../../Buyer_UI/all_shops_addresses_on_google_map.dart';
-import '../../Buyer_UI/review_cart.dart';
 
 class AllForms extends StatefulWidget {
   const AllForms({super.key});
