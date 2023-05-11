@@ -6,7 +6,7 @@ import 'package:lottie/lottie.dart';
 import 'package:milk_zilla/controllers/Inspector_Controllers/get_orders_for_inpectors.dart';
 import 'package:milk_zilla/res/widgets/my_static_ui_widgets.dart';
 
-import '../../Model/order_model.dart';
+import '../../../Model/order_model.dart';
 
 class InspectorOrdersPending extends StatefulWidget {
   const InspectorOrdersPending({super.key});
@@ -16,11 +16,12 @@ class InspectorOrdersPending extends StatefulWidget {
 }
 
 class _InspectorOrdersPending extends State<InspectorOrdersPending> {
-    getOrdersForInspectorController GetOrdersForInspectorController = getOrdersForInspectorController();
+  getOrdersForInspectorController GetOrdersForInspectorController =
+      getOrdersForInspectorController();
 
   @override
   Widget build(BuildContext context) {
-     return Scaffold(
+    return Scaffold(
         body: FutureBuilder<List<OrderModel>>(
       future: GetOrdersForInspectorController.getOrdersForInspector('Prepared'),
       builder: (context, snapshot) {
@@ -36,7 +37,8 @@ class _InspectorOrdersPending extends State<InspectorOrdersPending> {
             itemCount: orders.length,
             itemBuilder: (context, index) {
               OrderModel order = orders[index];
-              return MyStaticUIWidgets.buildOrderUI2(context, order, 'Prepared','Inspector');
+              return MyStaticUIWidgets.buildOrderUI2(
+                  context, order, 'Prepared', 'Inspector');
             },
           );
         } else {

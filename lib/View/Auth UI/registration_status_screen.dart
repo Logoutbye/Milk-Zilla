@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:milk_zilla/Utils/utils.dart';
 import 'package:milk_zilla/View/Farm_UI/farm_orders.dart';
-import 'package:milk_zilla/View/Inspector_UI/insector_screen.dart';
 import 'package:milk_zilla/View/my_home_page.dart';
 import 'package:milk_zilla/controllers/Auth_Controllers/registration_status_controller.dart';
 import 'package:milk_zilla/res/Components/my_shared_prefrences.dart';
@@ -11,6 +10,7 @@ import 'package:milk_zilla/res/Components/round_button.dart';
 import 'package:milk_zilla/res/my_colors.dart';
 
 import '../../res/Components/custom_divider.dart';
+import '../Inspector_UI/inspector_dashboard.dart';
 import '../Seller_UI/Customer Orders/customers_orders.dart';
 
 class RegistrationStatusScreen extends StatefulWidget {
@@ -281,13 +281,12 @@ class _RegistrationStatusScreenState extends State<RegistrationStatusScreen> {
                                 } else if (whichUser == 'Farmer') {
                                   Navigator.of(context).pushReplacement(
                                       MaterialPageRoute(
-                                          builder: (context) =>
-                                              FarmOrders()));
+                                          builder: (context) => FarmOrders()));
                                 } else {
                                   Navigator.of(context).pushReplacement(
                                       MaterialPageRoute(
                                           builder: (context) =>
-                                              InspectorScreen()));
+                                              InspectorDashboard()));
                                 }
                               })
                           : MyElevatedButton(

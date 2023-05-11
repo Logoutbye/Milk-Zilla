@@ -2,11 +2,14 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:milk_zilla/View/Buyer_UI/Customer%20Orders%20With%20Shop/customer_orders_with_shop.dart';
 import 'package:milk_zilla/View/Inspector_UI/Inspector_profile.dart';
-import 'package:milk_zilla/View/Inspector_UI/insector_screen.dart';
+import 'package:milk_zilla/View/Inspector_UI/Test%20Milk/test_milk_screen.dart';
+import 'package:milk_zilla/View/Inspector_UI/inspector_dashboard.dart';
 import 'package:milk_zilla/View/my_home_page.dart';
 import 'package:milk_zilla/main.dart';
 import 'package:milk_zilla/res/Components/my_drawers/buyer_drawer.dart';
 import 'package:milk_zilla/res/Components/my_shared_prefrences.dart';
+
+import '../../../View/Inspector_UI/Pick Orders/inspector_screen.dart';
 
 class InspectorDrawer extends StatefulWidget {
   InspectorDrawer({super.key});
@@ -31,24 +34,21 @@ class _InspectorDrawerState extends State<InspectorDrawer> {
             child: Image(image: AssetImage('assets/images/icon.png')),
           ), //DrawerHeader
 
-          // ListTile(
-          //   leading: const Icon(Icons.production_quantity_limits),
-          //   title: const Text('My Profile'),
-          //   onTap: () {
-          //     // MySharedPrefencesSessionHandling
-          //     //     .removeWhichUserLoggedInFromSharedPreferences();
-
-          //     // FirebaseAuth.instance.signOut();
-          //     Navigator.pop(context);
-          //     Navigator.of(context).push(
-          //         MaterialPageRoute(builder: (context) => InspectorProfile()));
-          //     // navigatorKey.currentState!.popUntil((route) => route.isFirst);
-          //   },
-          // ),
+          // Test Milk
+          ListTile(
+            leading: const Icon(Icons.people),
+            title: const Text('Dashboard'),
+            onTap: () {
+              Navigator.pop(context);
+              Navigator.of(context).push(MaterialPageRoute(
+                  builder: (context) => InspectorDashboard()));
+              // navigatorKey.currentState!.popUntil((route) => route.isFirst);
+            },
+          ),
           // // Customer Orders
           ListTile(
             leading: const Icon(Icons.people),
-            title: const Text('My Orders'),
+            title: const Text('Pick Orders'),
             onTap: () {
               // MySharedPrefencesSessionHandling
               //     .removeWhichUserLoggedInFromSharedPreferences();
@@ -57,6 +57,22 @@ class _InspectorDrawerState extends State<InspectorDrawer> {
               Navigator.pop(context);
               Navigator.of(context).push(
                   MaterialPageRoute(builder: (context) => InspectorScreen()));
+              // navigatorKey.currentState!.popUntil((route) => route.isFirst);
+            },
+          ),
+
+          // Test Milk
+          ListTile(
+            leading: const Icon(Icons.people),
+            title: const Text('Test Milk For Farm'),
+            onTap: () {
+              // MySharedPrefencesSessionHandling
+              //     .removeWhichUserLoggedInFromSharedPreferences();
+
+              // FirebaseAuth.instance.signOut();
+              Navigator.pop(context);
+              Navigator.of(context).push(
+                  MaterialPageRoute(builder: (context) => TestMilkScreen()));
               // navigatorKey.currentState!.popUntil((route) => route.isFirst);
             },
           ),

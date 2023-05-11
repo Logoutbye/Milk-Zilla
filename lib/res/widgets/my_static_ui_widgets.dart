@@ -7,7 +7,7 @@ import 'package:milk_zilla/controllers/Global_Controllers/update_status_global_c
 import 'package:milk_zilla/controllers/Inspector_Controllers/pick_order_controller.dart';
 import 'package:milk_zilla/res/constanst.dart';
 import '../../View/Buyer_UI/Customer Orders With Shop/customer_orders_with_shop.dart';
-import '../../View/Inspector_UI/insector_screen.dart';
+import '../../View/Inspector_UI/Pick Orders/inspector_screen.dart';
 import '../../View/Seller_UI/Customer Orders/customers_orders.dart';
 import '../my_colors.dart';
 
@@ -177,7 +177,9 @@ class MyStaticUIWidgets {
                     ),
                   ],
                 ),
-                status == 'Pending' || status == 'Prepared' || status == 'Shipped' 
+                status == 'Pending' ||
+                        status == 'Prepared' ||
+                        status == 'Shipped'
                     ? SizedBox(
                         height: heightbetweenWidgetsInOrder,
                       )

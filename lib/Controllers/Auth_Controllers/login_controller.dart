@@ -4,12 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:milk_zilla/Model/seller_model.dart';
 import 'package:milk_zilla/View/Farm_UI/farm_orders.dart';
+import 'package:milk_zilla/View/Inspector_UI/inspector_dashboard.dart';
 import 'package:milk_zilla/main.dart';
 
 import '../../Utils/utils.dart';
 import '../../View/Auth UI/registration_status_screen.dart';
 import '../../View/Buyer_UI/all_shops_to_order_from.dart';
-import '../../View/Inspector_UI/insector_screen.dart';
 import '../../View/Seller_UI/Customer Orders/customers_orders.dart';
 import '../../res/Components/firebase_helper.dart';
 import '../../res/Components/my_shared_prefrences.dart';
@@ -54,7 +54,7 @@ class LoginController {
         print(
             'checking currentUserStatusInFirestore at login success::$currentSellerStatusInFirestore');
 
-             var currentFarmerStatusInFirestore =
+        var currentFarmerStatusInFirestore =
             await FirestoreHelper.currentFarmerStatusInFirestore;
         print(
             'checking currentFarmerStatusInFirestore at login success::$currentFarmerStatusInFirestore');
@@ -81,13 +81,11 @@ class LoginController {
                       whichUser: whichUser,
                     )));
           }
-        }
-        
-         else if (whichUser == 'Farmer') {
+        } else if (whichUser == 'Farmer') {
           navigatorKey.currentState!.popUntil((route) => route.isFirst);
           if (currentFarmerStatusInFirestore == 'Approved') {
-            Navigator.of(parentContext).push(
-                MaterialPageRoute(builder: (context) => FarmOrders()));
+            Navigator.of(parentContext)
+                .push(MaterialPageRoute(builder: (context) => FarmOrders()));
           } else {
             print(
                 'After successful login i am waiting to be approved as seller');
@@ -96,16 +94,14 @@ class LoginController {
                       whichUser: whichUser,
                     )));
           }
-        }
-        
-         else {
+        } else {
           if (currentInspectorStatusInFirestore == 'Approved') {
             navigatorKey.currentState!.popUntil((route) => route.isFirst);
             Navigator.of(parentContext).push(
-                MaterialPageRoute(builder: (context) => InspectorScreen()));
+                MaterialPageRoute(builder: (context) => InspectorDashboard()));
           } else {
             print(
-                'After successful login i am waiting to be approved as seller');
+                'After successful login i am waiting to be approved as Inspector');
             Navigator.of(parentContext).push(MaterialPageRoute(
                 builder: (context) => RegistrationStatusScreen(
                       whichUser: whichUser,

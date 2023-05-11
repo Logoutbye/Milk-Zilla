@@ -10,7 +10,6 @@ import 'package:milk_zilla/View/Auth%20UI/registration_status_screen.dart';
 import 'package:milk_zilla/View/Buyer_UI/all_shops_to_order_from.dart';
 import 'package:milk_zilla/View/Buyer_UI/review_cart.dart';
 import 'package:milk_zilla/View/Farm_UI/farm_orders.dart';
-import 'package:milk_zilla/View/Inspector_UI/insector_screen.dart';
 import 'package:milk_zilla/View/Seller_UI/seller_screen.dart';
 import 'package:milk_zilla/main.dart';
 import 'package:milk_zilla/res/Components/firebase_helper.dart';
@@ -19,6 +18,7 @@ import 'package:milk_zilla/res/my_colors.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../res/Components/error_screen.dart';
+import 'Inspector_UI/inspector_dashboard.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key});
@@ -226,7 +226,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                               if (FirestoreHelper
                                                       .currentSellerStatusInFirestore ==
                                                   'Approved') {
-                                                return InspectorScreen();
+                                                return InspectorDashboard();
                                               } else {
                                                 return RegistrationStatusScreen(
                                                   whichUser: 'Seller',
@@ -363,7 +363,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                                   if (FirestoreHelper
                                                           .currentInspectorStatusInFirestore ==
                                                       'Approved') {
-                                                    return InspectorScreen();
+                                                    return InspectorDashboard();
                                                   } else {
                                                     return RegistrationStatusScreen(
                                                       whichUser: 'Inspector',
