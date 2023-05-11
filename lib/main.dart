@@ -12,7 +12,7 @@ import 'package:milk_zilla/res/Components/firebase_helper.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'View/Inspector_UI/inspector_dashboard.dart';
-import 'View/Seller_UI/Customer Orders/customers_orders.dart';
+import 'View/Seller_UI/Sell Milk To Customers/customers_orders.dart';
 import 'View/my_home_page.dart';
 
 Future<void> main() async {

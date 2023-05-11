@@ -11,7 +11,7 @@ import 'package:milk_zilla/res/my_colors.dart';
 
 import '../../res/Components/custom_divider.dart';
 import '../Inspector_UI/inspector_dashboard.dart';
-import '../Seller_UI/Customer Orders/customers_orders.dart';
+import '../Seller_UI/Sell Milk To Customers/customers_orders.dart';
 
 class RegistrationStatusScreen extends StatefulWidget {
   String whichUser;

@@ -3,13 +3,13 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:milk_zilla/Model/order_model.dart';
 import 'package:milk_zilla/View/Inspector_UI/customer_delivery_location.dart';
-import 'package:milk_zilla/controllers/Global_Controllers/update_status_global_controller.dart';
 import 'package:milk_zilla/controllers/Inspector_Controllers/pick_order_controller.dart';
 import 'package:milk_zilla/res/constanst.dart';
+import '../../Controllers/Global_Controllers/update_status_global_controller.dart';
 import '../../View/Buyer_UI/Customer Orders With Shop/customer_orders_with_shop.dart';
 import '../../View/Farm_UI/farm_orders.dart';
 import '../../View/Inspector_UI/Pick Orders/inspector_screen.dart';
-import '../../View/Seller_UI/Customer Orders/customers_orders.dart';
+import '../../View/Seller_UI/Sell Milk To Customers/customers_orders.dart';
 import '../my_colors.dart';
 
 class MyStaticUIWidgets {

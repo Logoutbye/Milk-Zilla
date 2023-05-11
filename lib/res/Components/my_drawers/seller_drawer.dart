@@ -1,13 +1,14 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:milk_zilla/View/Seller_UI/Customer%20Orders/customers_orders.dart';
 import 'package:milk_zilla/View/Seller_UI/Shop%20Orders/all_farms.dart';
-import 'package:milk_zilla/View/Seller_UI/seller_profile.dart';
+import 'package:milk_zilla/View/Seller_UI/seller_dashboard.dart';
 import 'package:milk_zilla/View/Seller_UI/shop_products_for_selling.dart';
 import 'package:milk_zilla/View/my_home_page.dart';
 import 'package:milk_zilla/main.dart';
 import 'package:milk_zilla/res/Components/my_shared_prefrences.dart';
 import 'package:milk_zilla/res/my_colors.dart';
+
+import '../../../View/Seller_UI/Sell Milk To Customers/customers_orders.dart';
 
 class SellerDrawer extends StatefulWidget {
   SellerDrawer({super.key});
@@ -32,6 +33,45 @@ class _SellerDrawerState extends State<SellerDrawer> {
             child: Image(image: AssetImage('assets/images/icon.png')),
           ), //DrawerHeader
 
+          // seller dashboard
+          ListTile(
+            leading: const Icon(
+              Icons.production_quantity_limits,
+              size: 35,
+              color: MyColors.kPrimary,
+            ),
+            title: const Text('Dashboard',
+                style: TextStyle(
+                  color: MyColors.kPrimary,
+                )),
+            onTap: () {
+              //Navigator.pop(context);
+              Navigator.of(context).push(
+                  MaterialPageRoute(builder: (context) => SellerDashboard()));
+            },
+          ),
+
+          // Customer Orders
+          ListTile(
+            leading: const Icon(
+              Icons.people,
+              color: MyColors.kPrimary,
+            ),
+            title: const Text('Customer Orders',
+                style: TextStyle(color: MyColors.kPrimary)),
+            onTap: () {
+              // MySharedPrefencesSessionHandling
+              //     .removeWhichUserLoggedInFromSharedPreferences();
+
+              // FirebaseAuth.instance.signOut();
+              Navigator.pop(context);
+              Navigator.of(context).pushReplacement(MaterialPageRoute(
+                  builder: (context) => MyAllCustomerOrders()));
+              //navigatorKey.currentState!.popUntil((route) => route.isFirst);
+            },
+          ),
+
+          // create an order from farm
           ListTile(
             leading: const Icon(
               Icons.production_quantity_limits,
@@ -48,9 +88,7 @@ class _SellerDrawerState extends State<SellerDrawer> {
                   .push(MaterialPageRoute(builder: (context) => AllForms()));
             },
           ),
-          Divider(
-            color: MyColors.kPrimary,
-          ),
+
           ListTile(
             leading: Image.asset(
               'assets/images/my_products.png',
@@ -69,28 +107,6 @@ class _SellerDrawerState extends State<SellerDrawer> {
               Navigator.pop(context);
               Navigator.of(context).push(MaterialPageRoute(
                   builder: (context) => ShopeProductsForSelling()));
-              //navigatorKey.currentState!.popUntil((route) => route.isFirst);
-            },
-          ),
-          Divider(
-            color: MyColors.kPrimary,
-          ),
-          // Customer Orders
-          ListTile(
-            leading: const Icon(
-              Icons.people,
-              color: MyColors.kPrimary,
-            ),
-            title: const Text('Customer Orders',
-                style: TextStyle(color: MyColors.kPrimary)),
-            onTap: () {
-              // MySharedPrefencesSessionHandling
-              //     .removeWhichUserLoggedInFromSharedPreferences();
-
-              // FirebaseAuth.instance.signOut();
-              Navigator.pop(context);
-              Navigator.of(context).pushReplacement(MaterialPageRoute(
-                  builder: (context) => MyAllCustomerOrders()));
               //navigatorKey.currentState!.popUntil((route) => route.isFirst);
             },
           ),

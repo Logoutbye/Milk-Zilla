@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
-import 'package:milk_zilla/View/Seller_UI/Customer%20Orders/customer_orders_delivered.dart';
-import 'package:milk_zilla/View/Seller_UI/Customer%20Orders/customer_orders_pending.dart';
-import 'package:milk_zilla/View/Seller_UI/Customer%20Orders/customer_orders_pickedby_inspecter.dart';
+import 'package:milk_zilla/View/Seller_UI/Sell%20Milk%20To%20Customers/customer_orders_delivered.dart';
+import 'package:milk_zilla/View/Seller_UI/Sell%20Milk%20To%20Customers/customer_orders_pending.dart';
+import 'package:milk_zilla/View/Seller_UI/Sell%20Milk%20To%20Customers/customer_orders_pickedby_inspecter.dart';
 
 import '../../../res/Components/my_drawers/seller_drawer.dart';
 import '../../../res/my_colors.dart';
@@ -22,12 +22,11 @@ class _MyAllCustomerOrdersState extends State<MyAllCustomerOrders> {
       length: 3,
       child: Scaffold(
         appBar: AppBar(
-           backgroundColor: MyColors.kWhite,
+          backgroundColor: MyColors.kWhite,
           foregroundColor: MyColors.kPrimary,
           title: const Text('Customer Orders'),
           centerTitle: true,
           automaticallyImplyLeading: false,
-         
           actions: [
             Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -39,11 +38,10 @@ class _MyAllCustomerOrdersState extends State<MyAllCustomerOrders> {
                         )))
           ],
           bottom: TabBar(
-                 indicatorColor: MyColors.kPrimary,
+            indicatorColor: MyColors.kPrimary,
             unselectedLabelColor: Color.fromARGB(255, 139, 211, 142),
             labelColor: MyColors.kPrimary,
             labelStyle: TextStyle(fontSize: 15),
-            
             automaticIndicatorColorAdjustment: true,
             tabs: [
               Tab(

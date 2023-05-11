@@ -1,26 +1,24 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:lottie/lottie.dart';
-import 'package:milk_zilla/res/Components/my_drawers/seller_drawer.dart';
 
 import '../../../Controllers/Seller_Controllers/seller_controller.dart';
 import '../../../Model/order_model.dart';
 
 import '../../../res/widgets/my_static_ui_widgets.dart';
 
-class CustomerOrdersPickedbyInspecterFromShop extends StatefulWidget {
-  const CustomerOrdersPickedbyInspecterFromShop({super.key});
+class CustomerOrdersDeliverdByShop extends StatefulWidget {
+  const CustomerOrdersDeliverdByShop({super.key});
 
   @override
-  State<CustomerOrdersPickedbyInspecterFromShop> createState() =>
-      _CustomerOrdersPickedbyInspecterFromShopState();
+  State<CustomerOrdersDeliverdByShop> createState() =>
+      _CustomerOrdersDeliverdByShopState();
 }
 
-class _CustomerOrdersPickedbyInspecterFromShopState
-    extends State<CustomerOrdersPickedbyInspecterFromShop> {
-  SellerContoller buyerContoller = SellerContoller();
+class _CustomerOrdersDeliverdByShopState
+    extends State<CustomerOrdersDeliverdByShop> {
+  SellerContoller sellerController = SellerContoller();
   var shopId;
   @override
   void initState() {
@@ -40,7 +38,7 @@ class _CustomerOrdersPickedbyInspecterFromShopState
   Widget build(BuildContext context) {
     return Scaffold(
         body: FutureBuilder<List<OrderModel>>(
-      future: buyerContoller.getOrdersForShop(shopId, 'Prepared'),
+      future: sellerController.getOrdersForShop(shopId, 'Delivered'),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return Center(
@@ -54,7 +52,8 @@ class _CustomerOrdersPickedbyInspecterFromShopState
             itemCount: orders.length,
             itemBuilder: (context, index) {
               OrderModel order = orders[index];
-              return MyStaticUIWidgets.buildOrderUI2(context, order, 'Prepared','Seller');
+              return MyStaticUIWidgets.buildOrderUI2(
+                  context, order, 'Delivered', 'Seller');
             },
           );
         } else {

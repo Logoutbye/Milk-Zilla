@@ -10,7 +10,6 @@ import 'package:milk_zilla/View/Auth%20UI/registration_status_screen.dart';
 import 'package:milk_zilla/View/Buyer_UI/all_shops_to_order_from.dart';
 import 'package:milk_zilla/View/Buyer_UI/review_cart.dart';
 import 'package:milk_zilla/View/Farm_UI/farm_orders.dart';
-import 'package:milk_zilla/View/Seller_UI/seller_screen.dart';
 import 'package:milk_zilla/main.dart';
 import 'package:milk_zilla/res/Components/firebase_helper.dart';
 import 'package:milk_zilla/res/Components/my_shared_prefrences.dart';
