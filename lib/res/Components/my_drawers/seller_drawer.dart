@@ -2,10 +2,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:milk_zilla/View/Seller_UI/Customer%20Orders/customers_orders.dart';
 import 'package:milk_zilla/View/Seller_UI/Shop%20Orders/all_farms.dart';
-import 'package:milk_zilla/View/Seller_UI/seller_profile.dart';
 import 'package:milk_zilla/View/Seller_UI/shop_products_for_selling.dart';
 import 'package:milk_zilla/View/my_home_page.dart';
-import 'package:milk_zilla/main.dart';
 import 'package:milk_zilla/res/Components/my_shared_prefrences.dart';
 import 'package:milk_zilla/res/my_colors.dart';
 
