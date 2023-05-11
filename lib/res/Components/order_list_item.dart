@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:milk_zilla/res/constanst.dart';
 
@@ -21,7 +20,9 @@ class OrderListItem extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               children: [
                 Text(
-                  item!.name!,
+                  item!.name =='Milk'?
+                  '${item!.name!} ${item!.unit}':
+                  '${item!.name}',
                   style: const TextStyle(
                     color: Colors.black,
                     fontSize: 18.0,
@@ -40,30 +41,35 @@ class OrderListItem extends StatelessWidget {
                   height: 40.0,
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        // IconButton(
-                        //   iconSize: 18.0,
-                        //   padding: const EdgeInsets.all(2.0),
-                        //   icon: const Icon(Icons.remove),
-                        //   onPressed: item!.onPressedDecrement,
-                        // ),
-                        Text(
-                          "${item!.quantity} ${item!.unit}",
-                          style: const TextStyle(
-                            color: Colors.black,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 18.0,
+                    child: SingleChildScrollView(
+                      scrollDirection: Axis.horizontal,
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          // IconButton(
+                          //   iconSize: 18.0,
+                          //   padding: const EdgeInsets.all(2.0),
+                          //   icon: const Icon(Icons.remove),
+                          //   onPressed: item!.onPressedDecrement,
+                          // ),
+                          Text(
+                            item!.name == 'Milk'
+                                ? "${item!.quantity} Containers"
+                                : "${item!.quantity} ${item!.unit}",
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontWeight: FontWeight.bold,
+                              fontSize: item!.name == 'Milk' ? 13 : 18.0,
+                            ),
                           ),
-                        ),
-                        // IconButton(
-                        //   iconSize: 18.0,
-                        //   padding: const EdgeInsets.all(2.0),
-                        //   icon: const Icon(Icons.add),
-                        //   onPressed: item!.onPressedIncrement,
-                        // ),
-                      ],
+                          // IconButton(
+                          //   iconSize: 18.0,
+                          //   padding: const EdgeInsets.all(2.0),
+                          //   icon: const Icon(Icons.add),
+                          //   onPressed: item!.onPressedIncrement,
+                          // ),
+                        ],
+                      ),
                     ),
                   ),
                 )

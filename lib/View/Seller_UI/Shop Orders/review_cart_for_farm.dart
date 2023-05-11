@@ -190,9 +190,8 @@ class _ReviewCartForFarmState extends State<ReviewCartForFarm> {
                                       TextStyle(color: MyColors.kPrimary),
                                   enabledBorder: new OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(10),
-                                    borderSide: BorderSide(
-                                        color:
-                                            Color.fromARGB(255, 235, 11, 11)),
+                                    borderSide:
+                                        BorderSide(color: MyColors.kSecondary),
                                   ),
                                   focusedBorder: OutlineInputBorder(
                                     borderSide:
@@ -242,9 +241,8 @@ class _ReviewCartForFarmState extends State<ReviewCartForFarm> {
                                       TextStyle(color: MyColors.kPrimary),
                                   enabledBorder: new OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(10),
-                                    borderSide: BorderSide(
-                                        color:
-                                            Color.fromARGB(255, 235, 11, 11)),
+                                    borderSide:
+                                        BorderSide(color: MyColors.kSecondary),
                                   ),
                                   focusedBorder: OutlineInputBorder(
                                     borderSide:
@@ -294,9 +292,8 @@ class _ReviewCartForFarmState extends State<ReviewCartForFarm> {
                                       TextStyle(color: MyColors.kPrimary),
                                   enabledBorder: new OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(10),
-                                    borderSide: BorderSide(
-                                        color:
-                                            Color.fromARGB(255, 235, 11, 11)),
+                                    borderSide:
+                                        BorderSide(color: MyColors.kSecondary),
                                   ),
                                   focusedBorder: OutlineInputBorder(
                                     borderSide:
@@ -347,18 +344,29 @@ class _ReviewCartForFarmState extends State<ReviewCartForFarm> {
                   ],
                 ),
                 onPressed: () {
-                  int q250 = int.parse(_controller250.text);
-                  int q500 = int.parse(_controller500.text);
+                  // int q250 = int.parse(_controller250.text);
+                  // int q500 = int.parse(_controller500.text);
 
-                  int q1L = int.parse(_controller1L.text);
+                  // int q1L = int.parse(_controller1L.text);
 
-                  print("values : $q1L ");
+                  // print("values : $q1L ");
 
                   Navigator.of(context).push(MaterialPageRoute(
                       builder: (context) => CheckOutForFarm(
-                            quantity1L: q1L,
-                            quantity250ml: q250,
-                            quantity500ml: q500,
+                            // quantity1L: q1L,
+                            // quantity250ml: q250,
+                            // quantity500ml: q500,
+                            // farmid: getShopId,
+
+                            quantity1L: _controller1L.text.isNotEmpty
+                                ? int.parse(_controller1L.text)
+                                : 0,
+                            quantity250ml: _controller250.text.isNotEmpty
+                                ? int.parse(_controller250.text)
+                                : 0,
+                            quantity500ml: _controller500.text.isNotEmpty
+                                ? int.parse(_controller500.text)
+                                : 0,
                             farmid: getShopId,
                           )));
                 },

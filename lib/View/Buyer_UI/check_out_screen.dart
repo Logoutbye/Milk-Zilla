@@ -5,16 +5,15 @@ import 'package:geocoding/geocoding.dart';
 import 'package:lottie/lottie.dart';
 import 'package:milk_zilla/Controllers/Buyer_Controllers/get_real_time_prices_from_database_for_creating_an_order.dart';
 import 'package:milk_zilla/Utils/utils.dart';
-import 'package:milk_zilla/View/Buyer_UI/set_customer_address_on_google_map.dart';
 import 'package:milk_zilla/res/Components/custom_divider.dart';
 import 'package:milk_zilla/res/Components/error_screen.dart';
 import 'package:milk_zilla/res/constanst.dart';
 import 'package:milk_zilla/res/my_colors.dart';
 import 'package:provider/provider.dart';
 
-import '../../Controllers/Buyer_Controllers/create_an_order_controller.dart';
 import '../../Model/order_item_model.dart';
 import '../../Model/price_list_model.dart';
+import '../../controllers/Buyer_Controllers/create_an_order_controller.dart';
 import '../../provider/Sopping_item_provider.dart';
 import '../../res/Components/order_list_item.dart';
 

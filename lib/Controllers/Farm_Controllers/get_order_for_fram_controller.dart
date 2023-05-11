@@ -11,7 +11,7 @@ class getOrderForFarmController {
       print("status of order for which getting orders from database " + status);
 
       QuerySnapshot querySnapshot = await FirebaseFirestore.instance
-          .collection('Orders with Farm')
+          .collection('Orders With Farm')
           .where('shop_id', isEqualTo: farmID)
           .where('status', isEqualTo: status)
           .get();

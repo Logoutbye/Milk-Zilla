@@ -5,10 +5,10 @@ import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:lottie/lottie.dart';
 
-import '../../../Controllers/Buyer_Controllers/create_an_order_controller.dart';
 import '../../../Controllers/Buyer_Controllers/get_real_time_prices_from_database_for_creating_an_order.dart';
 import '../../../Model/order_item_model.dart';
 import '../../../Model/price_list_model.dart';
+import '../../../controllers/Buyer_Controllers/create_an_order_controller.dart';
 import '../../../res/Components/custom_divider.dart';
 import '../../../res/Components/order_list_item.dart';
 import '../../../res/constanst.dart';
@@ -33,14 +33,15 @@ class CheckOutForFarm extends StatefulWidget {
 }
 
 class _CheckOutForFarmState extends State<CheckOutForFarm> {
+  var totalPrice;
   var totalItems;
-  var totalPrice = 60000;
 
   final user = FirebaseAuth.instance.currentUser;
 
   var getUserName;
   @override
   void initState() {
+    calculatetotalPricesandTotalItems();
     getDataOfLoginedUser();
     print('init total price is $totalPrice && total items are $totalItems');
 
@@ -120,7 +121,7 @@ class _CheckOutForFarmState extends State<CheckOutForFarm> {
                     if (widget.quantity500ml > 0)
                       OrderListItem(
                         item: OrderItemModel(
-                          name: "Milk ",
+                          name: "Milk",
                           unit: '500 ML',
                           quantity: widget.quantity500ml,
                           price: snapshot.data.quantity500ML,
@@ -306,12 +307,84 @@ class _CheckOutForFarmState extends State<CheckOutForFarm> {
     );
   }
 
+  calculatetotalPricesandTotalItems() async {
+    //calculate total items
+    var litre_quantity = widget.quantity1L != 0 ? 1 : 0;
+    var half_quantity = widget.quantity500ml != 0 ? 1 : 0;
+    var quarter_quantity = widget.quantity250ml != 0 ? 1 : 0;
+    totalItems = litre_quantity + half_quantity + quarter_quantity;
+    print('after calculations total items =${totalItems}');
+    //calculate total price
+
+    //store prices from database
+    var one_Liter_price;
+    var half_Liter_price;
+    var quarter_Liter_price;
+    var delivery_charges;
+
+    var new_one_Liter_price;
+    var new_half_Liter_price;
+    var new_quarter_Liter_price;
+    var new_delivery_charges;
+
+    // access database
+    FirebaseFirestore firestore = FirebaseFirestore.instance;
+    // get document reference
+    DocumentReference documentReference =
+        firestore.collection('Price List').doc('containers');
+    // get document snapshot
+    DocumentSnapshot documentSnapshot = await documentReference.get();
+    // check if document exists
+    if (documentSnapshot.exists) {
+      // get document data
+      Map<String, dynamic>? data =
+          documentSnapshot.data() as Map<String, dynamic>?;
+
+      // access specific fields
+      one_Liter_price = data!['1 liter'];
+      half_Liter_price = data['500 ml'];
+      quarter_Liter_price = data['250 ml'];
+      delivery_charges = data['delivery_charges'];
+    }
+
+    var litre_price =
+        widget.quantity1L != 0 ? one_Liter_price * widget.quantity1L : 0;
+    var half_price =
+        widget.quantity500ml != 0 ? half_Liter_price * widget.quantity500ml : 0;
+    var quarter_price =
+        widget.quantity250ml != 0 ? quarter_Liter_price * widget.quantity250ml : 0;
+    totalPrice = litre_price + half_price + quarter_price+delivery_charges;
+
+    // if (widget.quantity1L > 0) {
+    //   new_one_Liter_price = one_Liter_price * widget.quantity1L;
+    // } else {
+    //   new_one_Liter_price = 0;
+    // }
+    // if (widget.quantity500ml > 0) {
+    //   new_half_Liter_price = half_Liter_price * widget.quantity500ml;
+    // } else {
+    //   new_half_Liter_price = 0;
+    // }
+    // if (widget.quantity250ml > 0) {
+    //   new_quarter_Liter_price = quarter_Liter_price * widget.quantity250ml;
+    // } else {
+    //   new_quarter_Liter_price = 0;
+    // }
+
+    // //caluculated prices
+    // totalPrice = new_one_Liter_price +
+    //     new_half_Liter_price +
+    //     new_quarter_Liter_price +
+    //     new_delivery_charges;
+    // print('after calculations total prices =${totalPrice}');
+  }
+
   // to get current user name customer id
   Future<PriceListModel?> getDataOfLoginedUser() async {
     FirebaseFirestore firestore = FirebaseFirestore.instance;
     // get document reference
     DocumentReference documentReference =
-        firestore.collection('Buyers').doc('${user!.email}');
+        firestore.collection('Sellers').doc('${user!.email}');
     // get document snapshot
     DocumentSnapshot documentSnapshot = await documentReference.get();
     // check if document exists
