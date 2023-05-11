@@ -36,7 +36,7 @@ class _FarmOrderPickedState extends State<FarmOrderPicked> {
 getOrderForFarmController farmController =getOrderForFarmController();
     return Scaffold(
         body: FutureBuilder<List<OrderModel>>(
-      future: farmController.getOrdersForFarm(FarmId, 'Pending'),
+      future: farmController.getOrdersForFarm(FarmId, 'Prepared'),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return Center(
@@ -51,7 +51,7 @@ getOrderForFarmController farmController =getOrderForFarmController();
             itemBuilder: (context, index) {
               OrderModel order = orders[index];
               return MyStaticUIWidgets.buildOrderUI2(
-                  context, order, 'Pending', 'Farmer');
+                  context, order, 'Prepared', 'Farmer');
             },
           );
         } else {

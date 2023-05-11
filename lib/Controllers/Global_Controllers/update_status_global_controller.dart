@@ -5,10 +5,10 @@ import 'package:milk_zilla/Utils/utils.dart';
 
 class UpdateStatusGlobalController {
   Future<void> updateStatus(
-      BuildContext context, OrderModel order, var status) async {
+      BuildContext context, OrderModel order, var status,var collection) async {
     // Get a reference to the document you want to update
     final documentReference =
-        FirebaseFirestore.instance.collection('Orders').doc(order.order_id);
+        FirebaseFirestore.instance.collection(collection).doc(order.order_id);
     // Update a field in the document
     documentReference.update({
       'status': '$status',

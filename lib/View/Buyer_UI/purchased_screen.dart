@@ -11,7 +11,12 @@ import 'Customer Orders With Shop/customer_orders_with_shop.dart';
 class PurchasedScreen extends StatefulWidget {
   var result;
   var order_no;
-  PurchasedScreen({required this.result, required this.order_no, super.key});
+  var orderCollectiontohelpfornavigation;
+  PurchasedScreen(
+      {required this.result,
+      required this.order_no,
+      super.key,
+      required this.orderCollectiontohelpfornavigation});
 
   @override
   State<PurchasedScreen> createState() => _PurchasedScreenState();
@@ -81,14 +86,15 @@ class _PurchasedScreenState extends State<PurchasedScreen> {
                       backgroundColor: MyColors.kPrimary,
                     ),
                     child: Text(
-                           "My Dash Board",
+                      "My Dash Board",
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 18.0,
                       ),
                     ),
                     onPressed: () {
-              navigatorKey.currentState!.popUntil((route) => route.isFirst);
+                      navigatorKey.currentState!
+                          .popUntil((route) => route.isFirst);
                     },
                   ),
                 ),
@@ -116,14 +122,21 @@ class _PurchasedScreenState extends State<PurchasedScreen> {
                       ),
                     ),
                     onPressed: () {
-                      if(widget.result =='successful'){
-                       navigatorKey.currentState!.popUntil((route) => route.isFirst);
-                       Navigator.of(context).push(MaterialPageRoute(builder: (context)=>CustomerOrdersWithShop()));
-                      }else{
+                      if (widget.result == 'successful') {
+                        navigatorKey.currentState!
+                            .popUntil((route) => route.isFirst);
+                        if (widget.orderCollectiontohelpfornavigation ==
+                            'Order') {
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) => CustomerOrdersWithShop()));
+                        } else {
+                          // Navigator.of(context).push(MaterialPageRoute(
+                          //     builder: (context) => CustomerOrdersWithShop()));
+                        }
+                      } else {
                         Navigator.pop(context);
                       }
-                                    // navigatorKey.currentState!.popUntil((route) => route.isFirst);
-
+                      // navigatorKey.currentState!.popUntil((route) => route.isFirst);
                     },
                   ),
                 ),

@@ -7,6 +7,7 @@ import 'package:milk_zilla/controllers/Global_Controllers/update_status_global_c
 import 'package:milk_zilla/controllers/Inspector_Controllers/pick_order_controller.dart';
 import 'package:milk_zilla/res/constanst.dart';
 import '../../View/Buyer_UI/Customer Orders With Shop/customer_orders_with_shop.dart';
+import '../../View/Farm_UI/farm_orders.dart';
 import '../../View/Inspector_UI/insector_screen.dart';
 import '../../View/Seller_UI/Customer Orders/customers_orders.dart';
 import '../my_colors.dart';
@@ -177,7 +178,9 @@ class MyStaticUIWidgets {
                     ),
                   ],
                 ),
-                status == 'Pending' || status == 'Prepared' || status == 'Shipped' 
+                status == 'Pending' ||
+                        status == 'Prepared' ||
+                        status == 'Shipped'
                     ? SizedBox(
                         height: heightbetweenWidgetsInOrder,
                       )
@@ -202,8 +205,8 @@ class MyStaticUIWidgets {
                             ),
                           ),
                           onPressed: () {
-                            UpdateStatusGlobalController()
-                                .updateStatus(context, order, 'Canceled');
+                            UpdateStatusGlobalController().updateStatus(
+                                context, order, 'Canceled', 'Orders');
                             Navigator.pop(context);
                             Navigator.of(context).push(MaterialPageRoute(
                                 builder: (context) =>
@@ -231,8 +234,8 @@ class MyStaticUIWidgets {
                                 ),
                               ),
                               onPressed: () {
-                                UpdateStatusGlobalController()
-                                    .updateStatus(context, order, 'Prepared');
+                                UpdateStatusGlobalController().updateStatus(
+                                    context, order, 'Prepared', 'Orders');
                                 Navigator.pop(context);
                                 Navigator.of(context).push(MaterialPageRoute(
                                     builder: (context) =>
@@ -260,7 +263,7 @@ class MyStaticUIWidgets {
                                   ),
                                   onPressed: () {
                                     UpdateStatusGlobalController().updateStatus(
-                                        context, order, 'Shipped');
+                                        context, order, 'Shipped', 'Orders');
                                     final user =
                                         FirebaseAuth.instance.currentUser;
                                     final email = user!.email;
@@ -347,7 +350,7 @@ class MyStaticUIWidgets {
                                             onPressed: () {
                                               UpdateStatusGlobalController()
                                                   .updateStatus(context, order,
-                                                      'Delivered');
+                                                      'Delivered', 'Orders');
                                               Navigator.pop(context);
                                               Navigator.of(context).push(
                                                   MaterialPageRoute(
@@ -359,7 +362,41 @@ class MyStaticUIWidgets {
                                       ),
                                     ],
                                   )
-                                : SizedBox(),
+                                : role == 'Farmer' && status == 'Pending'
+                                    ? Center(
+                                        child: ElevatedButton(
+                                          style: ElevatedButton.styleFrom(
+                                            padding: const EdgeInsets.all(10.0),
+                                            elevation: 0,
+                                            shape: RoundedRectangleBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(
+                                                        15.0)),
+                                            backgroundColor: MyColors.kPrimary,
+                                          ),
+                                          child: Text(
+                                            'Pick Up',
+                                            style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 18.0,
+                                            ),
+                                          ),
+                                          onPressed: () {
+                                            UpdateStatusGlobalController()
+                                                .updateStatus(
+                                                    context,
+                                                    order,
+                                                    'Prepared',
+                                                    'Orders With Farm');
+                                            Navigator.pop(context);
+                                            Navigator.of(context).push(
+                                                MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        FarmOrders()));
+                                          },
+                                        ),
+                                      )
+                                    : SizedBox(),
 
                 // InkWell(
                 //     onTap: () {

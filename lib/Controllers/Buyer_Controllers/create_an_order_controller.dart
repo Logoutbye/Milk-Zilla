@@ -55,20 +55,20 @@ class CreateAnOrderController {
 
       // once data of an order is sent to firebase the provider then would be reset to zero so that
       // user can make a new order easily.
-      // if (collection == "Orders") {
-      //   Provider.of<ShoppingItemProvider>(context, listen: false)
-      //       .reset('Buffalo Milk');
-      //   Provider.of<ShoppingItemProvider>(context, listen: false)
-      //       .reset('Cow Milk');
-      //   Provider.of<ShoppingItemProvider>(context, listen: false)
-      //       .reset('Mix Milk');
-      //   Provider.of<ShoppingItemProvider>(context, listen: false)
-      //       .reset('Yogurt');
-      //   Provider.of<ShoppingItemProvider>(context, listen: false)
-      //       .reset('Butter');
-      //   Provider.of<ShoppingItemProvider>(context, listen: false)
-      //       .reset('Desi Ghee');
-      // }
+      if (collection == "Orders") {
+        Provider.of<ShoppingItemProvider>(context, listen: false)
+            .reset('Buffalo Milk');
+        Provider.of<ShoppingItemProvider>(context, listen: false)
+            .reset('Cow Milk');
+        Provider.of<ShoppingItemProvider>(context, listen: false)
+            .reset('Mix Milk');
+        Provider.of<ShoppingItemProvider>(context, listen: false)
+            .reset('Yogurt');
+        Provider.of<ShoppingItemProvider>(context, listen: false)
+            .reset('Butter');
+        Provider.of<ShoppingItemProvider>(context, listen: false)
+            .reset('Desi Ghee');
+      }
 
       // totalItems = 0;
       // totalPrice = 0;
@@ -82,6 +82,7 @@ class CreateAnOrderController {
           builder: (context) => PurchasedScreen(
                 result: 'successful',
                 order_no: '${orderRef.id}',
+                orderCollectiontohelpfornavigation: collection,
               )));
 
       print('Order created with ID: ${orderRef.id}');
@@ -93,6 +94,7 @@ class CreateAnOrderController {
           builder: (context) => PurchasedScreen(
                 result: 'un-successful',
                 order_no: null,
+                orderCollectiontohelpfornavigation: collection,
               )));
     }
   }

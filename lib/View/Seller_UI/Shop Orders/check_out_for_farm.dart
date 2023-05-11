@@ -39,6 +39,8 @@ class _CheckOutForFarmState extends State<CheckOutForFarm> {
   final user = FirebaseAuth.instance.currentUser;
 
   var getUserName;
+  
+  var getUserAdress;
   @override
   void initState() {
     calculatetotalPricesandTotalItems();
@@ -275,7 +277,7 @@ class _CheckOutForFarmState extends State<CheckOutForFarm> {
                                   context,
                                   user!.email,
                                   getUserName,
-                                  '',
+                                  getUserAdress,
                                   snapshot.data.delivery_charges,
                                   orderDetails,
                                   // generateOrderNumber,
@@ -351,9 +353,10 @@ class _CheckOutForFarmState extends State<CheckOutForFarm> {
         widget.quantity1L != 0 ? one_Liter_price * widget.quantity1L : 0;
     var half_price =
         widget.quantity500ml != 0 ? half_Liter_price * widget.quantity500ml : 0;
-    var quarter_price =
-        widget.quantity250ml != 0 ? quarter_Liter_price * widget.quantity250ml : 0;
-    totalPrice = litre_price + half_price + quarter_price+delivery_charges;
+    var quarter_price = widget.quantity250ml != 0
+        ? quarter_Liter_price * widget.quantity250ml
+        : 0;
+    totalPrice = litre_price + half_price + quarter_price + delivery_charges;
 
     // if (widget.quantity1L > 0) {
     //   new_one_Liter_price = one_Liter_price * widget.quantity1L;
@@ -394,6 +397,9 @@ class _CheckOutForFarmState extends State<CheckOutForFarm> {
           documentSnapshot.data() as Map<String, dynamic>?;
       // access specific fields
       String user_name = data!['name'];
+      String user_address = data!['shop_adress'];
+      getUserAdress = user_address;
+
       print('user_name${user_name}');
       getUserName = user_name;
       print('getUserName:$getUserName');
