@@ -8,16 +8,15 @@ import '../../../Model/order_model.dart';
 
 import '../../../res/widgets/my_static_ui_widgets.dart';
 
-class CustomerOrdersDeliverdByShop extends StatefulWidget {
-  const CustomerOrdersDeliverdByShop({super.key});
+class BuyMilkFromFarmDelivered extends StatefulWidget {
+  const BuyMilkFromFarmDelivered({super.key});
 
   @override
-  State<CustomerOrdersDeliverdByShop> createState() =>
-      _CustomerOrdersDeliverdByShopState();
+  State<BuyMilkFromFarmDelivered> createState() =>
+      _BuyMilkFromFarmDeliveredState();
 }
 
-class _CustomerOrdersDeliverdByShopState
-    extends State<CustomerOrdersDeliverdByShop> {
+class _BuyMilkFromFarmDeliveredState extends State<BuyMilkFromFarmDelivered> {
   SellerContoller sellerController = SellerContoller();
   var shopId;
   @override
@@ -53,7 +52,7 @@ class _CustomerOrdersDeliverdByShopState
             itemBuilder: (context, index) {
               OrderModel order = orders[index];
               return MyStaticUIWidgets.buildOrderUI2(
-                  context, order, 'Delivered','Seller');
+                  context, order, 'Delivered', 'Seller');
             },
           );
         } else {
