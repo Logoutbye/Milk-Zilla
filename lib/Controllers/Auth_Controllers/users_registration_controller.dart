@@ -7,7 +7,7 @@ import 'package:milk_zilla/View/Farm_UI/farm_orders.dart';
 import '../../Utils/utils.dart';
 import '../../View/Auth UI/registration_status_screen.dart';
 import '../../View/Buyer_UI/all_shops_to_order_from.dart';
-import '../../View/Inspector_UI/insector_screen.dart';
+import '../../View/Inspector_UI/inspector_dashboard.dart';
 import '../../View/Seller_UI/Customer Orders/customers_orders.dart';
 import '../../res/Components/firebase_helper.dart';
 import '../../res/Components/my_shared_prefrences.dart';
@@ -74,7 +74,7 @@ class UserRegistrationController {
 
           if (currentInspectorStatusInFirestore == 'Approved') {
             Navigator.of(parentContext).push(
-                MaterialPageRoute(builder: (context) => InspectorScreen()));
+                MaterialPageRoute(builder: (context) => InspectorDashboard()));
           } else {
             Navigator.of(parentContext).push(MaterialPageRoute(
                 builder: (context) => RegistrationStatusScreen(
@@ -102,8 +102,8 @@ class UserRegistrationController {
               await FirestoreHelper.currentFarmerStatusInFirestore;
 
           if (currentFarmerStatusInFirestore == 'Approved') {
-            Navigator.of(parentContext).push(
-                MaterialPageRoute(builder: (context) => FarmOrders()));
+            Navigator.of(parentContext)
+                .push(MaterialPageRoute(builder: (context) => FarmOrders()));
           } else {
             print('Something is wrong here');
             Navigator.of(parentContext).push(MaterialPageRoute(

@@ -1,22 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
-import 'package:milk_zilla/View/Inspector_UI/inspector_orders_delivered.dart';
-import 'package:milk_zilla/View/Inspector_UI/inspector_orders_pending.dart';
-import 'package:milk_zilla/View/Inspector_UI/inspector_orders_picked.dart';
+import 'package:milk_zilla/View/Inspector_UI/Pick%20Orders/inspector_orders_delivered.dart';
+import 'package:milk_zilla/View/Inspector_UI/Pick%20Orders/inspector_orders_pending.dart';
+import 'package:milk_zilla/View/Inspector_UI/Pick%20Orders/inspector_orders_picked.dart';
+import 'package:milk_zilla/View/Inspector_UI/Test%20Milk/test_milk_delivered.dart';
+import 'package:milk_zilla/View/Inspector_UI/Test%20Milk/test_milk_pending.dart';
+import 'package:milk_zilla/View/Inspector_UI/Test%20Milk/test_milk_picked.dart';
 import 'package:milk_zilla/res/Components/my_drawer.dart';
 import 'package:milk_zilla/res/Components/my_drawers/inspector_drawer.dart';
 
-import '../../res/my_colors.dart';
+import '../../../res/my_colors.dart';
 
-class InspectorScreen extends StatefulWidget {
-  const InspectorScreen({super.key});
+class TestMilkScreen extends StatefulWidget {
+  const TestMilkScreen({super.key});
 
   @override
-  State<InspectorScreen> createState() => _InspectorScreenState();
+  State<TestMilkScreen> createState() => _TestMilkScreenState();
 }
 
-class _InspectorScreenState extends State<InspectorScreen> {
+class _TestMilkScreenState extends State<TestMilkScreen> {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
@@ -25,7 +28,7 @@ class _InspectorScreenState extends State<InspectorScreen> {
         appBar: AppBar(
           backgroundColor: MyColors.kWhite,
           foregroundColor: MyColors.kPrimary,
-          title: const Text('My Orders'),
+          title: const Text('Test Milk For Farm'),
           centerTitle: true,
           bottom: TabBar(
             indicatorColor: MyColors.kPrimary,
@@ -59,9 +62,9 @@ class _InspectorScreenState extends State<InspectorScreen> {
         endDrawer: InspectorDrawer(),
         body: TabBarView(
           children: [
-            InspectorOrdersPending(),
-            InspectorOrdersPicked(),
-            InspectorOrdersDelivered(),
+            TestMilkPending(),
+            TestMilkPicked(),
+            TestMilkDilevered(),
           ],
         ),
       ),

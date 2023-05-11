@@ -6,12 +6,12 @@ import 'package:milk_zilla/View/Auth%20UI/registration_status_screen.dart';
 import 'package:milk_zilla/View/Buyer_UI/all_shops_to_order_from.dart';
 import 'package:milk_zilla/View/Buyer_UI/set_customer_address_on_google_map.dart';
 import 'package:milk_zilla/View/Farm_UI/farm_orders.dart';
-import 'package:milk_zilla/View/Inspector_UI/insector_screen.dart';
 
 import 'package:milk_zilla/provider/Sopping_item_provider.dart';
 import 'package:milk_zilla/res/Components/firebase_helper.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'View/Inspector_UI/inspector_dashboard.dart';
 import 'View/Seller_UI/Customer Orders/customers_orders.dart';
 import 'View/my_home_page.dart';
 
@@ -61,7 +61,7 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-      print(
+    print(
         'before navigation currentFarmerStatusInFirestore :${FirestoreHelper.currentFarmerStatusInFirestore}');
     print(
         'before navigation currentSellerStatusInFirestore :${FirestoreHelper.currentSellerStatusInFirestore}');
@@ -104,7 +104,7 @@ class MyApp extends StatelessWidget {
                                 FirestoreHelper
                                         .currentInspectorStatusInFirestore ==
                                     'Approved'
-                            ? InspectorScreen()
+                            ? InspectorDashboard()
 
                             //if user is Inspector and is not approved
                             : whichUserLoggedIn == 'Inspector' &&

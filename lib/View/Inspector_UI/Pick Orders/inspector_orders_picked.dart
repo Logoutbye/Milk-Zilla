@@ -3,27 +3,27 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:lottie/lottie.dart';
-import 'package:milk_zilla/Model/order_model.dart';
-import 'package:milk_zilla/controllers/Inspector_Controllers/get_orders_for_inpectors.dart';
 
-import '../../res/widgets/my_static_ui_widgets.dart';
+import '../../../Model/order_model.dart';
+import '../../../controllers/Inspector_Controllers/get_orders_for_inpectors.dart';
+import '../../../res/widgets/my_static_ui_widgets.dart';
 
-class InspectorOrdersDelivered extends StatefulWidget {
-  const InspectorOrdersDelivered({super.key});
+class InspectorOrdersPicked extends StatefulWidget {
+  const InspectorOrdersPicked({super.key});
 
   @override
-  State<InspectorOrdersDelivered> createState() =>
-      _InspectorOrdersDeliveredState();
+  State<InspectorOrdersPicked> createState() => _InspectorOrdersPickedState();
 }
 
-class _InspectorOrdersDeliveredState extends State<InspectorOrdersDelivered> {
-      getOrdersForInspectorController GetOrdersForInspectorController = getOrdersForInspectorController();
+class _InspectorOrdersPickedState extends State<InspectorOrdersPicked> {
+  getOrdersForInspectorController GetOrdersForInspectorController =
+      getOrdersForInspectorController();
 
   @override
   Widget build(BuildContext context) {
-     return Scaffold(
+    return Scaffold(
         body: FutureBuilder<List<OrderModel>>(
-      future: GetOrdersForInspectorController.getOrdersForInspector('Delivered'),
+      future: GetOrdersForInspectorController.getOrdersForInspector('Shipped'),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return Center(
@@ -37,7 +37,8 @@ class _InspectorOrdersDeliveredState extends State<InspectorOrdersDelivered> {
             itemCount: orders.length,
             itemBuilder: (context, index) {
               OrderModel order = orders[index];
-              return MyStaticUIWidgets.buildOrderUI2(context, order, 'Delivered','Inspector');
+              return MyStaticUIWidgets.buildOrderUI2(
+                  context, order, 'Shipped', 'Inspector');
             },
           );
         } else {
@@ -45,6 +46,5 @@ class _InspectorOrdersDeliveredState extends State<InspectorOrdersDelivered> {
         }
       },
     ));
-  
   }
 }
