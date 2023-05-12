@@ -38,7 +38,7 @@ class _BuyMilkFromFarmPickedState extends State<BuyMilkFromFarmPicked> {
   Widget build(BuildContext context) {
     return Scaffold(
         body: FutureBuilder<List<OrderModel>>(
-      future: buyerContoller.getOrdersForShop(shopId, 'Prepared'),
+      future: buyerContoller.getOrdersForShopWithFarm(shopId, 'Prepared'),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return Center(

@@ -33,7 +33,7 @@ class _BuyMilkFromFarmPendingState extends State<BuyMilkFromFarmPending> {
   Widget build(BuildContext context) {
     return Scaffold(
         body: FutureBuilder<List<OrderModel>>(
-      future: sellerController.getOrdersForShop(shopId, 'Pending'),
+      future: sellerController.getOrdersForShopWithFarm(shopId, 'Pending'),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return Center(
