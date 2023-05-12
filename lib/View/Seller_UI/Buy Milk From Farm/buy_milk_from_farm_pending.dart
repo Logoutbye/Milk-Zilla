@@ -1,9 +1,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
-import 'package:milk_zilla/Controllers/Seller_Controllers/seller_controller.dart';
 import 'package:milk_zilla/Model/order_model.dart';
 import 'package:milk_zilla/res/widgets/my_static_ui_widgets.dart';
+
+import '../../../Controllers/Seller_Controllers/seller_controller.dart';
 
 class BuyMilkFromFarmPending extends StatefulWidget {
   const BuyMilkFromFarmPending({super.key});
@@ -48,7 +49,7 @@ class _BuyMilkFromFarmPendingState extends State<BuyMilkFromFarmPending> {
             itemBuilder: (context, index) {
               OrderModel order = orders[index];
               return MyStaticUIWidgets.buildOrderUI2(
-                  context, order, 'Pending', 'Seller');
+                  context, order, 'Pending', 'SellerBuyingMilkForShop');
             },
           );
         } else {

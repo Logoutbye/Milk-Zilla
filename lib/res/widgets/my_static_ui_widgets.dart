@@ -2,14 +2,19 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:milk_zilla/Model/order_model.dart';
+import 'package:milk_zilla/Utils/utils.dart';
 import 'package:milk_zilla/View/Inspector_UI/customer_delivery_location.dart';
 import 'package:milk_zilla/controllers/Inspector_Controllers/pick_order_controller.dart';
 import 'package:milk_zilla/res/constanst.dart';
+import 'package:milk_zilla/res/widgets/report_viewer_screen.dart';
 import '../../Controllers/Global_Controllers/update_status_global_controller.dart';
 import '../../View/Buyer_UI/Customer Orders With Shop/customer_orders_with_shop.dart';
 import '../../View/Farm_UI/farm_orders.dart';
 import '../../View/Inspector_UI/Pick Orders/inspector_screen.dart';
+import '../../View/Inspector_UI/Test Milk/test_milk_screen.dart';
+import '../../View/Seller_UI/Buy Milk From Farm/buy_milk_from_farm_tabar.dart';
 import '../../View/Seller_UI/Sell Milk To Customers/customers_orders.dart';
+import '../../controllers/Inspector_Controllers/test_orders_for_shop_controller.dart';
 import '../my_colors.dart';
 
 class MyStaticUIWidgets {
@@ -41,6 +46,20 @@ class MyStaticUIWidgets {
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
+               role== 'MilkTestor' && status != 'Pending'? Row(
+                  children: [
+                    SizedBox(),
+                    Spacer(),
+                    IconButton(
+                        onPressed: () {
+                          // Navigator.of(context).push(MaterialPageRoute(builder: (context)=>SfPdfViewer.network('')));
+                        },
+                        icon: Icon(
+                          Icons.report_gmailerrorred_rounded,
+                          color: MyColors.kPrimary,
+                        ))
+                  ],
+                ):SizedBox(),
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -396,47 +415,267 @@ class MyStaticUIWidgets {
                                           },
                                         ),
                                       )
-                                    : role == 'MilkTestor' && status == 'Prepared'?
- Center(
-                                child: ElevatedButton(
-                                  style: ElevatedButton.styleFrom(
-                                    padding: const EdgeInsets.all(10.0),
-                                    elevation: 0,
-                                    shape: RoundedRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(15.0)),
-                                    backgroundColor: MyColors.kPrimary,
-                                  ),
-                                  child: Text(
-                                    'Test Milk',
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 18.0,
-                                    ),
-                                  ),
-                                  onPressed: () {
-                                    UpdateStatusGlobalController().updateStatus(
-                                        context, order, 'Shipped', 'Orders With Farm');
-                                    final user =
-                                        FirebaseAuth.instance.currentUser;
-                                    final email = user!.email;
-                                    print('current users email::${email}');
+                                    : role == 'SellerBuyingMilkForShop' &&
+                                            status == 'Pending'
+                                        ? Center(
+                                            child: ElevatedButton(
+                                              style: ElevatedButton.styleFrom(
+                                                padding:
+                                                    const EdgeInsets.all(10.0),
+                                                elevation: 0,
+                                                shape: RoundedRectangleBorder(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            15.0)),
+                                                backgroundColor:
+                                                    MyColors.kPrimary,
+                                              ),
+                                              child: Text(
+                                                'Cancel',
+                                                style: TextStyle(
+                                                  fontWeight: FontWeight.bold,
+                                                  fontSize: 18.0,
+                                                ),
+                                              ),
+                                              onPressed: () {
+                                                UpdateStatusGlobalController()
+                                                    .updateStatus(
+                                                        context,
+                                                        order,
+                                                        'Canceled',
+                                                        'Orders With Farm');
+                                                Navigator.pop(context);
+                                                Navigator.of(context).push(
+                                                    MaterialPageRoute(
+                                                        builder: (context) =>
+                                                            BuyMilkFromFarmTabar()));
+                                              },
+                                            ),
+                                          )
+                                        : role == 'MilkTestor' &&
+                                                status == 'Pending'
+                                            ? Center(
+                                                child: ElevatedButton(
+                                                  style:
+                                                      ElevatedButton.styleFrom(
+                                                    padding:
+                                                        const EdgeInsets.all(
+                                                            10.0),
+                                                    elevation: 0,
+                                                    shape:
+                                                        RoundedRectangleBorder(
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        15.0)),
+                                                    backgroundColor:
+                                                        MyColors.kPrimary,
+                                                  ),
+                                                  child: Text(
+                                                    'Test Milk',
+                                                    style: TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      fontSize: 18.0,
+                                                    ),
+                                                  ),
+                                                  onPressed: () {
+                                                    // when raised button is pressed
+                                                    // we display showModalBottomSheet
+                                                    showModalBottomSheet<void>(
+                                                      // context and builder are
+                                                      // required properties in this widget
+                                                      context: context,
+                                                      backgroundColor:
+                                                          MyColors.kSecondary,
+                                                      shape: RoundedRectangleBorder(
+                                                          borderRadius:
+                                                              BorderRadius.vertical(
+                                                                  top: Radius
+                                                                      .circular(
+                                                                          25))),
+                                                      builder: (BuildContext
+                                                          context) {
+                                                        // we set up a container inside which
+                                                        // we create center column and display text
 
-                                    //order is picked by
-                                    PickOderController()
-                                        .PickOder(context, order, email);
+                                                        // Returning SizedBox instead of a Container
+                                                        return SizedBox(
+                                                          height: MediaQuery.of(
+                                                                      context)
+                                                                  .size
+                                                                  .height /
+                                                              6,
+                                                          child: Padding(
+                                                            padding:
+                                                                const EdgeInsets
+                                                                    .all(18.0),
+                                                            child: Row(
+                                                              mainAxisAlignment:
+                                                                  MainAxisAlignment
+                                                                      .center,
+                                                              crossAxisAlignment:
+                                                                  CrossAxisAlignment
+                                                                      .center,
+                                                              children: [
+                                                                Center(
+                                                                  child: Column(
+                                                                    mainAxisAlignment:
+                                                                        MainAxisAlignment
+                                                                            .center,
+                                                                    children: <
+                                                                        Widget>[
+                                                                      Text(
+                                                                        'Not-Approved',
+                                                                        style: TextStyle(
+                                                                            color:
+                                                                                MyColors.kPrimary,
+                                                                            fontWeight: FontWeight.bold),
+                                                                      ),
+                                                                      IconButton(
+                                                                          onPressed:
+                                                                              () {
+                                                                            final user =
+                                                                                FirebaseAuth.instance.currentUser;
+                                                                            final email =
+                                                                                user!.email;
+                                                                            print('current users email::${email}');
 
-                                    Navigator.pop(context);
-                                    Navigator.of(context).push(
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                InspectorScreen()));
-                                  },
-                                ),
-                              )
-                            
+                                                                            TestOrderController().TestOrder(
+                                                                                context,
+                                                                                order,
+                                                                                email,
+                                                                                'Orders With Farm',
+                                                                                'Canceled',
+                                                                                'Not-Approved',
+                                                                                '${NotApprovedReportLink}');
 
-                                    : SizedBox(),
+                                                                            Navigator.pop(context);
+                                                                            Navigator.of(context).push(MaterialPageRoute(builder: (context) => TestMilkScreen()));
+                                                                          },
+                                                                          icon:
+                                                                              Icon(
+                                                                            Icons.cancel_outlined,
+                                                                            size:
+                                                                                30,
+                                                                            color:
+                                                                                MyColors.kPrimary,
+                                                                          ))
+                                                                    ],
+                                                                  ),
+                                                                ),
+                                                                Spacer(),
+                                                                Column(
+                                                                  mainAxisAlignment:
+                                                                      MainAxisAlignment
+                                                                          .center,
+                                                                  crossAxisAlignment:
+                                                                      CrossAxisAlignment
+                                                                          .center,
+                                                                  children: <
+                                                                      Widget>[
+                                                                    Text(
+                                                                      'Approved',
+                                                                      style: TextStyle(
+                                                                          color: MyColors
+                                                                              .kPrimary,
+                                                                          fontWeight:
+                                                                              FontWeight.bold),
+                                                                    ),
+                                                                    IconButton(
+                                                                        onPressed:
+                                                                            () {
+                                                                          final user = FirebaseAuth
+                                                                              .instance
+                                                                              .currentUser;
+                                                                          final email =
+                                                                              user!.email;
+                                                                          print(
+                                                                              'current users email::${email}');
+
+                                                                          TestOrderController().TestOrder(
+                                                                              context,
+                                                                              order,
+                                                                              email,
+                                                                              'Orders With Farm',
+                                                                              'Shipped',
+                                                                              'Approved',
+                                                                              '${ApprovedReportLink}');
+
+                                                                          Navigator.pop(
+                                                                              context);
+                                                                          Navigator.of(context)
+                                                                              .push(MaterialPageRoute(builder: (context) => TestMilkScreen()));
+                                                                        },
+                                                                        icon:
+                                                                            Icon(
+                                                                          Icons
+                                                                              .done,
+                                                                          size:
+                                                                              30,
+                                                                          color:
+                                                                              MyColors.kPrimary,
+                                                                        ))
+                                                                  ],
+                                                                ),
+                                                              ],
+                                                            ),
+                                                          ),
+                                                        );
+                                                      },
+                                                    );
+                                                  },
+                                                ),
+                                              )
+                                            : role == 'MilkTestor' &&
+                                                    status == 'Shipped'
+                                                ? Padding(
+                                                    padding: const EdgeInsets
+                                                            .symmetric(
+                                                        horizontal: 10),
+                                                    child: Center(
+                                                      child: ElevatedButton(
+                                                        style: ElevatedButton
+                                                            .styleFrom(
+                                                          padding:
+                                                              const EdgeInsets
+                                                                  .all(10.0),
+                                                          elevation: 0,
+                                                          shape: RoundedRectangleBorder(
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          15.0)),
+                                                          backgroundColor:
+                                                              MyColors.kPrimary,
+                                                        ),
+                                                        child: Text(
+                                                          'Deliver',
+                                                          style: TextStyle(
+                                                            fontWeight:
+                                                                FontWeight.bold,
+                                                            fontSize: 18.0,
+                                                          ),
+                                                        ),
+                                                        onPressed: () {
+                                                          UpdateStatusGlobalController()
+                                                              .updateStatus(
+                                                                  context,
+                                                                  order,
+                                                                  'Delivered',
+                                                                  'Orders With Farm');
+                                                          Navigator.pop(
+                                                              context);
+                                                          Navigator.of(context).push(
+                                                              MaterialPageRoute(
+                                                                  builder:
+                                                                      (context) =>
+                                                                          TestMilkScreen()));
+                                                        },
+                                                      ),
+                                                    ),
+                                                  )
+                                                : SizedBox(),
 
                 // InkWell(
                 //     onTap: () {

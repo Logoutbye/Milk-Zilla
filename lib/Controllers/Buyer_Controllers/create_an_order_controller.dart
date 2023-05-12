@@ -50,7 +50,9 @@ class CreateAnOrderController {
         'total_items': giveme_total_items,
         'total_price': giveme_total_price,
         'lat': giveme_lat,
-        'long': giveme_long
+        'long': giveme_long,
+        'milk_test_report_link': '',
+        'milk_test_report_status': ''
       });
 
       // once data of an order is sent to firebase the provider then would be reset to zero so that

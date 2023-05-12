@@ -6,14 +6,22 @@ import '../../Utils/utils.dart';
 
 class TestOrderController {
   Future<void> TestOrder(
-      BuildContext context, OrderModel order, var inspector_id) async {
+      BuildContext context,
+      OrderModel order,
+      var inspector_id,
+      var collection,
+      var status,
+      var milk_test_report_link,
+      var milk_test_report_status) async {
     // Get a reference to the document you want to update
     final documentReference =
-        FirebaseFirestore.instance.collection('Orders With Farm').doc(order.order_id);
+        FirebaseFirestore.instance.collection(collection).doc(order.order_id);
     // Update a field in the document
     documentReference.update({
       'inspector_id': '$inspector_id',
-      'test_report_id':''
+      'status': '$status',
+      'milk_test_report_link': '$milk_test_report_link',
+      'milk_test_report_status': '$milk_test_report_status',
     }).then((value) {
       Utils.toastMessage('Milk tested successfully');
       print('Field updated successfully');
