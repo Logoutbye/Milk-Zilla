@@ -23,7 +23,7 @@ class _InspectorOrdersPending extends State<TestMilkPending> {
   Widget build(BuildContext context) {
     return Scaffold(
         body: FutureBuilder<List<OrderModel>>(
-      future: GetOrdersForInspectorController.getOrdersForInspector('Prepared'),
+      future: GetOrdersForInspectorController.getOrdersForInspector('Prepared','Orders With Farm'),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return Center(
@@ -38,7 +38,7 @@ class _InspectorOrdersPending extends State<TestMilkPending> {
             itemBuilder: (context, index) {
               OrderModel order = orders[index];
               return MyStaticUIWidgets.buildOrderUI2(
-                  context, order, 'Prepared', 'Inspector');
+                  context, order, 'Prepared', 'MilkTestor');
             },
           );
         } else {

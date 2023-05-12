@@ -25,7 +25,7 @@ class _InspectorOrdersDeliveredState extends State<InspectorOrdersDelivered> {
     return Scaffold(
         body: FutureBuilder<List<OrderModel>>(
       future:
-          GetOrdersForInspectorController.getOrdersForInspector('Delivered'),
+          GetOrdersForInspectorController.getOrdersForInspector('Delivered','Orders'),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return Center(

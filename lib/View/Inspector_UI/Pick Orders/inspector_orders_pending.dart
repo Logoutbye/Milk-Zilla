@@ -23,7 +23,7 @@ class _InspectorOrdersPending extends State<InspectorOrdersPending> {
   Widget build(BuildContext context) {
     return Scaffold(
         body: FutureBuilder<List<OrderModel>>(
-      future: GetOrdersForInspectorController.getOrdersForInspector('Prepared'),
+      future: GetOrdersForInspectorController.getOrdersForInspector('Prepared','Orders'),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return Center(

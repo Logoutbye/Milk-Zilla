@@ -34,14 +34,14 @@ class _TestMilkScreenState extends State<TestMilkScreen> {
             indicatorColor: MyColors.kPrimary,
             unselectedLabelColor: Color.fromARGB(255, 139, 211, 142),
             labelColor: MyColors.kPrimary,
-            labelStyle: TextStyle(fontSize: 15),
+            labelStyle: TextStyle(fontSize: 12),
             automaticIndicatorColorAdjustment: true,
             tabs: [
               Tab(
-                text: 'Ready to pick',
+                text: 'Ready for testing',
               ),
               Tab(
-                text: 'Picked',
+                text: 'Deliver to Shop',
               ),
               Tab(
                 text: 'Deliverd',

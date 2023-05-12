@@ -5,12 +5,12 @@ import '../../Model/order_model.dart';
 
 class getOrdersForInspectorController {
   Future<List<OrderModel>> getOrdersForInspector(
-       String status) async {
+       String status, var collection) async {
     try {
       print("status of order for which getting orders from database " + status);
 
       QuerySnapshot querySnapshot = await FirebaseFirestore.instance
-          .collection('Orders')
+          .collection(collection)
           // .where('customer_id', isEqualTo: CustomerId)
           .where('status', isEqualTo: status)
           .get();

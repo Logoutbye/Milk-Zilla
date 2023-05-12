@@ -23,7 +23,7 @@ class _TestMilkPickedState extends State<TestMilkPicked> {
   Widget build(BuildContext context) {
     return Scaffold(
         body: FutureBuilder<List<OrderModel>>(
-      future: GetOrdersForInspectorController.getOrdersForInspector('Shipped'),
+      future: GetOrdersForInspectorController.getOrdersForInspector('Shipped','Orders With Farm'),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return Center(
@@ -38,7 +38,7 @@ class _TestMilkPickedState extends State<TestMilkPicked> {
             itemBuilder: (context, index) {
               OrderModel order = orders[index];
               return MyStaticUIWidgets.buildOrderUI2(
-                  context, order, 'Shipped', 'Inspector');
+                  context, order, 'Shipped', 'MilkTestor');
             },
           );
         } else {

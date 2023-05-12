@@ -396,6 +396,46 @@ class MyStaticUIWidgets {
                                           },
                                         ),
                                       )
+                                    : role == 'MilkTestor' && status == 'Prepared'?
+ Center(
+                                child: ElevatedButton(
+                                  style: ElevatedButton.styleFrom(
+                                    padding: const EdgeInsets.all(10.0),
+                                    elevation: 0,
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(15.0)),
+                                    backgroundColor: MyColors.kPrimary,
+                                  ),
+                                  child: Text(
+                                    'Test Milk',
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 18.0,
+                                    ),
+                                  ),
+                                  onPressed: () {
+                                    UpdateStatusGlobalController().updateStatus(
+                                        context, order, 'Shipped', 'Orders With Farm');
+                                    final user =
+                                        FirebaseAuth.instance.currentUser;
+                                    final email = user!.email;
+                                    print('current users email::${email}');
+
+                                    //order is picked by
+                                    PickOderController()
+                                        .PickOder(context, order, email);
+
+                                    Navigator.pop(context);
+                                    Navigator.of(context).push(
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                InspectorScreen()));
+                                  },
+                                ),
+                              )
+                            
+
                                     : SizedBox(),
 
                 // InkWell(

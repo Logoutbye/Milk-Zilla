@@ -17,135 +17,147 @@ class _InspectorDashboardState extends State<InspectorDashboard> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: Container(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              // first two buttons for registration
-              Container(
-                child: SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
-                  // row for two buttons
-                  child: Row(
-                    children: [
-                      SizedBox(
-                        width: 10,
-                      ),
-                      //Seller orders with Customer
-                      InkWell(
-                        onTap: () {
-                          //Navigator.pop(context);
-                          Navigator.of(context)
-                              .push(MaterialPageRoute(builder: (context) {
-                            return InspectorScreen();
-                          }));
-                        },
-                        child: Container(
-                          width: MediaQuery.of(context).size.width / 2.4,
-                          height: MediaQuery.of(context).size.height / 5,
-                          decoration: BoxDecoration(
-                            color: MyColors.kSecondary,
-                            borderRadius: BorderRadius.circular(20),
-                            boxShadow: [
-                              BoxShadow(
-                                color: MyColors.kBlack,
-                                blurRadius: 15,
-                                spreadRadius: 2,
-                                offset: Offset(
-                                  0,
-                                  5,
-                                ), // Shadow position
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(0),
+        child: AppBar(),
+      ),
+      body: Container(
+         height: MediaQuery.of(context).size.height,
+         width: MediaQuery.of(context).size.width,
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                colorFilter:
+                    ColorFilter.mode(MyColors.kBlack, BlendMode.softLight),
+                image: AssetImage("assets/images/bg.jpeg"),
+                fit: BoxFit.fill,
+              ),
+            ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            // first two buttons for inspector
+            Container(
+              child: SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                // row for two buttons
+                child: Row(
+                  children: [
+                    SizedBox(
+                      width: 10,
+                    ),
+                    //Seller orders with Customer
+                    InkWell(
+                      onTap: () {
+                        //Navigator.pop(context);
+                        Navigator.of(context)
+                            .push(MaterialPageRoute(builder: (context) {
+                          return InspectorScreen();
+                        }));
+                      },
+                      child: Container(
+                        width: MediaQuery.of(context).size.width / 2.4,
+                        height: MediaQuery.of(context).size.height / 5,
+                        decoration: BoxDecoration(
+                          color: MyColors.kSecondary,
+                          borderRadius: BorderRadius.circular(20),
+                          boxShadow: [
+                            BoxShadow(
+                              color: MyColors.kBlack,
+                              blurRadius: 15,
+                              spreadRadius: 2,
+                              offset: Offset(
+                                0,
+                                5,
+                              ), // Shadow position
+                            ),
+                          ],
+                        ),
+                        child: Center(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              ImageIcon(
+                                AssetImage("assets/images/shopping-cart.png"),
+                                size: 72,
+                                color: MyColors.kPrimary,
+                              ),
+                              SizedBox(
+                                height:
+                                    MediaQuery.of(context).size.height / 70,
+                              ),
+                              Text(
+                                'Pick Orders',
+                                style: TextStyle(
+                                    color: MyColors.kPrimary,
+                                    fontWeight: FontWeight.bold),
                               ),
                             ],
                           ),
-                          child: Center(
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                ImageIcon(
-                                  AssetImage("assets/images/shopping-cart.png"),
-                                  size: 72,
-                                  color: MyColors.kPrimary,
-                                ),
-                                SizedBox(
-                                  height:
-                                      MediaQuery.of(context).size.height / 70,
-                                ),
-                                Text(
-                                  'Pick Orders',
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      width: 15,
+                    ),
+
+                    // Seller orders with Farm
+                    InkWell(
+                      onTap: () {
+                        Navigator.of(context)
+                            .push(MaterialPageRoute(builder: (context) {
+                          return TestMilkScreen();
+                        }));
+                      },
+                      child: Container(
+                        width: MediaQuery.of(context).size.width / 2.4,
+                        height: MediaQuery.of(context).size.height / 5,
+                        decoration: BoxDecoration(
+                          color: MyColors.kSecondary,
+                          borderRadius: BorderRadius.circular(20),
+                          boxShadow: [
+                            BoxShadow(
+                              color: MyColors.kBlack,
+                              blurRadius: 15,
+                              spreadRadius: 2,
+                              offset: Offset(
+                                0,
+                                5,
+                              ), // Shadow position
+                            ),
+                          ],
+                        ),
+                        child: Center(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              ImageIcon(
+                                AssetImage("assets/images/seller.png"),
+                                size: 72,
+                                color: MyColors.kPrimary,
+                              ),
+                              SizedBox(
+                                height:
+                                    MediaQuery.of(context).size.height / 70,
+                              ),
+                              Text('Test Milk',
                                   style: TextStyle(
                                       color: MyColors.kPrimary,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
-                      SizedBox(
-                        width: 15,
-                      ),
-
-                      // Seller orders with Farm
-                      InkWell(
-                        onTap: () {
-                          Navigator.of(context)
-                              .push(MaterialPageRoute(builder: (context) {
-                            return TestMilkScreen();
-                          }));
-                        },
-                        child: Container(
-                          width: MediaQuery.of(context).size.width / 2.4,
-                          height: MediaQuery.of(context).size.height / 5,
-                          decoration: BoxDecoration(
-                            color: MyColors.kSecondary,
-                            borderRadius: BorderRadius.circular(20),
-                            boxShadow: [
-                              BoxShadow(
-                                color: MyColors.kBlack,
-                                blurRadius: 15,
-                                spreadRadius: 2,
-                                offset: Offset(
-                                  0,
-                                  5,
-                                ), // Shadow position
-                              ),
+                                      fontWeight: FontWeight.bold)),
                             ],
                           ),
-                          child: Center(
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                ImageIcon(
-                                  AssetImage("assets/images/seller.png"),
-                                  size: 72,
-                                  color: MyColors.kPrimary,
-                                ),
-                                SizedBox(
-                                  height:
-                                      MediaQuery.of(context).size.height / 70,
-                                ),
-                                Text('Test Milk',
-                                    style: TextStyle(
-                                        color: MyColors.kPrimary,
-                                        fontWeight: FontWeight.bold)),
-                              ],
-                            ),
-                          ),
                         ),
-                      ), // container for chating Doctor will move to next screen
-
-                      SizedBox(
-                        width: 10,
                       ),
-                    ],
-                  ),
+                    ), // container for chating Doctor will move to next screen
+
+                    SizedBox(
+                      width: 10,
+                    ),
+                  ],
                 ),
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

@@ -31,13 +31,17 @@ Future<void> main() async {
     final email = user.email;
     print('email::${email}');
     // and if user was seller or inspector it will check if the status is approved so he may navigate to their relative dashbord else they see application status
-    await FirestoreHelper.initializeToCheckStatusForSellers();
-    await FirestoreHelper.initializeToCheckStatusForInspector();
-    await FirestoreHelper.initializeToCheckStatusForFarmer();
+    if (whichUserLoggedIn == 'Seller') {
+      await FirestoreHelper.initializeToCheckStatusForSellers();
+      await FirestoreHelper.currentSellerStatusInFirestore;
+    } else if (whichUserLoggedIn == 'Inspector') {
+      await FirestoreHelper.initializeToCheckStatusForInspector();
+      await FirestoreHelper.currentInspectorStatusInFirestore;
+    } else if (whichUserLoggedIn == 'Farmer') {
+      await FirestoreHelper.initializeToCheckStatusForFarmer();
+      await FirestoreHelper.currentFarmerStatusInFirestore;
+    }
 
-    await FirestoreHelper.currentSellerStatusInFirestore;
-    await FirestoreHelper.currentInspectorStatusInFirestore;
-    await FirestoreHelper.currentFarmerStatusInFirestore;
     print(
         'in main currentFarmerStatusInFirestore :${FirestoreHelper.currentFarmerStatusInFirestore}');
     print(
