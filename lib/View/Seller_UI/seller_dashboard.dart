@@ -26,16 +26,16 @@ class _SellerDashboardState extends State<SellerDashboard> {
       ),
       body: Center(
         child: Container(
-          height: MediaQuery.of(context).size.height,
-          width: MediaQuery.of(context).size.width,
-          decoration: BoxDecoration(
-            image: DecorationImage(
-              colorFilter:
-                  ColorFilter.mode(MyColors.kBlack, BlendMode.softLight),
-              image: AssetImage("assets/images/bg.jpeg"),
-              fit: BoxFit.fill,
-            ),
-          ),
+          // height: MediaQuery.of(context).size.height,
+          // width: MediaQuery.of(context).size.width,
+          // decoration: BoxDecoration(
+          //   image: DecorationImage(
+          //     colorFilter:
+          //         ColorFilter.mode(MyColors.kBlack, BlendMode.softLight),
+          //     image: AssetImage("assets/images/bg.jpeg"),
+          //     fit: BoxFit.fill,
+          //   ),
+          // ),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
