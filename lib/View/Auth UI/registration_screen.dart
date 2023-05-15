@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:geocoding/geocoding.dart';
 
+import '../../Utils/utils.dart';
 import '../../controllers/Auth_Controllers/users_registration_controller.dart';
 import '../../res/Components/round_button.dart';
 import '../../res/my_colors.dart';
@@ -26,6 +28,10 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   TextEditingController farmOrshopNameTextControl = TextEditingController();
   TextEditingController buyerOrinspectorOrShopAdressTextControl =
       TextEditingController();
+
+// latitude and longitude for storing in firebase
+  double latitudeofuser = 0.0;
+  double longitudeofuser = 0.0;
 
   var whichUser;
 
@@ -252,11 +258,13 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                                   ),
                                   // if user is seller
                                   // shop name
-                                  widget.whichUser == 'Seller'|| widget.whichUser == 'Farmer'
+                                  widget.whichUser == 'Seller' ||
+                                          widget.whichUser == 'Farmer'
                                       ? Container(
                                           // color: Colors.red,
                                           child: TextField(
-                                            controller: farmOrshopNameTextControl,
+                                            controller:
+                                                farmOrshopNameTextControl,
                                             maxLength: 60,
                                             onTap: () {},
                                             keyboardType: TextInputType.name,
@@ -269,7 +277,12 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                                             ),
                                             decoration: InputDecoration(
                                               // hintText: 'User',
-                                              labelText:widget.whichUser == 'Seller'? 'Shop Name' : widget.whichUser == 'Farmer'?'Farm Name':'',
+                                              labelText: widget.whichUser ==
+                                                      'Seller'
+                                                  ? 'Shop Name'
+                                                  : widget.whichUser == 'Farmer'
+                                                      ? 'Farm Name'
+                                                      : '',
                                               labelStyle: TextStyle(
                                                   color: MyColors.kPrimary),
                                               hintStyle: TextStyle(
@@ -296,13 +309,44 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                                           ),
                                         )
                                       : SizedBox(),
+                                  //Address Text Field
                                   Container(
                                     // color: Colors.red,
                                     child: TextField(
                                       controller:
                                           buyerOrinspectorOrShopAdressTextControl,
                                       maxLength: 60,
-                                      onTap: () {},
+                                      readOnly: widget.whichUser == 'Seller'
+                                          ? true
+                                          : false,
+                                      onTap: () {
+                                        if (widget.whichUser == 'Seller') {
+                                          Navigator.pushNamed(context,
+                                                  '/setSellerAddressOnGoogleMap')
+                                              .then((result) async {
+                                            List<double> myLatLang =
+                                                result as List<double>;
+                                            latitudeofuser = myLatLang[0];
+                                            longitudeofuser = myLatLang[1];
+
+                                            // converting latlang to String address
+                                            List<Placemark> placemarks =
+                                                await placemarkFromCoordinates(
+                                                    latitudeofuser,
+                                                    longitudeofuser);
+                                            var deliverFullAddress =
+                                                "${placemarks.reversed.last.subLocality}  ${placemarks.reversed.last.locality}, ${placemarks.reversed.last.administrativeArea}";
+                                            buyerOrinspectorOrShopAdressTextControl
+                                                .text = deliverFullAddress;
+
+                                            //===============================
+                                            setState(() {});
+                                            Utils.flushBarErrorMessage(
+                                                'latidtude and longitude: ${myLatLang[0]} ${myLatLang[1]}',
+                                                context);
+                                          });
+                                        }
+                                      },
                                       keyboardType: TextInputType.name,
                                       // inputFormatters: [
                                       //   FilteringTextInputFormatter.digitsOnly,
