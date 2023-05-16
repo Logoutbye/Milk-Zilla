@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
 
+import '../../Controllers/Auth_Controllers/users_registration_controller.dart';
 import '../../Utils/utils.dart';
-import '../../controllers/Auth_Controllers/users_registration_controller.dart';
 import '../../res/Components/round_button.dart';
 import '../../res/my_colors.dart';
 
@@ -492,7 +492,9 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                                               cityTextControl,
                                               nameTextControl,
                                               buyerOrinspectorOrShopAdressTextControl,
-                                              farmOrshopNameTextControl);
+                                              farmOrshopNameTextControl,
+                                              latitudeofuser,
+                                              longitudeofuser);
                                       // FirebaseRegistration(context);
                                     },
                                   ),
@@ -674,5 +676,4 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   //     shopNameTextControl.clear();
   //   }
   // }
-
 }

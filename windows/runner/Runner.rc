@@ -90,12 +90,12 @@ BEGIN
         BLOCK "040904e4"
         BEGIN
             VALUE "CompanyName", "com.example" "\0"
-            VALUE "FileDescription", "milk_zilla" "\0"
+            VALUE "FileDescription", "Milk Zilla" "\0"
             VALUE "FileVersion", VERSION_AS_STRING "\0"
-            VALUE "InternalName", "milk_zilla" "\0"
+            VALUE "InternalName", "Milk Zilla" "\0"
             VALUE "LegalCopyright", "Copyright (C) 2023 com.example. All rights reserved." "\0"
             VALUE "OriginalFilename", "milk_zilla.exe" "\0"
-            VALUE "ProductName", "milk_zilla" "\0"
+            VALUE "ProductName", "Milk Zilla" "\0"
             VALUE "ProductVersion", VERSION_AS_STRING "\0"
         END
     END

@@ -23,6 +23,8 @@ class UserRegistrationController {
     var nameTextControl,
     var famrOrbuyerOrinspectorOrShopAdressTextControl,
     var farmOrshopNameTextControl,
+    lat,
+    long
   ) async {
     showDialog(
         context: parentContext,
@@ -47,7 +49,9 @@ class UserRegistrationController {
             cityTextControl,
             nameTextControl,
             famrOrbuyerOrinspectorOrShopAdressTextControl,
-            farmOrshopNameTextControl);
+            farmOrshopNameTextControl,
+            lat,
+            long);
         if (whichUser == 'Buyer') {
           MySharedPrefencesSessionHandling
               .setOrupdateWhichUserLoggedInSharedPreferences('${whichUser}');
@@ -186,6 +190,8 @@ Future createUserInFirebase(
   var nameTextControl,
   var buyerOrinspectorOrShopAdressTextControl,
   var shopNameTextControl,
+  lat,
+  long
 ) async {
   //Refrence to document
   final buyer = FirebaseFirestore.instance
@@ -219,7 +225,9 @@ Future createUserInFirebase(
     'email': emailTextController.text,
     'password': PasswordTextController.text,
     'status': 'Pending',
-    'role': 'Seller'
+    'role': 'Seller',
+    'lat':lat,
+    'long':long,
   };
   final jsonForFarmer = {
     'name': nameTextControl.text,
