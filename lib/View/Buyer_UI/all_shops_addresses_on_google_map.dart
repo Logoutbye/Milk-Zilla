@@ -12,14 +12,12 @@ import 'package:milk_zilla/res/my_colors.dart';
 class AllShopsAddressesOnGoogleMap extends StatefulWidget {
   AllShopsAddressesOnGoogleMap({
     super.key,
+    required this.shopesLatLang,
+    required this.shopNames,
   });
-  // required this.latitudeOfCustomer,
-  // required this.longitudeOfCustomer,
-  // required this.customerName
 
-  // double latitudeOfCustomer;
-  // double longitudeOfCustomer;
-  // String customerName;
+  List<LatLng> shopesLatLang;
+  List<String> shopNames;
 
   @override
   State<AllShopsAddressesOnGoogleMap> createState() =>
@@ -36,12 +34,14 @@ class _AllShopsAddressesOnGoogleMapState
   LatLng _markerPosition = LatLng(30.3753, 69.3451);
 
   // latitude and longitude
-  List<LatLng> _shopesLatLang = [
-    LatLng(34.0150, 71.5250),
-    LatLng(35.3753, 72.3633),
-    LatLng(34.2000, 71.7864),
-    LatLng(35.8519, 72.0400),
-  ];
+  List<LatLng> _shopesLatLang = List.empty(growable: true);
+
+  // [
+  //   LatLng(34.0150, 71.5250),
+  //   LatLng(35.3753, 72.3633),
+  //   LatLng(34.2000, 71.7864),
+  //   LatLng(35.8519, 72.0400),
+  // ];
 
 // for connverting coardinates to address
   late List<Placemark> placemarks;
@@ -61,17 +61,18 @@ class _AllShopsAddressesOnGoogleMapState
         ),
       ),
     );
-
+    _shopesLatLang = widget.shopesLatLang;
     for (var i = 0; i < _shopesLatLang.length; i++) {
       _markers.add(
         Marker(
             markerId: MarkerId('marker_${i + 2}'),
             position: _shopesLatLang[i],
             infoWindow: InfoWindow(
-              title: 'Shope ${i + 1}',
+              title: '${widget.shopNames[i]}',
             )),
       );
     }
+    setState(() {});
   }
 
   // latitude and longitude for sending back to Cart Screen

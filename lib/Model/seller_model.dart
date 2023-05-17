@@ -11,6 +11,8 @@ class SellerOrInspectorModel {
   var inspector_adress;
   var email;
   var password;
+  var lat;
+  var long;
   var status;
 
   SellerOrInspectorModel({
@@ -24,6 +26,8 @@ class SellerOrInspectorModel {
     required this.inspector_adress,
     required this.email,
     required this.password,
+    required this.lat,
+    required this.long,
     required this.status,
   });
 
@@ -40,6 +44,8 @@ class SellerOrInspectorModel {
         inspector_adress: data['inspector_adress'],
         email: data['email'],
         password: data['password'],
+        lat: data['lat'],
+        long: data['long'],
         status: data['status']);
     // Order(
     //   id: doc.id,
@@ -61,6 +67,8 @@ class SellerOrInspectorModel {
     farm_adress = json['farm_adress'];
     inspector_adress = json['inspector_adress'];
     email = json['email'];
+    lat = json['lat'];
+    long = json['long'];
     status = json['status'];
   }
 
@@ -75,6 +83,8 @@ class SellerOrInspectorModel {
     data['farm_adress'] = this.farm_adress;
     data['inspector_adress'] = this.inspector_adress;
     data['email'] = this.email;
+    data['lat'] = this.lat;
+    data['long'] = this.long;
     data['status'] = this.status;
     return data;
   }

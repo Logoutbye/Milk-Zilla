@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:lottie/lottie.dart';
 import 'package:milk_zilla/Controllers/Buyer_Controllers/get_all_approved_shopes_with_specif_city_controller.dart';
 import 'package:milk_zilla/Model/seller_model.dart';
@@ -25,6 +26,9 @@ class AllShopesToOrderFrom extends StatefulWidget {
 class _AllShopesToOrderFromState extends State<AllShopesToOrderFrom> {
   final user = FirebaseAuth.instance.currentUser;
   var getUserCity;
+
+  List<LatLng> shopesLatLang = List.empty(growable: true);
+  List<String> shopsNames = List.empty(growable: true);
 
   @override
   void initState() {
@@ -107,6 +111,8 @@ class _AllShopesToOrderFromState extends State<AllShopesToOrderFrom> {
               itemBuilder: (context, index) {
                 print("Shopes Length: ${shops.length}");
                 SellerOrInspectorModel shopes = shops[index];
+                shopesLatLang.add(LatLng(shopes.lat, shopes.long));
+                shopsNames.add(shopes.shop_name);
                 // TODO: Build UI for each order
                 return buildShopsUI(context, shopes);
               },
@@ -116,27 +122,21 @@ class _AllShopesToOrderFromState extends State<AllShopesToOrderFrom> {
           }
         },
       ),
-      floatingActionButton: FloatingActionButton(
-        child: Container(
-          width: 200.0,
-          height: 200.0,
-          decoration: BoxDecoration(
-            shape: BoxShape.circle,
-            //color: Colors.blue,
-          ),
-          child: Center(
-            child: Text(
-              'Near shop',
-              style: TextStyle(
-                fontSize: 16.0,
-                color: Colors.white,
-              ),
-            ),
+      floatingActionButton: FloatingActionButton.extended(
+        //backgroundColor: MyColors.kSecondary,
+        label: Text(
+          'Shops near me',
+          style: TextStyle(
+            fontSize: 16.0,
+            color: Colors.white,
           ),
         ),
         onPressed: () {
           Navigator.of(context).push(MaterialPageRoute(builder: (context) {
-            return AllShopsAddressesOnGoogleMap();
+            return AllShopsAddressesOnGoogleMap(
+              shopesLatLang: shopesLatLang,
+              shopNames: shopsNames,
+            );
           }));
         },
       ),
