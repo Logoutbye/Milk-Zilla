@@ -70,27 +70,29 @@ class LoginController {
           Navigator.of(parentContext).pushReplacement(
               MaterialPageRoute(builder: (context) => AllShopesToOrderFrom()));
         } else if (whichUser == 'Seller') {
-          navigatorKey.currentState!.popUntil((route) => route.isFirst);
           if (currentSellerStatusInFirestore == 'Approved') {
-            Navigator.of(parentContext).push(
+            navigatorKey.currentState!.popUntil((route) => route.isFirst);
+            Navigator.of(parentContext).pushReplacement(
                 MaterialPageRoute(builder: (context) => SellerDashboard()));
           } else {
+            navigatorKey.currentState!.popUntil((route) => route.isFirst);
             print(
                 'After successful login i am waiting to be approved as seller');
-            Navigator.of(parentContext).push(MaterialPageRoute(
+            Navigator.of(parentContext).pushReplacement(MaterialPageRoute(
                 builder: (context) => RegistrationStatusScreen(
                       whichUser: whichUser,
                     )));
           }
         } else if (whichUser == 'Farmer') {
-          navigatorKey.currentState!.popUntil((route) => route.isFirst);
           if (currentFarmerStatusInFirestore == 'Approved') {
-            Navigator.of(parentContext)
-                .push(MaterialPageRoute(builder: (context) => FarmOrders()));
+            navigatorKey.currentState!.popUntil((route) => route.isFirst);
+            Navigator.of(parentContext).pushReplacement(
+                MaterialPageRoute(builder: (context) => FarmOrders()));
           } else {
+            navigatorKey.currentState!.popUntil((route) => route.isFirst);
             print(
                 'After successful login i am waiting to be approved as seller');
-            Navigator.of(parentContext).push(MaterialPageRoute(
+            Navigator.of(parentContext).pushReplacement(MaterialPageRoute(
                 builder: (context) => RegistrationStatusScreen(
                       whichUser: whichUser,
                     )));
@@ -98,12 +100,13 @@ class LoginController {
         } else {
           if (currentInspectorStatusInFirestore == 'Approved') {
             navigatorKey.currentState!.popUntil((route) => route.isFirst);
-            Navigator.of(parentContext).push(
+            Navigator.of(parentContext).pushReplacement(
                 MaterialPageRoute(builder: (context) => InspectorDashboard()));
           } else {
+            navigatorKey.currentState!.popUntil((route) => route.isFirst);
             print(
                 'After successful login i am waiting to be approved as Inspector');
-            Navigator.of(parentContext).push(MaterialPageRoute(
+            Navigator.of(parentContext).pushReplacement(MaterialPageRoute(
                 builder: (context) => RegistrationStatusScreen(
                       whichUser: whichUser,
                     )));

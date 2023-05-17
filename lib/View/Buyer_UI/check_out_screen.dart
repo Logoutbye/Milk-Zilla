@@ -533,6 +533,8 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
                               } else {
                                 Navigator.pop(context);
                               }
+                            } else {
+                              Navigator.pop(context);
                             }
                             ;
                           }),

@@ -1,6 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:milk_zilla/View/Seller_UI/Shop%20Orders/all_farms.dart';
+import 'package:milk_zilla/View/Seller_UI/Shop%20Orders/all_farms_to_order_milk.dart';
 import 'package:milk_zilla/View/Seller_UI/seller_dashboard.dart';
 import 'package:milk_zilla/View/Seller_UI/shop_products_for_selling.dart';
 import 'package:milk_zilla/View/my_home_page.dart';
@@ -56,7 +56,7 @@ class _SellerDrawerState extends State<SellerDrawer> {
               Icons.people,
               color: MyColors.kPrimary,
             ),
-            title: const Text('Customer Orders',
+            title: const Text('Sell Milk',
                 style: TextStyle(color: MyColors.kPrimary)),
             onTap: () {
               // MySharedPrefencesSessionHandling
@@ -77,14 +77,14 @@ class _SellerDrawerState extends State<SellerDrawer> {
               size: 35,
               color: MyColors.kPrimary,
             ),
-            title: const Text('Create Order from Farm',
+            title: const Text('Create an Order',
                 style: TextStyle(
                   color: MyColors.kPrimary,
                 )),
             onTap: () {
               //Navigator.pop(context);
               Navigator.of(context)
-                  .push(MaterialPageRoute(builder: (context) => AllForms()));
+                  .push(MaterialPageRoute(builder: (context) => AllFarmsToOrderMilk()));
             },
           ),
 

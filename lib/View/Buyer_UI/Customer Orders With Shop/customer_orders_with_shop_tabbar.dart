@@ -7,14 +7,14 @@ import 'package:milk_zilla/res/my_colors.dart';
 
 import 'customer_orders_withshop_prepared_by_seller.dart';
 
-class CustomerOrdersWithShop extends StatefulWidget {
-  const CustomerOrdersWithShop({super.key});
+class CustomerOrdersWithShopTabBar extends StatefulWidget {
+  const CustomerOrdersWithShopTabBar({super.key});
 
   @override
-  State<CustomerOrdersWithShop> createState() => _CustomerOrdersWithShopState();
+  State<CustomerOrdersWithShopTabBar> createState() => _CustomerOrdersWithShopTabBarState();
 }
 
-class _CustomerOrdersWithShopState extends State<CustomerOrdersWithShop> {
+class _CustomerOrdersWithShopTabBarState extends State<CustomerOrdersWithShopTabBar> {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(

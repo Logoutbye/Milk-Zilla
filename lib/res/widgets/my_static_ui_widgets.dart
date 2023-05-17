@@ -5,13 +5,14 @@ import 'package:milk_zilla/Model/order_model.dart';
 import 'package:milk_zilla/Utils/utils.dart';
 import 'package:milk_zilla/View/Inspector_UI/customer_delivery_location.dart';
 import 'package:milk_zilla/controllers/Inspector_Controllers/pick_order_controller.dart';
+import 'package:milk_zilla/helper.dart';
 import 'package:milk_zilla/res/constanst.dart';
 import 'package:milk_zilla/res/widgets/report_viewer_screen.dart';
 import '../../Controllers/Global_Controllers/update_status_global_controller.dart';
-import '../../View/Buyer_UI/Customer Orders With Shop/customer_orders_with_shop.dart';
+import '../../View/Buyer_UI/Customer Orders With Shop/customer_orders_with_shop_tabbar.dart';
 import '../../View/Farm_UI/farm_orders.dart';
 import '../../View/Inspector_UI/Pick Orders/inspector_screen.dart';
-import '../../View/Inspector_UI/Test Milk/test_milk_screen.dart';
+import '../../View/Inspector_UI/Test Milk/test_milk_screen_tab_bar.dart';
 import '../../View/Seller_UI/Buy Milk From Farm/buy_milk_from_farm_tabar.dart';
 import '../../View/Seller_UI/Sell Milk To Customers/customers_orders.dart';
 import '../../controllers/Inspector_Controllers/test_orders_for_shop_controller.dart';
@@ -46,20 +47,23 @@ class MyStaticUIWidgets {
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-               role== 'MilkTestor' && status != 'Pending'? Row(
-                  children: [
-                    SizedBox(),
-                    Spacer(),
-                    IconButton(
-                        onPressed: () {
-                          // Navigator.of(context).push(MaterialPageRoute(builder: (context)=>SfPdfViewer.network('')));
-                        },
-                        icon: Icon(
-                          Icons.report_gmailerrorred_rounded,
-                          color: MyColors.kPrimary,
-                        ))
-                  ],
-                ):SizedBox(),
+                 status != 'ReadyForTesting'
+                    ? Row(
+                        children: [
+                          SizedBox(),
+                          Spacer(),
+                          IconButton(
+                              onPressed: () {
+                                Navigator.of(context).push(MaterialPageRoute(
+                                    builder: (context) => ViewMilkReport()));
+                              },
+                              icon: Icon(
+                                Icons.report_gmailerrorred_rounded,
+                                color: MyColors.kPrimary,
+                              ))
+                        ],
+                      )
+                    : SizedBox(),
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -229,7 +233,7 @@ class MyStaticUIWidgets {
                             Navigator.pop(context);
                             Navigator.of(context).push(MaterialPageRoute(
                                 builder: (context) =>
-                                    CustomerOrdersWithShop()));
+                                    CustomerOrdersWithShopTabBar()));
                           },
                         ),
                       )
@@ -453,7 +457,7 @@ class MyStaticUIWidgets {
                                             ),
                                           )
                                         : role == 'MilkTestor' &&
-                                                status == 'Pending'
+                                                status == 'ReadyForTesting'
                                             ? Center(
                                                 child: ElevatedButton(
                                                   style:
@@ -523,8 +527,7 @@ class MyStaticUIWidgets {
                                                                     mainAxisAlignment:
                                                                         MainAxisAlignment
                                                                             .center,
-                                                                    children: <
-                                                                        Widget>[
+                                                                    children: <Widget>[
                                                                       Text(
                                                                         'Not-Approved',
                                                                         style: TextStyle(
@@ -548,10 +551,10 @@ class MyStaticUIWidgets {
                                                                                 'Orders With Farm',
                                                                                 'Canceled',
                                                                                 'Not-Approved',
-                                                                                '${NotApprovedReportLink}');
+                                                                                '${NotApprovedReportPdfLink}');
 
                                                                             Navigator.pop(context);
-                                                                            Navigator.of(context).push(MaterialPageRoute(builder: (context) => TestMilkScreen()));
+                                                                            Navigator.of(context).push(MaterialPageRoute(builder: (context) => TestMilkScreenTabbar()));
                                                                           },
                                                                           icon:
                                                                               Icon(
@@ -572,8 +575,7 @@ class MyStaticUIWidgets {
                                                                   crossAxisAlignment:
                                                                       CrossAxisAlignment
                                                                           .center,
-                                                                  children: <
-                                                                      Widget>[
+                                                                  children: <Widget>[
                                                                     Text(
                                                                       'Approved',
                                                                       style: TextStyle(
@@ -600,12 +602,12 @@ class MyStaticUIWidgets {
                                                                               'Orders With Farm',
                                                                               'Shipped',
                                                                               'Approved',
-                                                                              '${ApprovedReportLink}');
+                                                                              '${ApprovedReportPdfLink}');
 
                                                                           Navigator.pop(
                                                                               context);
                                                                           Navigator.of(context)
-                                                                              .push(MaterialPageRoute(builder: (context) => TestMilkScreen()));
+                                                                              .push(MaterialPageRoute(builder: (context) => TestMilkScreenTabbar()));
                                                                         },
                                                                         icon:
                                                                             Icon(
@@ -670,7 +672,7 @@ class MyStaticUIWidgets {
                                                               MaterialPageRoute(
                                                                   builder:
                                                                       (context) =>
-                                                                          TestMilkScreen()));
+                                                                          TestMilkScreenTabbar()));
                                                         },
                                                       ),
                                                     ),

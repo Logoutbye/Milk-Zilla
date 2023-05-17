@@ -102,208 +102,211 @@ class _LoginScreenState extends State<LoginScreen> {
                     left: MediaQuery.of(context).size.height / 24,
 
                     // Main form Container
-                    child: Center(
-                      child: Container(
-                        width: MediaQuery.of(context).size.width / 1.2,
-                        height: MediaQuery.of(context).size.height / 1.9,
-                        decoration: BoxDecoration(
-                          color: MyColors.kSecondary,
-                          borderRadius: BorderRadius.circular(20),
-                          boxShadow: [
-                            BoxShadow(
-                              color: MyColors.kPrimary,
-                              // blurRadius: 15,
-                              // spreadRadius: 2,
-                              // offset: Offset(
-                              //   0,
-                              //   5,
-                              // ), // Shadow position
-                            ),
-                          ],
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.all(10),
-                          child: Center(
-                            child: SingleChildScrollView(
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  // Login Text
-                                  Container(
-                                    child: Text(
-                                      'Login',
-                                      style: TextStyle(
-                                        color: MyColors.kPrimary,
-                                        fontSize: 30,
-                                        fontWeight: FontWeight.bold,
+                    child: FittedBox(
+                      fit: BoxFit.fill,
+                      child: Center(
+                        child: Container(
+                          width: MediaQuery.of(context).size.width / 1.2,
+                          height: MediaQuery.of(context).size.height / 2,
+                          decoration: BoxDecoration(
+                            color: MyColors.kSecondary,
+                            borderRadius: BorderRadius.circular(20),
+                            boxShadow: [
+                              BoxShadow(
+                                color: MyColors.kPrimary,
+                                // blurRadius: 15,
+                                // spreadRadius: 2,
+                                // offset: Offset(
+                                //   0,
+                                //   5,
+                                // ), // Shadow position
+                              ),
+                            ],
+                          ),
+                          child: Padding(
+                            padding:  EdgeInsets.all(10),
+                            child: Center(
+                              child: SingleChildScrollView(
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    // Login Text
+                                    Container(
+                                      child: Text(
+                                        'Login',
+                                        style: TextStyle(
+                                          color: MyColors.kPrimary,
+                                          fontSize: 30,
+                                          fontWeight: FontWeight.bold,
+                                        ),
                                       ),
                                     ),
-                                  ),
-                                  SizedBox(
-                                    height: 20,
-                                  ),
-                                  // Mobile Number Textfield
-                                  Container(
-                                    // color: Colors.red,
-                                    child: TextField(
-                                      controller: emailTextController,
-                                      maxLength: 30,
-                                      onTap: () {},
-                                      keyboardType: TextInputType.emailAddress,
-                                      // inputFormatters: [
-                                      //   FilteringTextInputFormatter.digitsOnly,
-                                      // ],
-                                      style: TextStyle(
-                                        color: MyColors.kBlack,
-                                        // fontSize: 18,
+                                    SizedBox(
+                                      height: 20,
+                                    ),
+                                    // Mobile Number Textfield
+                                    Container(
+                                      // color: Colors.red,
+                                      child: TextField(
+                                        controller: emailTextController,
+                                        maxLength: 30,
+                                        onTap: () {},
+                                        keyboardType: TextInputType.emailAddress,
+                                        // inputFormatters: [
+                                        //   FilteringTextInputFormatter.digitsOnly,
+                                        // ],
+                                        style: TextStyle(
+                                          color: MyColors.kBlack,
+                                          // fontSize: 18,
+                                        ),
+                                        decoration: InputDecoration(
+                                          hintText: 'example@gmail.com',
+                                          labelText: 'Email',
+                                          labelStyle:
+                                              TextStyle(color: MyColors.kPrimary),
+                                          hintStyle:
+                                              TextStyle(color: MyColors.kPrimary),
+                                          enabledBorder: new OutlineInputBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(10),
+                                            borderSide: BorderSide(
+                                                color: Color.fromARGB(
+                                                    255, 180, 180, 180)),
+                                          ),
+                                          focusedBorder: OutlineInputBorder(
+                                            borderSide: BorderSide(
+                                                color: MyColors.kPrimary),
+                                            borderRadius:
+                                                BorderRadius.circular(10),
+                                          ),
+                                          prefixIcon: Icon(Icons.email,color: MyColors.kPrimary,),
+                                        ),
                                       ),
-                                      decoration: InputDecoration(
-                                        hintText: 'example@gmail.com',
-                                        labelText: 'Email',
-                                        labelStyle:
-                                            TextStyle(color: MyColors.kPrimary),
-                                        hintStyle:
-                                            TextStyle(color: MyColors.kPrimary),
-                                        enabledBorder: new OutlineInputBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(10),
-                                          borderSide: BorderSide(
+                                    ),
+                                    SizedBox(
+                                      height: 15,
+                                    ),
+                                    // Password TextField
+                                    Container(
+                                      // color: Colors.red,
+                                      child: TextField(
+                                        controller: PasswordTextController,
+                                        obscureText: true,
+                                        onTap: () {},
+                                        style: TextStyle(
+                                          color: MyColors.kBlack,
+                                          // fontSize: 18,
+                                        ),
+                                        decoration: InputDecoration(
+                                          hintText: 'Password',
+                                          labelText: 'Password',
+                                          labelStyle:
+                                              TextStyle(color: MyColors.kPrimary),
+                                          hintStyle:
+                                              TextStyle(color: MyColors.kPrimary),
+                                          enabledBorder: new OutlineInputBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(10),
+                                            borderSide: BorderSide(
                                               color: Color.fromARGB(
-                                                  255, 180, 180, 180)),
-                                        ),
-                                        focusedBorder: OutlineInputBorder(
-                                          borderSide: BorderSide(
-                                              color: MyColors.kPrimary),
-                                          borderRadius:
-                                              BorderRadius.circular(10),
-                                        ),
-                                        prefixIcon: Icon(Icons.email,color: MyColors.kPrimary,),
-                                      ),
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    height: 15,
-                                  ),
-                                  // Password TextField
-                                  Container(
-                                    // color: Colors.red,
-                                    child: TextField(
-                                      controller: PasswordTextController,
-                                      obscureText: true,
-                                      onTap: () {},
-                                      style: TextStyle(
-                                        color: MyColors.kBlack,
-                                        // fontSize: 18,
-                                      ),
-                                      decoration: InputDecoration(
-                                        hintText: 'Password',
-                                        labelText: 'Password',
-                                        labelStyle:
-                                            TextStyle(color: MyColors.kPrimary),
-                                        hintStyle:
-                                            TextStyle(color: MyColors.kPrimary),
-                                        enabledBorder: new OutlineInputBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(10),
-                                          borderSide: BorderSide(
-                                            color: Color.fromARGB(
-                                                255, 193, 198, 198),
-                                            //Color.fromARGB(255, 115, 38, 38),
+                                                  255, 193, 198, 198),
+                                              //Color.fromARGB(255, 115, 38, 38),
+                                            ),
+                                          ),
+                                          focusedBorder: OutlineInputBorder(
+                                            borderSide: BorderSide(
+                                                color: MyColors.kPrimary),
+                                            borderRadius:
+                                                BorderRadius.circular(10),
+                                          ),
+                                          prefixIcon: Icon(
+                                            Icons.lock,
+                                            color:
+                                                MyColors.kPrimary,
+                                            // size: 25,
                                           ),
                                         ),
-                                        focusedBorder: OutlineInputBorder(
-                                          borderSide: BorderSide(
-                                              color: MyColors.kPrimary),
-                                          borderRadius:
-                                              BorderRadius.circular(10),
+                                      ),
+                                    ),
+                    
+                                    // forgot password
+                                    Container(
+                                      child: Align(
+                                        alignment: Alignment.topRight,
+                                        child: TextButton(
+                                          onPressed: () {
+                                            if (emailTextController
+                                                .text.isEmpty) {
+                                              Utils.flushBarErrorMessage(
+                                                  'Please Enter Email', context);
+                                            } else if (emailTextController
+                                                    .text.isNotEmpty &&
+                                                PasswordTextController
+                                                    .text.isEmpty) {
+                                            forgetPasswordController.firebaseForgetPassword(context,emailTextController);
+                                            } else {
+                                              Utils.flushBarErrorMessage(
+                                                  'Please enter only email',
+                                                  context);
+                                            }
+                                          },
+                                          child: Text('Forgot password!'),
                                         ),
-                                        prefixIcon: Icon(
-                                          Icons.lock,
-                                          color:
-                                              MyColors.kPrimary,
-                                          // size: 25,
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      height: 5,
+                                    ),
+                                    MyElevatedButton(
+                                      title: 'Login',
+                                      onpress: () {
+                                        loginController.FirebaseLogin(
+                                          context,
+                                          emailTextController,
+                                          PasswordTextController,
+                                          whichUser);
+                                        // FirebaseLogin(context);
+                                      },
+                                    ),
+                                    GestureDetector(
+                                      onTap: () {
+                                        Navigator.of(context).push(
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    RegistrationScreen(
+                                                      whichUser: widget.whichUser,
+                                                    )));
+                                      },
+                                      child: Padding(
+                                        padding: const EdgeInsets.only(top: 30),
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.start,
+                                          children: [
+                                            Row(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.center,
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              children: [
+                                                Text("Dont have an account? "),
+                                                Text(
+                                                  "Create Now",
+                                                  style: TextStyle(
+                                                      color: MyColors.kPrimary,
+                                                      fontWeight:
+                                                          FontWeight.bold),
+                                                ),
+                                              ],
+                                            ),
+                                          ],
                                         ),
                                       ),
-                                    ),
-                                  ),
-
-                                  // forgot password
-                                  Container(
-                                    child: Align(
-                                      alignment: Alignment.topRight,
-                                      child: TextButton(
-                                        onPressed: () {
-                                          if (emailTextController
-                                              .text.isEmpty) {
-                                            Utils.flushBarErrorMessage(
-                                                'Please Enter Email', context);
-                                          } else if (emailTextController
-                                                  .text.isNotEmpty &&
-                                              PasswordTextController
-                                                  .text.isEmpty) {
-                                          forgetPasswordController.firebaseForgetPassword(context,emailTextController);
-                                          } else {
-                                            Utils.flushBarErrorMessage(
-                                                'Please enter only email',
-                                                context);
-                                          }
-                                        },
-                                        child: Text('Forgot password!'),
-                                      ),
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    height: 5,
-                                  ),
-                                  MyElevatedButton(
-                                    title: 'Login',
-                                    onpress: () {
-                                      loginController.FirebaseLogin(
-                                        context,
-                                        emailTextController,
-                                        PasswordTextController,
-                                        whichUser);
-                                      // FirebaseLogin(context);
-                                    },
-                                  ),
-                                  GestureDetector(
-                                    onTap: () {
-                                      Navigator.of(context).push(
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  RegistrationScreen(
-                                                    whichUser: widget.whichUser,
-                                                  )));
-                                    },
-                                    child: Padding(
-                                      padding: const EdgeInsets.only(top: 30),
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.start,
-                                        children: [
-                                          Row(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.center,
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                            children: [
-                                              Text("Dont have an account? "),
-                                              Text(
-                                                "Create Now",
-                                                style: TextStyle(
-                                                    color: MyColors.kPrimary,
-                                                    fontWeight:
-                                                        FontWeight.bold),
-                                              ),
-                                            ],
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  )
-                                ],
+                                    )
+                                  ],
+                                ),
                               ),
                             ),
                           ),

@@ -8,7 +8,7 @@ import 'package:provider/provider.dart';
 
 import '../../res/Components/create_an_order.dart';
 import '../../res/my_colors.dart';
-import 'Customer Orders With Shop/customer_orders_with_shop.dart';
+import 'Customer Orders With Shop/customer_orders_with_shop_tabbar.dart';
 
 class ReviewCart extends StatefulWidget {
   var getShopId;
@@ -63,7 +63,7 @@ class _ReviewCartState extends State<ReviewCart> {
                 ),
                 onPressed: () {
                   Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => CustomerOrdersWithShop()));
+                      builder: (context) => CustomerOrdersWithShopTabBar()));
                 },
               ),
             ),
