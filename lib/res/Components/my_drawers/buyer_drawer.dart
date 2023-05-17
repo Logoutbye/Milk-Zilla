@@ -1,10 +1,12 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:milk_zilla/View/Buyer_UI/Customer%20Orders%20With%20Shop/customer_orders_with_shop.dart';
+import 'package:milk_zilla/View/Buyer_UI/Customer%20Orders%20With%20Shop/customer_orders_with_shop_tabbar.dart';
 import 'package:milk_zilla/View/Buyer_UI/buyer_profile.dart';
 import 'package:milk_zilla/View/my_home_page.dart';
 import 'package:milk_zilla/main.dart';
 import 'package:milk_zilla/res/Components/my_shared_prefrences.dart';
+
+import '../../../helper.dart';
 
 class BuyerDrawer extends StatefulWidget {
   BuyerDrawer({super.key});
@@ -31,16 +33,12 @@ class _BuyerDrawerState extends State<BuyerDrawer> {
 
           // ListTile(
           //   leading: const Icon(Icons.production_quantity_limits),
-          //   title: const Text('My Profile'),
+          //   title: const Text('Pdf testing'),
           //   onTap: () {
-          //     // MySharedPrefencesSessionHandling
-          //     //     .removeWhichUserLoggedInFromSharedPreferences();
+            
 
-          //     // FirebaseAuth.instance.signOut();
-          //     Navigator.pop(context);
           //     Navigator.of(context).push(
-          //         MaterialPageRoute(builder: (context) => BuyerProfile()));
-          //     // navigatorKey.currentState!.popUntil((route) => route.isFirst);
+          //         MaterialPageRoute(builder: (context) => reportScreen()));
           //   },
           // ),
           // // Customer Orders
@@ -54,7 +52,7 @@ class _BuyerDrawerState extends State<BuyerDrawer> {
               // FirebaseAuth.instance.signOut();
               Navigator.pop(context);
               Navigator.of(context).push(MaterialPageRoute(
-                  builder: (context) => CustomerOrdersWithShop()));
+                  builder: (context) => CustomerOrdersWithShopTabBar()));
               // navigatorKey.currentState!.popUntil((route) => route.isFirst);
             },
           ),

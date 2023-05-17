@@ -1,6 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:milk_zilla/View/Buyer_UI/Customer%20Orders%20With%20Shop/customer_orders_with_shop.dart';
+import 'package:milk_zilla/View/Buyer_UI/Customer%20Orders%20With%20Shop/customer_orders_with_shop_tabbar.dart';
 import 'package:milk_zilla/View/Buyer_UI/buyer_profile.dart';
 import 'package:milk_zilla/View/Farm_UI/farm_orders.dart';
 import 'package:milk_zilla/View/my_home_page.dart';

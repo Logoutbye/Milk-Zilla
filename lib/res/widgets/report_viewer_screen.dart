@@ -1,21 +1,54 @@
-// import 'package:flutter/material.dart';
-// import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
+import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
+import 'package:milk_zilla/res/my_colors.dart';
 
-// class ViewMilkReport extends StatefulWidget {
-//   const ViewMilkReport({super.key});
+import '../constanst.dart';
 
-//   @override
-//   State<ViewMilkReport> createState() => _ViewMilkReportState();
-// }
+class ViewMilkReport extends StatefulWidget {
+  const ViewMilkReport({super.key});
 
-// class _ViewMilkReportState extends State<ViewMilkReport> {
-//   String src =
-//       'https://firebasestorage.googleapis.com/v0/b/milk-zilla.appspot.com/o/Milk%20Zilla%20Reports%2FApproved%20Reports%2FPostive%20Report.pdf?alt=media&token=a1d0c2ef-64e8-4e3a-a038-28dc9aea1f4e';
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//         body: Container(
-//             child: SfPdfViewer.network(
-//                 'https://cdn.syncfusion.com/content/PDFViewer/flutter-succinctly.pdf')));
-//   }
-// }
+  @override
+  State<ViewMilkReport> createState() => _ViewMilkReportState();
+}
+
+class _ViewMilkReportState extends State<ViewMilkReport> {
+  bool _isLoading = true;
+
+  @override
+  void initState() {
+    super.initState();
+    _fetchImage();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      // backgroundColor: MyColors.kSecondary,
+      appBar: AppBar(
+        elevation: 0,
+        backgroundColor: MyColors.kSecondary,
+        foregroundColor: MyColors.kPrimary,
+        title:_isLoading? Text('Status: Loading...'): Text('Status: Approved'),
+      ),
+      body: Center(
+          child: _isLoading
+              ? Center(
+                  child: LottieBuilder.asset('assets/animations/loading.json',
+                   height: MediaQuery.of(context).size.height / 5,),)
+              : Center(
+                  child: Container(
+                    child: Image.network(ApprovedReportPhotoLink),
+                  ),
+                )),
+    );
+  }
+
+  void _fetchImage() {
+    // Simulating image fetching delay with Future.delayed
+    Future.delayed(Duration(seconds: 2), () {
+      setState(() {
+        _isLoading = false;
+      });
+    });
+  }
+}

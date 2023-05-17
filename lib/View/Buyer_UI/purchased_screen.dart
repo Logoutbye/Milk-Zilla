@@ -6,7 +6,8 @@ import 'package:milk_zilla/main.dart';
 
 import '../../res/constanst.dart';
 import '../../res/my_colors.dart';
-import 'Customer Orders With Shop/customer_orders_with_shop.dart';
+import '../Seller_UI/Buy Milk From Farm/buy_milk_from_farm_tabar.dart';
+import 'Customer Orders With Shop/customer_orders_with_shop_tabbar.dart';
 
 class PurchasedScreen extends StatefulWidget {
   var result;
@@ -126,12 +127,14 @@ class _PurchasedScreenState extends State<PurchasedScreen> {
                         navigatorKey.currentState!
                             .popUntil((route) => route.isFirst);
                         if (widget.orderCollectiontohelpfornavigation ==
-                            'Order') {
+                            'Orders') {
+                              navigatorKey.currentState!
+                            .popUntil((route) => route.isFirst);
                           Navigator.of(context).push(MaterialPageRoute(
-                              builder: (context) => CustomerOrdersWithShop()));
+                              builder: (context) => CustomerOrdersWithShopTabBar()));
                         } else {
-                          // Navigator.of(context).push(MaterialPageRoute(
-                          //     builder: (context) => CustomerOrdersWithShop()));
+                            Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => BuyMilkFromFarmTabar()));
                         }
                       } else {
                         Navigator.pop(context);

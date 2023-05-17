@@ -12,14 +12,14 @@ import 'package:milk_zilla/res/Components/my_drawers/inspector_drawer.dart';
 
 import '../../../res/my_colors.dart';
 
-class TestMilkScreen extends StatefulWidget {
-  const TestMilkScreen({super.key});
+class TestMilkScreenTabbar extends StatefulWidget {
+  const TestMilkScreenTabbar({super.key});
 
   @override
-  State<TestMilkScreen> createState() => _TestMilkScreenState();
+  State<TestMilkScreenTabbar> createState() => _TestMilkScreenTabbarState();
 }
 
-class _TestMilkScreenState extends State<TestMilkScreen> {
+class _TestMilkScreenTabbarState extends State<TestMilkScreenTabbar> {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(

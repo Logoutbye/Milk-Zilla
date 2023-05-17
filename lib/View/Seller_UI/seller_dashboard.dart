@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
-import 'package:milk_zilla/View/Buyer_UI/Customer%20Orders%20With%20Shop/customer_orders_with_shop.dart';
+import 'package:milk_zilla/View/Buyer_UI/Customer%20Orders%20With%20Shop/customer_orders_with_shop_tabbar.dart';
 import 'package:milk_zilla/View/Inspector_UI/Pick%20Orders/inspector_screen.dart';
-import 'package:milk_zilla/View/Inspector_UI/Test%20Milk/test_milk_screen.dart';
+import 'package:milk_zilla/View/Inspector_UI/Test%20Milk/test_milk_screen_tab_bar.dart';
 import 'package:milk_zilla/View/Seller_UI/Buy%20Milk%20From%20Farm/buy_milk_from_farm_tabar.dart';
 import 'package:milk_zilla/View/Seller_UI/Sell%20Milk%20To%20Customers/customers_orders.dart';
 

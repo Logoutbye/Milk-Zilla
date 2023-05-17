@@ -10,7 +10,8 @@ import 'package:provider/provider.dart';
 
 import '../../../res/Components/create_an_order.dart';
 import '../../../res/my_colors.dart';
-import '../../Buyer_UI/Customer Orders With Shop/customer_orders_with_shop.dart';
+import '../../Buyer_UI/Customer Orders With Shop/customer_orders_with_shop_tabbar.dart';
+import '../Buy Milk From Farm/buy_milk_from_farm_tabar.dart';
 
 class ReviewCartForFarm extends StatefulWidget {
   var getFormId;
@@ -70,8 +71,8 @@ class _ReviewCartForFarmState extends State<ReviewCartForFarm> {
                   ),
                 ),
                 onPressed: () {
-                  // Navigator.of(context).push(MaterialPageRoute(
-                  //     builder: (context) => CustomerOrdersWithShop()));
+                   Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => BuyMilkFromFarmTabar()));
                 },
               ),
             ),
