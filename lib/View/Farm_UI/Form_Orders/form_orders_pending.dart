@@ -1,10 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:lottie/lottie.dart';
 
-import '../../../Controllers/Farm_Controllers/farm_controller.dart';
 import '../../../Model/order_model.dart';
 import '../../../controllers/Farm_Controllers/get_order_for_fram_controller.dart';
 import '../../../res/widgets/my_static_ui_widgets.dart';

@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:milk_zilla/Model/seller_model.dart';
 
 import '../../Model/order_model.dart';
 

@@ -12,8 +12,8 @@ import 'Customer Orders With Shop/customer_orders_with_shop_tabbar.dart';
 
 class ReviewCart extends StatefulWidget {
   var getShopId;
-
-  ReviewCart({required this.getShopId, super.key});
+  var getShopName;
+  ReviewCart({required this.getShopId, required this.getShopName, super.key});
 
   @override
   State<ReviewCart> createState() => _ReviewCartState();
@@ -104,7 +104,7 @@ class _ReviewCartState extends State<ReviewCart> {
                     style: Theme.of(context).textTheme.labelSmall,
                     children: [
                       TextSpan(
-                          text: 'Welcome to Milk Zilla\n',
+                          text: 'Welcome to ${widget.getShopName}\n',
                           style: TextStyle(
                               color: Color.fromARGB(255, 125, 199, 127),
                               fontSize: 16)),

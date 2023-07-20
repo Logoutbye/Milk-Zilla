@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:milk_zilla/controllers/Buyer_Controllers/get_orders_of_customer.dart';
 
-import '../../../Controllers/Seller_Controllers/seller_controller.dart';
 import '../../../Model/order_model.dart';
 import '../../../res/widgets/my_static_ui_widgets.dart';
 

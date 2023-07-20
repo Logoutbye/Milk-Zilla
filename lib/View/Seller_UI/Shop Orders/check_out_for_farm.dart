@@ -1,8 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:lottie/lottie.dart';
 
 import '../../../Controllers/Buyer_Controllers/get_real_time_prices_from_database_for_creating_an_order.dart';
@@ -397,12 +395,13 @@ class _CheckOutForFarmState extends State<CheckOutForFarm> {
           documentSnapshot.data() as Map<String, dynamic>?;
       // access specific fields
       String user_name = data!['name'];
-      String user_address = data!['shop_adress'];
+      String user_address = data['shop_adress'];
       getUserAdress = user_address;
 
       print('user_name${user_name}');
       getUserName = user_name;
       print('getUserName:$getUserName');
     }
+    return null;
   }
 }

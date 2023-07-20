@@ -1,21 +1,18 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:milk_zilla/Model/order_model.dart';
-import 'package:milk_zilla/Utils/utils.dart';
+import 'package:milk_zilla/View/Inspector_UI/Test%20Milk/create_milk_report.dart';
 import 'package:milk_zilla/View/Inspector_UI/customer_delivery_location.dart';
 import 'package:milk_zilla/controllers/Inspector_Controllers/pick_order_controller.dart';
-import 'package:milk_zilla/helper.dart';
-import 'package:milk_zilla/res/constanst.dart';
 import 'package:milk_zilla/res/widgets/report_viewer_screen.dart';
 import '../../Controllers/Global_Controllers/update_status_global_controller.dart';
 import '../../View/Buyer_UI/Customer Orders With Shop/customer_orders_with_shop_tabbar.dart';
 import '../../View/Farm_UI/farm_orders.dart';
+import '../../View/Inspector_UI/Pick Orders/find_report_by_lot_number.dart';
 import '../../View/Inspector_UI/Pick Orders/inspector_screen.dart';
 import '../../View/Inspector_UI/Test Milk/test_milk_screen_tab_bar.dart';
 import '../../View/Seller_UI/Buy Milk From Farm/buy_milk_from_farm_tabar.dart';
 import '../../View/Seller_UI/Sell Milk To Customers/customers_orders.dart';
-import '../../controllers/Inspector_Controllers/test_orders_for_shop_controller.dart';
 import '../my_colors.dart';
 
 class MyStaticUIWidgets {
@@ -47,23 +44,390 @@ class MyStaticUIWidgets {
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                 status != 'ReadyForTesting'
-                    ? Row(
-                        children: [
-                          SizedBox(),
-                          Spacer(),
-                          IconButton(
-                              onPressed: () {
-                                Navigator.of(context).push(MaterialPageRoute(
-                                    builder: (context) => ViewMilkReport()));
-                              },
-                              icon: Icon(
-                                Icons.report_gmailerrorred_rounded,
-                                color: MyColors.kPrimary,
-                              ))
-                        ],
-                      )
-                    : SizedBox(),
+                // eye button
+                if (role == 'Buyer' && status == 'Shipped')
+                  Row(
+                    children: [
+                      SizedBox(),
+                      Spacer(),
+                      IconButton(
+                          onPressed: () {
+                            Navigator.of(context).push(MaterialPageRoute(
+                                builder: (context) => ViewMilkReport(
+                                      orderId: order.order_id,
+                                      milk_supplier: order.shopId,
+                                      customer_id: order.customerId,
+                                      inspector_id: order.ispectorId,
+                                      inspector_remarks: order.inspectorRemarks,
+                                      order_report: order.orderReport,
+                                      milk_status: order.milk_status,
+                                      viewOnly: true,
+                                    )));
+                          },
+                          icon: Icon(
+                            Icons.report_gmailerrorred_rounded,
+                            color: MyColors.kPrimary,
+                          ))
+                    ],
+                  ),
+                //eye button
+                if (role == 'Buyer' && status == 'Delivered')
+                  Row(
+                    children: [
+                      SizedBox(),
+                      Spacer(),
+                      IconButton(
+                          onPressed: () {
+                            Navigator.of(context).push(MaterialPageRoute(
+                                builder: (context) => ViewMilkReport(
+                                      orderId: order.order_id,
+                                      milk_supplier: order.shopId,
+                                      customer_id: order.customerId,
+                                      inspector_id: order.ispectorId,
+                                      inspector_remarks: order.inspectorRemarks,
+                                      order_report: order.orderReport,
+                                      milk_status: order.milk_status,
+                                      viewOnly: true,
+                                    )));
+                          },
+                          icon: Icon(
+                            Icons.report_gmailerrorred_rounded,
+                            color: MyColors.kPrimary,
+                          ))
+                    ],
+                  ),
+                //eye button
+                if (role == 'Seller' && status == 'Delivered')
+                  Row(
+                    children: [
+                      SizedBox(),
+                      Spacer(),
+                      IconButton(
+                          onPressed: () {
+                            Navigator.of(context).push(MaterialPageRoute(
+                                builder: (context) => ViewMilkReport(
+                                      orderId: order.order_id,
+                                      milk_supplier: order.shopId,
+                                      customer_id: order.customerId,
+                                      inspector_id: order.ispectorId,
+                                      inspector_remarks: order.inspectorRemarks,
+                                      order_report: order.orderReport,
+                                      milk_status: order.milk_status,
+                                      viewOnly: true,
+                                    )));
+                          },
+                          icon: Icon(
+                            Icons.report_gmailerrorred_rounded,
+                            color: MyColors.kPrimary,
+                          ))
+                    ],
+                  ),
+                if (role == 'Inspector' && status == 'Shipped')
+                  Row(
+                    children: [
+                      SizedBox(),
+                      Spacer(),
+                      IconButton(
+                          onPressed: () {
+                            Navigator.of(context).push(MaterialPageRoute(
+                                builder: (context) => ViewMilkReport(
+                                      orderId: order.order_id,
+                                      milk_supplier: order.shopId,
+                                      customer_id: order.customerId,
+                                      inspector_id: order.ispectorId,
+                                      inspector_remarks: order.inspectorRemarks,
+                                      order_report: order.orderReport,
+                                      milk_status: order.milk_status,
+                                      viewOnly: true,
+                                    )));
+                          },
+                          icon: Icon(
+                            Icons.report_gmailerrorred_rounded,
+                            color: MyColors.kPrimary,
+                          ))
+                    ],
+                  ),
+                if (role == 'Inspector' && status == 'Delivered')
+                  Row(
+                    children: [
+                      SizedBox(),
+                      Spacer(),
+                      IconButton(
+                          onPressed: () {
+                            Navigator.of(context).push(MaterialPageRoute(
+                                builder: (context) => ViewMilkReport(
+                                      orderId: order.order_id,
+                                      milk_supplier: order.shopId,
+                                      customer_id: order.customerId,
+                                      inspector_id: order.ispectorId,
+                                      inspector_remarks: order.inspectorRemarks,
+                                      order_report: order.orderReport,
+                                      milk_status: order.milk_status,
+                                      viewOnly: true,
+                                    )));
+                          },
+                          icon: Icon(
+                            Icons.report_gmailerrorred_rounded,
+                            color: MyColors.kPrimary,
+                          ))
+                    ],
+                  ),
+                if (role == 'MilkTestor' && status == 'Shipped')
+                  Row(
+                    children: [
+                      SizedBox(),
+                      Spacer(),
+                      IconButton(
+                          onPressed: () {
+                            Navigator.of(context).push(MaterialPageRoute(
+                                builder: (context) => ViewMilkReport(
+                                      orderId: order.order_id,
+                                      milk_supplier: order.shopId,
+                                      customer_id: order.customerId,
+                                      inspector_id: order.ispectorId,
+                                      inspector_remarks: order.inspectorRemarks,
+                                      order_report: order.orderReport,
+                                      milk_status: order.milk_status,
+                                      viewOnly: true,
+                                    )));
+                          },
+                          icon: Icon(
+                            Icons.report_gmailerrorred_rounded,
+                            color: MyColors.kPrimary,
+                          ))
+                    ],
+                  ),
+                if (role == 'MilkTestor' && status == 'Delivered')
+                  Row(
+                    children: [
+                      SizedBox(),
+                      Spacer(),
+                      IconButton(
+                          onPressed: () {
+                            Navigator.of(context).push(MaterialPageRoute(
+                                builder: (context) => ViewMilkReport(
+                                      orderId: order.order_id,
+                                      milk_supplier: order.shopId,
+                                      customer_id: order.customerId,
+                                      inspector_id: order.ispectorId,
+                                      inspector_remarks: order.inspectorRemarks,
+                                      order_report: order.orderReport,
+                                      milk_status: order.milk_status,
+                                      viewOnly: true,
+                                    )));
+                          },
+                          icon: Icon(
+                            Icons.report_gmailerrorred_rounded,
+                            color: MyColors.kPrimary,
+                          ))
+                    ],
+                  ),
+                if (role == 'Farmer' && status == 'Delivered')
+                  Row(
+                    children: [
+                      SizedBox(),
+                      Spacer(),
+                      IconButton(
+                          onPressed: () {
+                            Navigator.of(context).push(MaterialPageRoute(
+                                builder: (context) => ViewMilkReport(
+                                      orderId: order.order_id,
+                                      milk_supplier: order.shopId,
+                                      customer_id: order.customerId,
+                                      inspector_id: order.ispectorId,
+                                      inspector_remarks: order.inspectorRemarks,
+                                      order_report: order.orderReport,
+                                      milk_status: order.milk_status,
+                                      viewOnly: true,
+                                    )));
+                          },
+                          icon: Icon(
+                            Icons.report_gmailerrorred_rounded,
+                            color: MyColors.kPrimary,
+                          ))
+                    ],
+                  ),
+
+                // // eyebutton
+                // role == 'MilkTestor' && status != 'Prepared'
+                //     ? Row(
+                //         children: [
+                //           SizedBox(),
+                //           Spacer(),
+                //           IconButton(
+                //               onPressed: () {
+                //                 Navigator.of(context).push(MaterialPageRoute(
+                //                     builder: (context) => ViewMilkReport(
+                //                           orderId: order.order_id,
+                //                           milk_supplier: order.shopId,
+                //                           customer_id: order.customerId,
+                //                           inspector_id: order.ispectorId,
+                //                           inspector_remarks:
+                //                               order.inspectorRemarks,
+                //                           order_report: order.orderReport,
+                //                           milk_status: order.milk_status,
+                //                           viewOnly: true,
+                //                         )));
+                //               },
+                //               icon: Icon(
+                //                 Icons.report_gmailerrorred_rounded,
+                //                 color: MyColors.kPrimary,
+                //               ))
+                //         ],
+                //       )
+                //     : SizedBox(),
+                // //eye button
+                // role == 'Seller' && status == 'Pending'
+                //     ? SizedBox()
+                //     : role == 'Seller' && status == 'Prepared'
+                //         ? SizedBox()
+                //         :role == 'Seller' && status == 'Delivered'? Row(
+                //             children: [
+                //               SizedBox(),
+                //               Spacer(),
+                //               IconButton(
+                //                   onPressed: () {
+                //                     Navigator.of(context).push(
+                //                         MaterialPageRoute(
+                //                             builder: (context) =>
+                //                                 ViewMilkReport(
+                //                                   orderId: order.order_id,
+                //                                   milk_supplier: order.shopId,
+                //                                   customer_id: order.customerId,
+                //                                   inspector_id:
+                //                                       order.ispectorId,
+                //                                   inspector_remarks:
+                //                                       order.inspectorRemarks,
+                //                                   order_report:
+                //                                       order.orderReport,
+                //                                   milk_status:
+                //                                       order.milk_status,
+                //                                   viewOnly: true,
+                //                                 )));
+                //                   },
+                //                   icon: Icon(
+                //                     Icons.report_gmailerrorred_rounded,
+                //                     color: MyColors.kPrimary,
+                //                   ))
+                //             ],
+                //           ):SizedBox(),
+                // //eye button
+                // role == 'Farmer' && status == 'Delivered'
+                //     ? Row(
+                //         children: [
+                //           SizedBox(),
+                //           Spacer(),
+                //           IconButton(
+                //               onPressed: () {
+                //                 Navigator.of(context).push(MaterialPageRoute(
+                //                     builder: (context) => ViewMilkReport(
+                //                           orderId: order.order_id,
+                //                           milk_supplier: order.shopId,
+                //                           customer_id: order.customerId,
+                //                           inspector_id: order.ispectorId,
+                //                           inspector_remarks:
+                //                               order.inspectorRemarks,
+                //                           order_report: order.orderReport,
+                //                           milk_status: order.milk_status,
+                //                           viewOnly: true,
+                //                         )));
+                //                 // Text('Name: ${order.items[index]['item_name']}'),
+                //               },
+                //               icon: Icon(
+                //                 Icons.report_gmailerrorred_rounded,
+                //                 color: MyColors.kPrimary,
+                //               ))
+                //         ],
+                //       )
+                //     : SizedBox(),
+                // //eye button
+                // role == 'Inspector' && status == 'Prepared'
+                //     ? SizedBox()
+                //     : Row(
+                //         children: [
+                //           SizedBox(),
+                //           Spacer(),
+                //           IconButton(
+                //               onPressed: () {
+                //                 Navigator.of(context).push(MaterialPageRoute(
+                //                     builder: (context) => ViewMilkReport(
+                //                           orderId: order.order_id,
+                //                           milk_supplier: order.shopId,
+                //                           customer_id: order.customerId,
+                //                           inspector_id: order.ispectorId,
+                //                           inspector_remarks:
+                //                               order.inspectorRemarks,
+                //                           order_report: order.orderReport,
+                //                           milk_status: order.milk_status,
+                //                           viewOnly: true,
+                //                         )));
+                //                 // Text('Name: ${order.items[index]['item_name']}'),
+                //               },
+                //               icon: Icon(
+                //                 Icons.report_gmailerrorred_rounded,
+                //                 color: MyColors.kPrimary,
+                //               ))
+                //         ],
+                //       ),
+
+                // //eye button
+                // role == 'Buyer' && status == 'Shipped'
+                //     ? Row(
+                //         children: [
+                //           SizedBox(),
+                //           Spacer(),
+                //           IconButton(
+                //               onPressed: () {
+                //                 Navigator.of(context).push(MaterialPageRoute(
+                //                     builder: (context) => ViewMilkReport(
+                //                           orderId: order.order_id,
+                //                           milk_supplier: order.shopId,
+                //                           customer_id: order.customerId,
+                //                           inspector_id: order.ispectorId,
+                //                           inspector_remarks:
+                //                               order.inspectorRemarks,
+                //                           order_report: order.orderReport,
+                //                           milk_status: order.milk_status,
+                //                           viewOnly: true,
+                //                         )));
+                //                 // Text('Name: ${order.items[index]['item_name']}'),
+                //               },
+                //               icon: Icon(
+                //                 Icons.report_gmailerrorred_rounded,
+                //                 color: MyColors.kPrimary,
+                //               ))
+                //         ],
+                //       )
+                //     : SizedBox(), //eye button
+                // role == 'Buyer' && status == 'Delivered'
+                //     ? Row(
+                //         children: [
+                //           SizedBox(),
+                //           Spacer(),
+                //           IconButton(
+                //               onPressed: () {
+                //                 Navigator.of(context).push(MaterialPageRoute(
+                //                     builder: (context) => ViewMilkReport(
+                //                           orderId: order.order_id,
+                //                           milk_supplier: order.shopId,
+                //                           customer_id: order.customerId,
+                //                           inspector_id: order.ispectorId,
+                //                           inspector_remarks:
+                //                               order.inspectorRemarks,
+                //                           order_report: order.orderReport,
+                //                           milk_status: order.milk_status,
+                //                           viewOnly: true,
+                //                         )));
+                //                 // Text('Name: ${order.items[index]['item_name']}'),
+                //               },
+                //               icon: Icon(
+                //                 Icons.report_gmailerrorred_rounded,
+                //                 color: MyColors.kPrimary,
+                //               ))
+                //         ],
+                //       )
+                //     : SizedBox(),
+
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -285,22 +649,25 @@ class MyStaticUIWidgets {
                                     ),
                                   ),
                                   onPressed: () {
-                                    UpdateStatusGlobalController().updateStatus(
-                                        context, order, 'Shipped', 'Orders');
-                                    final user =
-                                        FirebaseAuth.instance.currentUser;
-                                    final email = user!.email;
-                                    print('current users email::${email}');
+                                    // UpdateStatusGlobalController().updateStatus(
+                                    //     context, order, 'Shipped', 'Orders');
+                                    // final user =
+                                    //     FirebaseAuth.instance.currentUser;
+                                    // final email = user!.email;
+                                    // print('current users email::${email}');
 
-                                    //order is picked by
-                                    PickOderController()
-                                        .PickOder(context, order, email);
+                                    // //order is picked by
+                                    // PickOderController()
+                                    //     .PickOder(context, order, email);
 
-                                    Navigator.pop(context);
+                                    // Navigator.pop(context);
                                     Navigator.of(context).push(
                                         MaterialPageRoute(
                                             builder: (context) =>
-                                                InspectorScreen()));
+                                                FindReportByLotNumber(
+                                                  documentIdToAccessTheReport:
+                                                      order.order_id,
+                                                )));
                                   },
                                 ),
                               )
@@ -457,7 +824,7 @@ class MyStaticUIWidgets {
                                             ),
                                           )
                                         : role == 'MilkTestor' &&
-                                                status == 'ReadyForTesting'
+                                                status == 'Prepared'
                                             ? Center(
                                                 child: ElevatedButton(
                                                   style:
@@ -484,148 +851,165 @@ class MyStaticUIWidgets {
                                                     ),
                                                   ),
                                                   onPressed: () {
+                                                    Navigator.of(context).push(
+                                                        MaterialPageRoute(
+                                                            builder: (context) =>
+                                                                CreateMilkReport(
+                                                                  order: order
+                                                                      .order_id,
+                                                                )));
+
                                                     // when raised button is pressed
                                                     // we display showModalBottomSheet
-                                                    showModalBottomSheet<void>(
-                                                      // context and builder are
-                                                      // required properties in this widget
-                                                      context: context,
-                                                      backgroundColor:
-                                                          MyColors.kSecondary,
-                                                      shape: RoundedRectangleBorder(
-                                                          borderRadius:
-                                                              BorderRadius.vertical(
-                                                                  top: Radius
-                                                                      .circular(
-                                                                          25))),
-                                                      builder: (BuildContext
-                                                          context) {
-                                                        // we set up a container inside which
-                                                        // we create center column and display text
+                                                    // showModalBottomSheet<void>(
+                                                    //   // context and builder are
+                                                    //   // required properties in this widget
+                                                    //   context: context,
+                                                    //   backgroundColor:
+                                                    //       MyColors.kSecondary,
+                                                    //   shape: RoundedRectangleBorder(
+                                                    //       borderRadius:
+                                                    //           BorderRadius.vertical(
+                                                    //               top: Radius
+                                                    //                   .circular(
+                                                    //                       25))),
+                                                    //   builder: (BuildContext
+                                                    //       context) {
+                                                    //     // we set up a container inside which
+                                                    //     // we create center column and display text
 
-                                                        // Returning SizedBox instead of a Container
-                                                        return SizedBox(
-                                                          height: MediaQuery.of(
-                                                                      context)
-                                                                  .size
-                                                                  .height /
-                                                              6,
-                                                          child: Padding(
-                                                            padding:
-                                                                const EdgeInsets
-                                                                    .all(18.0),
-                                                            child: Row(
-                                                              mainAxisAlignment:
-                                                                  MainAxisAlignment
-                                                                      .center,
-                                                              crossAxisAlignment:
-                                                                  CrossAxisAlignment
-                                                                      .center,
-                                                              children: [
-                                                                Center(
-                                                                  child: Column(
-                                                                    mainAxisAlignment:
-                                                                        MainAxisAlignment
-                                                                            .center,
-                                                                    children: <Widget>[
-                                                                      Text(
-                                                                        'Not-Approved',
-                                                                        style: TextStyle(
-                                                                            color:
-                                                                                MyColors.kPrimary,
-                                                                            fontWeight: FontWeight.bold),
-                                                                      ),
-                                                                      IconButton(
-                                                                          onPressed:
-                                                                              () {
-                                                                            final user =
-                                                                                FirebaseAuth.instance.currentUser;
-                                                                            final email =
-                                                                                user!.email;
-                                                                            print('current users email::${email}');
+                                                    //     // Returning SizedBox instead of a Container
+                                                    //     return SizedBox(
+                                                    //       height: MediaQuery.of(
+                                                    //                   context)
+                                                    //               .size
+                                                    //               .height /
+                                                    //           6,
+                                                    //       child: Padding(
+                                                    //         padding:
+                                                    //             const EdgeInsets
+                                                    //                 .all(18.0),
+                                                    //         child: Row(
+                                                    //           mainAxisAlignment:
+                                                    //               MainAxisAlignment
+                                                    //                   .center,
+                                                    //           crossAxisAlignment:
+                                                    //               CrossAxisAlignment
+                                                    //                   .center,
+                                                    //           children: [
+                                                    //             Center(
+                                                    //               child: Column(
+                                                    //                 mainAxisAlignment:
+                                                    //                     MainAxisAlignment
+                                                    //                         .center,
+                                                    //                 children: <Widget>[
+                                                    //                   Text(
+                                                    //                     'Not-Approved',
+                                                    //                     style: TextStyle(
+                                                    //                         color:
+                                                    //                             MyColors.kPrimary,
+                                                    //                         fontWeight: FontWeight.bold),
+                                                    //                   ),
+                                                    //                   IconButton(
+                                                    //                       onPressed:
+                                                    //                           () {
+                                                    //                         final user =
+                                                    //                             FirebaseAuth.instance.currentUser;
+                                                    //                         final email =
+                                                    //                             user!.email;
+                                                    //                         print('current users email::${email}');
 
-                                                                            TestOrderController().TestOrder(
-                                                                                context,
-                                                                                order,
-                                                                                email,
-                                                                                'Orders With Farm',
-                                                                                'Canceled',
-                                                                                'Not-Approved',
-                                                                                '${NotApprovedReportPdfLink}');
+                                                    //                         TestOrderController().TestOrder(
+                                                    //                             context,
+                                                    //                             order,
+                                                    //                             email,
+                                                    //                             'Orders With Farm',
+                                                    //                             'Canceled',
+                                                    //                             'Not-Approved',
+                                                    //                             '${NotApprovedReportPdfLink}');
 
-                                                                            Navigator.pop(context);
-                                                                            Navigator.of(context).push(MaterialPageRoute(builder: (context) => TestMilkScreenTabbar()));
-                                                                          },
-                                                                          icon:
-                                                                              Icon(
-                                                                            Icons.cancel_outlined,
-                                                                            size:
-                                                                                30,
-                                                                            color:
-                                                                                MyColors.kPrimary,
-                                                                          ))
-                                                                    ],
-                                                                  ),
-                                                                ),
-                                                                Spacer(),
-                                                                Column(
-                                                                  mainAxisAlignment:
-                                                                      MainAxisAlignment
-                                                                          .center,
-                                                                  crossAxisAlignment:
-                                                                      CrossAxisAlignment
-                                                                          .center,
-                                                                  children: <Widget>[
-                                                                    Text(
-                                                                      'Approved',
-                                                                      style: TextStyle(
-                                                                          color: MyColors
-                                                                              .kPrimary,
-                                                                          fontWeight:
-                                                                              FontWeight.bold),
-                                                                    ),
-                                                                    IconButton(
-                                                                        onPressed:
-                                                                            () {
-                                                                          final user = FirebaseAuth
-                                                                              .instance
-                                                                              .currentUser;
-                                                                          final email =
-                                                                              user!.email;
-                                                                          print(
-                                                                              'current users email::${email}');
+                                                    //                         Navigator.pop(context);
+                                                    //                         Navigator.of(context).push(MaterialPageRoute(builder: (context) => TestMilkScreenTabbar()));
+                                                    //                       },
+                                                    //                       icon:
+                                                    //                           Icon(
+                                                    //                         Icons.cancel_outlined,
+                                                    //                         size:
+                                                    //                             30,
+                                                    //                         color:
+                                                    //                             MyColors.kPrimary,
+                                                    //                       ))
+                                                    //                 ],
+                                                    //               ),
+                                                    //             ),
+                                                    //             Spacer(),
+                                                    //             Column(
+                                                    //               mainAxisAlignment:
+                                                    //                   MainAxisAlignment
+                                                    //                       .center,
+                                                    //               crossAxisAlignment:
+                                                    //                   CrossAxisAlignment
+                                                    //                       .center,
+                                                    //               children: <Widget>[
+                                                    //                 Text(
+                                                    //                   'Approved',
+                                                    //                   style: TextStyle(
+                                                    //                       color: MyColors
+                                                    //                           .kPrimary,
+                                                    //                       fontWeight:
+                                                    //                           FontWeight.bold),
+                                                    //                 ),
+                                                    //                 IconButton(
+                                                    //                     onPressed:
+                                                    //                         () {
+                                                    //                       Navigator.pop(
+                                                    //                           context);
+                                                    //                       Navigator.of(context)
+                                                    //                           .push(MaterialPageRoute(builder: (context) => CreateMilkReport()));
 
-                                                                          TestOrderController().TestOrder(
-                                                                              context,
-                                                                              order,
-                                                                              email,
-                                                                              'Orders With Farm',
-                                                                              'Shipped',
-                                                                              'Approved',
-                                                                              '${ApprovedReportPdfLink}');
+                                                    //                       ////////////////////////////////
+                                                    //                       // this code was before now have to do the test milk other way
+                                                    //                       // final user = FirebaseAuth
+                                                    //                       //     .instance
+                                                    //                       //     .currentUser;
+                                                    //                       // final email =
+                                                    //                       //     user!.email;
+                                                    //                       // print(
+                                                    //                       //     'current users email::${email}');
 
-                                                                          Navigator.pop(
-                                                                              context);
-                                                                          Navigator.of(context)
-                                                                              .push(MaterialPageRoute(builder: (context) => TestMilkScreenTabbar()));
-                                                                        },
-                                                                        icon:
-                                                                            Icon(
-                                                                          Icons
-                                                                              .done,
-                                                                          size:
-                                                                              30,
-                                                                          color:
-                                                                              MyColors.kPrimary,
-                                                                        ))
-                                                                  ],
-                                                                ),
-                                                              ],
-                                                            ),
-                                                          ),
-                                                        );
-                                                      },
-                                                    );
+                                                    //                       // TestOrderController().TestOrder(
+                                                    //                       //     context,
+                                                    //                       //     order,
+                                                    //                       //     email,
+                                                    //                       //     'Orders With Farm',
+                                                    //                       //     'Shipped',
+                                                    //                       //     'Approved',
+                                                    //                       //     '${ApprovedReportPdfLink}');
+
+                                                    //                       // Navigator.pop(
+                                                    //                       //     context);
+                                                    //                       // Navigator.pop(
+                                                    //                       //     context);
+                                                    //                       // Navigator.of(context)
+                                                    //                       //     .push(MaterialPageRoute(builder: (context) => TestMilkScreenTabbar()));
+                                                    //                     },
+                                                    //                     icon:
+                                                    //                         Icon(
+                                                    //                       Icons
+                                                    //                           .done,
+                                                    //                       size:
+                                                    //                           30,
+                                                    //                       color:
+                                                    //                           MyColors.kPrimary,
+                                                    //                     ))
+                                                    //               ],
+                                                    //             ),
+                                                    //           ],
+                                                    //         ),
+                                                    //       ),
+                                                    //     );
+                                                    //   },
+                                                    // );
                                                   },
                                                 ),
                                               )

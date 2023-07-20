@@ -15,7 +15,6 @@ class CreateAnOrderController {
     var giveme_delivery_adress,
     var giveme_delivery_charges,
     List<Map<dynamic, dynamic>> giveme_order_details,
-    // var giveme_order_id,
     var giveme_shop_id,
     var giveme_status,
     var giveme_total_items,
@@ -25,6 +24,8 @@ class CreateAnOrderController {
     var giveme_long,
     var collection,
   ) async {
+        List<Map<dynamic, dynamic>> giveme_orderReport =[];
+
     //start animation
     showDialog(
         context: context,
@@ -43,7 +44,6 @@ class CreateAnOrderController {
         'delivery_charges': giveme_delivery_charges,
         'inspector_id': giveme_inspector_id,
         'items': giveme_order_details,
-        // 'order_id': giveme_order_id,
         'shop_id': giveme_shop_id,
         'status': 'Pending',
         'timestamp': FieldValue.serverTimestamp(),
@@ -51,8 +51,11 @@ class CreateAnOrderController {
         'total_price': giveme_total_price,
         'lat': giveme_lat,
         'long': giveme_long,
-        'milk_test_report_link': '',
-        'milk_test_report_status': ''
+        'order_report': giveme_orderReport,
+        'inspector_remarks':'',
+        'milk_status': ''
+        // 'inspector_remarks': '',
+        // 'milk_test_report_status': ''
       });
 
       // once data of an order is sent to firebase the provider then would be reset to zero so that

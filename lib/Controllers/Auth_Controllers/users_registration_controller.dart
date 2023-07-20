@@ -65,7 +65,7 @@ class UserRegistrationController {
           nameTextControl.clear();
           famrOrbuyerOrinspectorOrShopAdressTextControl.clear();
           farmOrshopNameTextControl.clear();
-        } else if (whichUser == 'Seller') {
+        } else if (whichUser == 'Inspector') {
           MySharedPrefencesSessionHandling
               .setOrupdateWhichUserLoggedInSharedPreferences('${whichUser}');
 

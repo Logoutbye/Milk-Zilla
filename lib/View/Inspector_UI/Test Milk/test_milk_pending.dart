@@ -1,7 +1,4 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:lottie/lottie.dart';
 import 'package:milk_zilla/controllers/Inspector_Controllers/get_orders_for_inpectors.dart';
 import 'package:milk_zilla/res/widgets/my_static_ui_widgets.dart';
@@ -38,7 +35,7 @@ class _InspectorOrdersPending extends State<TestMilkPending> {
             itemBuilder: (context, index) {
               OrderModel order = orders[index];
               return MyStaticUIWidgets.buildOrderUI2(
-                  context, order, 'ReadyForTesting', 'MilkTestor');
+                  context, order, 'Prepared', 'MilkTestor');
             },
           );
         } else {

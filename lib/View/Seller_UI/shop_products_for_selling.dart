@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:milk_zilla/res/Components/my_drawers/seller_drawer.dart';
 import 'package:milk_zilla/res/Components/round_button.dart';
 import 'package:shared_preferences/shared_preferences.dart';

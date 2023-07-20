@@ -8,7 +8,6 @@ import 'package:milk_zilla/res/Components/my_drawers/seller_drawer.dart';
 import '../../../Model/seller_model.dart';
 import '../../../res/Components/custom_divider.dart';
 import '../../../res/my_colors.dart';
-import '../../Buyer_UI/Customer Orders With Shop/customer_orders_with_shop_tabbar.dart';
 import '../Buy Milk From Farm/buy_milk_from_farm_tabar.dart';
 
 class AllFarmsToOrderMilk extends StatefulWidget {
@@ -337,7 +336,7 @@ class _AllFarmsToOrderMilkState extends State<AllFarmsToOrderMilk> {
                         Navigator.of(context).push(
                           MaterialPageRoute(
                             builder: (context) =>
-                                ReviewCartForFarm(getFormId: farm.email),
+                                ReviewCartForFarm(getFormId: farm.email,getFormName: farm.farm_name,),
                           ),
                         );
                       },

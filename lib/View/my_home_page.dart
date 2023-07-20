@@ -1,18 +1,12 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:lottie/lottie.dart';
 import 'package:milk_zilla/Utils/utils.dart';
 import 'package:milk_zilla/View/Auth%20UI/login_screen.dart';
-import 'package:milk_zilla/View/Auth%20UI/registration_screen.dart';
 import 'package:milk_zilla/View/Auth%20UI/registration_status_screen.dart';
 import 'package:milk_zilla/View/Buyer_UI/all_shops_to_order_from.dart';
-import 'package:milk_zilla/View/Buyer_UI/review_cart.dart';
 import 'package:milk_zilla/View/Farm_UI/farm_orders.dart';
-import 'package:milk_zilla/main.dart';
 import 'package:milk_zilla/res/Components/firebase_helper.dart';
-import 'package:milk_zilla/res/Components/my_shared_prefrences.dart';
 import 'package:milk_zilla/res/my_colors.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 

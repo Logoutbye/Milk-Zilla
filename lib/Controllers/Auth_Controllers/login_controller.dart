@@ -1,8 +1,6 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
-import 'package:milk_zilla/Model/seller_model.dart';
 import 'package:milk_zilla/View/Farm_UI/farm_orders.dart';
 import 'package:milk_zilla/View/Inspector_UI/inspector_dashboard.dart';
 import 'package:milk_zilla/main.dart';
@@ -10,7 +8,6 @@ import 'package:milk_zilla/main.dart';
 import '../../Utils/utils.dart';
 import '../../View/Auth UI/registration_status_screen.dart';
 import '../../View/Buyer_UI/all_shops_to_order_from.dart';
-import '../../View/Seller_UI/Sell Milk To Customers/customers_orders.dart';
 import '../../View/Seller_UI/seller_dashboard.dart';
 import '../../res/Components/firebase_helper.dart';
 import '../../res/Components/my_shared_prefrences.dart';

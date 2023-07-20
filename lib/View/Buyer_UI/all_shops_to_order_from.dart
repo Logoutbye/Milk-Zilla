@@ -10,10 +10,8 @@ import 'package:milk_zilla/View/Buyer_UI/all_shops_addresses_on_google_map.dart'
 import 'package:milk_zilla/View/Buyer_UI/review_cart.dart';
 
 import 'package:milk_zilla/res/Components/my_drawers/buyer_drawer.dart';
-import 'package:milk_zilla/res/constanst.dart';
 import 'package:milk_zilla/res/my_colors.dart';
 
-import '../../Model/price_list_model.dart';
 import '../../res/Components/custom_divider.dart';
 
 class AllShopesToOrderFrom extends StatefulWidget {
@@ -359,6 +357,7 @@ class _AllShopesToOrderFromState extends State<AllShopesToOrderFrom> {
                       onPressed: () {
                         Navigator.of(context).push(MaterialPageRoute(
                             builder: (context) => ReviewCart(
+                                  getShopName:shops.shop_name,
                                   getShopId: shops.email,
                                 )));
                       },

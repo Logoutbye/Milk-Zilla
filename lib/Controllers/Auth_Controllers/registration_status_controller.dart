@@ -33,5 +33,6 @@ class RegistrationStatusController {
         return SellerOrInspectorModel.fromJson(snapshot.data()!);
       }
     }
+    return null;
   }
 }

@@ -4,6 +4,7 @@ class OrderModel {
   String order_id;
   String customerId;
   String ispectorId;
+  String inspectorRemarks;
   String customerName;
   var lat;
   var long;
@@ -14,12 +15,15 @@ class OrderModel {
   int total_items;
   int total_price;
   List<Map<String, dynamic>> items;
+  List<Map<String, dynamic>> orderReport;
   DateTime timestamp;
+  var milk_status;
 
   OrderModel({
     required this.order_id,
     required this.customerId,
     required this.ispectorId,
+    required this.inspectorRemarks,
     required this.lat,
     required this.long,
     required this.customerName,
@@ -30,7 +34,9 @@ class OrderModel {
     required this.total_items,
     required this.total_price,
     required this.items,
+    required this.orderReport,
     required this.timestamp,
+    required this.milk_status
   });
 
   factory OrderModel.fromSnapshot(DocumentSnapshot doc) {
@@ -40,6 +46,7 @@ class OrderModel {
       customerId: data['customer_id'],
       customerName: data['customer_name'],
       ispectorId: data['inspector_id'],
+      inspectorRemarks: data['inspector_remarks'],
       lat: data['lat'],
       long: data['long'],
       shopId: data['shop_id'],
@@ -49,7 +56,9 @@ class OrderModel {
       delivery_charges: data['delivery_charges'],
       total_price: data['total_price'],
       items: List<Map<String, dynamic>>.from(data['items']),
+      orderReport: List<Map<String, dynamic>>.from(data['order_report']),
       timestamp: (data['timestamp'] as Timestamp).toDate(),
+      milk_status: data['milk_status']
     );
   }
 

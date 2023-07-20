@@ -1,7 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
-import 'package:milk_zilla/Utils/utils.dart';
 import 'package:milk_zilla/View/Farm_UI/farm_orders.dart';
 import 'package:milk_zilla/View/Seller_UI/seller_dashboard.dart';
 import 'package:milk_zilla/View/my_home_page.dart';
@@ -12,7 +11,6 @@ import 'package:milk_zilla/res/my_colors.dart';
 
 import '../../res/Components/custom_divider.dart';
 import '../Inspector_UI/inspector_dashboard.dart';
-import '../Seller_UI/Sell Milk To Customers/customers_orders.dart';
 
 class RegistrationStatusScreen extends StatefulWidget {
   String whichUser;

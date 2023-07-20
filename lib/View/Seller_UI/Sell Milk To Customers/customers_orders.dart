@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:milk_zilla/View/Seller_UI/Sell%20Milk%20To%20Customers/customer_orders_delivered.dart';
 import 'package:milk_zilla/View/Seller_UI/Sell%20Milk%20To%20Customers/customer_orders_pending.dart';
 import 'package:milk_zilla/View/Seller_UI/Sell%20Milk%20To%20Customers/customer_orders_pickedby_inspecter.dart';

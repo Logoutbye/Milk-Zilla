@@ -61,11 +61,11 @@ dependencies:
   lottie: ^2.3.2
   provider: ^6.0.5
   shared_preferences: ^2.1.0
-  dcdg: 4.1.0
+  # dcdg: 4.1.0
   # syncfusion_flutter_pdfviewer: ^21.2.4
   rename: ^2.1.1
   # flutter_native_splash: ^2.3.0
-  # flutter_launcher_icons: ^0.13.1
+  flutter_launcher_icons: ^0.13.1
 
 
 
@@ -85,7 +85,7 @@ flutter_icons:
 flutter_native_splash:
   #background_image: assets/images/SplashBackground.png
   color: "#ffffff"
-  image: assets/images/icon.png
+  image: assets/images/check.png
   android: true
   ios: true
   # The "flutter_lints" package below contains a set of recommended lints to

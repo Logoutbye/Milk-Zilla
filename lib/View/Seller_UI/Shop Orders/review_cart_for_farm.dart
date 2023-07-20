@@ -1,22 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
-import 'package:milk_zilla/View/Buyer_UI/check_out_screen.dart';
-import 'package:milk_zilla/View/Buyer_UI/price_list.dart';
 import 'package:milk_zilla/View/Seller_UI/Shop%20Orders/check_out_for_farm.dart';
+import 'package:milk_zilla/View/Seller_UI/Shop%20Orders/price_list_for_seller.dart';
 import 'package:milk_zilla/provider/Sopping_item_provider.dart';
-import 'package:milk_zilla/res/Components/my_drawers/buyer_drawer.dart';
 import 'package:milk_zilla/res/Components/my_drawers/seller_drawer.dart';
 import 'package:provider/provider.dart';
 
-import '../../../res/Components/create_an_order.dart';
 import '../../../res/my_colors.dart';
-import '../../Buyer_UI/Customer Orders With Shop/customer_orders_with_shop_tabbar.dart';
 import '../Buy Milk From Farm/buy_milk_from_farm_tabar.dart';
 
 class ReviewCartForFarm extends StatefulWidget {
   var getFormId;
+  var getFormName;
 
-  ReviewCartForFarm({required this.getFormId, super.key});
+  ReviewCartForFarm({required this.getFormId,required this.getFormName, super.key});
 
   @override
   State<ReviewCartForFarm> createState() => _ReviewCartForFarmState();
@@ -113,7 +110,7 @@ class _ReviewCartForFarmState extends State<ReviewCartForFarm> {
                     style: Theme.of(context).textTheme.labelSmall,
                     children: [
                       TextSpan(
-                          text: 'Welcome to Milk Zilla\n',
+                          text: 'Welcome to ${widget.getFormName}\n',
                           style: TextStyle(
                               color: Color.fromARGB(255, 125, 199, 127),
                               fontSize: 16)),
@@ -141,7 +138,7 @@ class _ReviewCartForFarmState extends State<ReviewCartForFarm> {
                   Spacer(),
                   InkWell(
                     onTap: () => Navigator.of(context).push(
-                        MaterialPageRoute(builder: (context) => priceList())),
+                        MaterialPageRoute(builder: (context) => PriceListForSeller())),
                     child: Text('See Price List',
                         style: TextStyle(
                             color: MyColors.kPrimary,

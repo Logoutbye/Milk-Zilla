@@ -12,6 +12,7 @@ class getRealTimePricesFromDatabaseforCreatingAnOrderController {
     if (snapshot.exists) {
       return PriceListModel.fromJson(snapshot.data()!);
     }
+    return null;
   }
 
   Future<ContainerPriceList?>
@@ -23,5 +24,6 @@ class getRealTimePricesFromDatabaseforCreatingAnOrderController {
     if (snapshot.exists) {
       return ContainerPriceList.fromJson(snapshot.data()!);
     }
+    return null;
   }
 }

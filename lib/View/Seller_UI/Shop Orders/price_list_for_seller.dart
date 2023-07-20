@@ -1,19 +1,18 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
+import 'package:milk_zilla/Model/price_list_model.dart';
 import 'package:milk_zilla/res/constanst.dart';
 import 'package:milk_zilla/res/my_colors.dart';
 
-import '../../Model/price_list_model.dart';
-
-class priceList extends StatefulWidget {
-  const priceList({super.key});
+class PriceListForSeller extends StatefulWidget {
+  const PriceListForSeller({super.key});
 
   @override
-  State<priceList> createState() => _priceListState();
+  State<PriceListForSeller> createState() => _PriceListForSellerState();
 }
 
-class _priceListState extends State<priceList> {
+class _PriceListForSellerState extends State<PriceListForSeller> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -43,7 +42,7 @@ class _priceListState extends State<priceList> {
                 ),
                 children: [
                   const Text(
-                    "Milk Zilla Pricing",
+                    "Milk Zilla Farm Pricing",
                     style: TextStyle(
                       color: Colors.black,
                       fontSize: 24.0,
@@ -57,12 +56,12 @@ class _priceListState extends State<priceList> {
                     children: [
                       const SizedBox(width: 40.0),
                       Text(
-                        "Buffalo Milk(1 Litre)",
+                        "1 Litre Container",
                         style: kTextStyleBlack,
                       ),
                       const Spacer(),
                       Text(
-                        "Rs ${snapshot.data!.buffalo_milk}",
+                        "Rs ${snapshot.data!.quantity1L}",
                         style: kTextStyleBlack,
                       ),
                       const SizedBox(width: 20.0),
@@ -77,12 +76,12 @@ class _priceListState extends State<priceList> {
                     children: [
                       const SizedBox(width: 40.0),
                       Text(
-                        "Cow Milk(1 litre)",
+                        "500 ml Container",
                         style: kTextStyleBlack,
                       ),
                       const Spacer(),
                       Text(
-                        "Rs ${snapshot.data!.cow_milk}",
+                        "Rs ${snapshot.data!.quantity500ML}",
                         style: kTextStyleBlack,
                       ),
                       const SizedBox(width: 20.0),
@@ -97,79 +96,17 @@ class _priceListState extends State<priceList> {
                     children: [
                       const SizedBox(width: 40.0),
                       Text(
-                        "Mix Milk(1 Litre)",
+                        "250 ml Container",
                         style: kTextStyleBlack,
                       ),
                       const Spacer(),
                       Text(
-                        "Rs ${snapshot.data!.mix_milk}",
+                        "Rs ${snapshot.data!.quantity250ML}",
                         style: kTextStyleBlack,
                       ),
                       const SizedBox(width: 20.0),
                     ],
                   ),
-                  const SizedBox(height: 20.0),
-                  _buildDivider(),
-                  const SizedBox(height: 20.0),
-                  _buildDivider(),
-                  const SizedBox(height: 20.0),
-                  Row(
-                    children: [
-                      const SizedBox(width: 40.0),
-                      Text(
-                        "Yogurt(1 Kg) ",
-                        style: kTextStyleBlack,
-                      ),
-                      const Spacer(),
-                      Text(
-                        "Rs ${snapshot.data!.yougurt}",
-                        style: kTextStyleBlack,
-                      ),
-                      const SizedBox(width: 20.0),
-                    ],
-                  ),
-                  const SizedBox(height: 20.0),
-                  _buildDivider(),
-                  const SizedBox(height: 20.0),
-                  _buildDivider(),
-                  const SizedBox(height: 20.0),
-                  Row(
-                    children: [
-                      const SizedBox(width: 40.0),
-                      Text(
-                        "Butter",
-                        style: kTextStyleBlack,
-                      ),
-                      const Spacer(),
-                      Text(
-                        "Rs ${snapshot.data!.butter}",
-                        style: kTextStyleBlack,
-                      ),
-                      const SizedBox(width: 20.0),
-                    ],
-                  ),
-                  const SizedBox(height: 20.0),
-                  _buildDivider(),
-                  const SizedBox(height: 20.0),
-                  _buildDivider(),
-                  const SizedBox(height: 20.0),
-                  Row(
-                    children: [
-                      const SizedBox(width: 40.0),
-                      Text(
-                        "Desi Ghee",
-                        style: kTextStyleBlack,
-                      ),
-                      const Spacer(),
-                      Text(
-                        "Rs ${snapshot.data!.desi_ghee}",
-                        style: kTextStyleBlack,
-                      ),
-                      const SizedBox(width: 20.0),
-                    ],
-                  ),
-                  const SizedBox(height: 20.0),
-                  _buildDivider(),
                   const SizedBox(height: 20.0),
                   _buildDivider(),
                   const SizedBox(height: 20.0),
@@ -201,13 +138,13 @@ class _priceListState extends State<priceList> {
     );
   }
 
-  Future<PriceListModel?> readPriceListFromDatabase() async {
+  Future<ContainerPriceList?> readPriceListFromDatabase() async {
     final docPrices =
-        FirebaseFirestore.instance.collection('Price List').doc('items');
+        FirebaseFirestore.instance.collection('Price List').doc('containers');
     final snapshot = await docPrices.get();
 
     if (snapshot.exists) {
-      return PriceListModel.fromJson(snapshot.data()!);
+      return ContainerPriceList.fromJson(snapshot.data()!);
     }
     return null;
   }

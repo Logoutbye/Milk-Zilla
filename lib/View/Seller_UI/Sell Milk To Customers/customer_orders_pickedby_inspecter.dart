@@ -1,9 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:lottie/lottie.dart';
-import 'package:milk_zilla/res/Components/my_drawers/seller_drawer.dart';
 
 import '../../../Controllers/Seller_Controllers/seller_controller.dart';
 import '../../../Model/order_model.dart';

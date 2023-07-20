@@ -72,5 +72,5 @@ Note:
     }
 
 
-
-## Getting Started
+test milk:
+seller order milk for his shop in order to sell it to customer then shop keeper will make it ready so that inspector can test it once he approves the milk then milk will be delivered to shop (Status flow Pending=> Prepared=> after test Approved(milk report status will be approved where as the other status will be Shipped)=> Delivered)

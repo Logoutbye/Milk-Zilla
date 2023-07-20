@@ -1,5 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:dcdg/dcdg.dart';
+// import 'package:dcdg/dcdg.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:milk_zilla/View/Auth%20UI/registration_status_screen.dart';
@@ -12,7 +12,6 @@ import 'package:milk_zilla/res/Components/firebase_helper.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'View/Inspector_UI/inspector_dashboard.dart';
-import 'View/Seller_UI/Sell Milk To Customers/customers_orders.dart';
 import 'View/Seller_UI/seller_dashboard.dart';
 import 'View/Seller_UI/set_seller_location_on_google_map.dart';
 import 'View/my_home_page.dart';
